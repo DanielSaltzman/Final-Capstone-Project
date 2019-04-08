@@ -1,43 +1,28 @@
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
+<c:import url="/WEB-INF/jsp/header.jsp" />
 
-<script type="text/javascript">
-	$(document).ready(function () {
-	
-		$("form").validate({
-			
-			rules : {
-				userName : {
-					required : true
-				},
-				password : {
-					required : true
-				}
-			},
-			messages : {			
-				confirmPassword : {
-					equalTo : "Passwords do not match"
-				}
-			},
-			errorClass : "error"
-		});
-	});
-</script>
-
-<div >
-	<div>
-		<c:url var="formAction" value="/login" />
-		<form method="POST" action="${formAction}">
-		<input type="hidden" name="destination" value="${param.destination}"/>
-			<div class="form-group">
-				<label for="userName">User Name: </label>
-				<input type="text" id="userName" name="userName" placeHolder="User Name" class="form-control" />
+<div class="container">
+	<div class="row justify-content-center align-items-center"
+		style="height: 100vh">
+		<div class="col-4">
+			<div class="card">
+				<div class="card-body">
+					<c:url var="pulseLogo" value="img/electricity.png" />
+					<h1><img class="icon" src="${pulseLogo}" height="40" width="40">  Pulse Survey</h1>
+					<form action="" autocomplete="off">
+						<div class="form-group">
+							<input type="text" class="form-control" name="username">
+						</div>
+						<div class="form-group">
+							<input type="password" class="form-control" name="password">
+						</div>
+						<button type="button" id="sendlogin" class="btn btn-primary">login</button>
+					</form>
+				</div>
 			</div>
-			<div class="form-group">
-				<label for="password">Password: </label>
-				<input type="password" id="password" name="password" placeHolder="Password" class="form-control" />
-			</div>
-			<button type="submit" class="btn btn-primary">Login</button>
-		</form>
+		</div>
 	</div>
 </div>
+
+<c:import url="/WEB-INF/jsp/footer.jsp" />
