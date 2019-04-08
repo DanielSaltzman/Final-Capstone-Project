@@ -81,6 +81,7 @@
 <div>
 	<h1 class="title" style="color:white">Upload Survey</h1>
 </div>
+<div class="uploadField">
 <div class="input-group mb-3">
   <div class="input-group-prepend">
     <span class="input-group-text" id="inputGroupFileAddon01">Upload</span>
@@ -89,5 +90,6 @@
     <input type="file" class="custom-file-input" id="inputGroupFile01" aria-describedby="inputGroupFileAddon01">
     <label class="custom-file-label" for="inputGroupFile01">Choose file</label>
   </div>
+</div>
 </div>
 <c:import url="/WEB-INF/jsp/header.jsp" />
