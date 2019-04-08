@@ -23,56 +23,71 @@
   </div>
 </nav>
 
+<c:url var="editLogo" value="img/icons/edit.png" />
+<c:url var="trashLogo" value="img/icons/trash.png" />
 
-<div class="list-group">
+<div class="list-group surveyView">
   <div class="list-group-item">
     <div class="d-flex w-100 justify-content-between">
       <h5 class="mb-1">Survey #1</h5>
-      <small>8/04/19</small>
+      <small><a href="#">Edit</a>  <img src="${editLogo}" height="15" width="15">  <a href="#">Trash</a>  <img src="${trashLogo}" height="15" width="15"></small>
     </div>
     <p class="mb-1">Donec id elit non mi porta gravida at eget metus. Maecenas sed diam eget risus varius blandit.</p>
-    <small>Donec id elit non mi porta.</small>
+    <small>8/24/19</small>
   </div>
     <div class="list-group-item">
     <div class="d-flex w-100 justify-content-between">
       <h5 class="mb-1">Survey #2</h5>
-      <small>8/04/19</small>
+      <small><a href="#">Edit</a>  <img src="${editLogo}" height="15" width="15">  <a href="#">Trash</a>  <img src="${trashLogo}" height="15" width="15"></small>
     </div>
     <p class="mb-1">Donec id elit non mi porta gravida at eget metus. Maecenas sed diam eget risus varius blandit.</p>
-    <small>Donec id elit non mi porta.</small>
+    <small>8/24/19</small>
   </div>
     <div class="list-group-item">
     <div class="d-flex w-100 justify-content-between">
       <h5 class="mb-1">Survey #3</h5>
-      <small>8/04/19</small>
+      <small><a href="#">Edit</a>  <img src="${editLogo}" height="15" width="15">  <a href="#">Trash</a>  <img src="${trashLogo}" height="15" width="15"></small>
     </div>
     <p class="mb-1">Donec id elit non mi porta gravida at eget metus. Maecenas sed diam eget risus varius blandit.</p>
-    <small>Donec id elit non mi porta.</small>
+    <small>8/24/19</small>
   </div>
     <div class="list-group-item">
     <div class="d-flex w-100 justify-content-between">
       <h5 class="mb-1">Survey #4</h5>
-      <small>8/04/19</small>
+      <small><a href="#">Edit</a>  <img src="${editLogo}" height="15" width="15">  <a href="#">Trash</a>  <img src="${trashLogo}" height="15" width="15"></small>
     </div>
     <p class="mb-1">Donec id elit non mi porta gravida at eget metus. Maecenas sed diam eget risus varius blandit.</p>
-    <small>Donec id elit non mi porta.</small>
+    <small>8/24/19</small>
   </div>
     <div class="list-group-item">
     <div class="d-flex w-100 justify-content-between">
       <h5 class="mb-1">Survey #5</h5>
-      <small>8/04/19</small>
+      <small><a href="#">Edit</a>  <img src="${editLogo}" height="15" width="15">  <a href="#">Trash</a>  <img src="${trashLogo}" height="15" width="15"></small>
     </div>
     <p class="mb-1">Donec id elit non mi porta gravida at eget metus. Maecenas sed diam eget risus varius blandit.</p>
-    <small>Donec id elit non mi porta.</small>
+    <small>8/24/19</small>
   </div>
     <div class="list-group-item">
     <div class="d-flex w-100 justify-content-between">
       <h5 class="mb-1">Survey #6</h5>
-      <small>8/04/19</small>
+      <small><a href="#">Edit</a>  <img src="${editLogo}" height="15" width="15">  <a href="#">Trash</a>  <img src="${trashLogo}" height="15" width="15"></small>
     </div>
     <p class="mb-1">Donec id elit non mi porta gravida at eget metus. Maecenas sed diam eget risus varius blandit.</p>
-    <small>Donec id elit non mi porta.</small>
+    <small>8/24/19</small>
   </div>
 </div>
 
+
+<div>
+	<h1 class="title" style="color:white">Upload Survey</h1>
+</div>
+<div class="input-group mb-3">
+  <div class="input-group-prepend">
+    <span class="input-group-text" id="inputGroupFileAddon01">Upload</span>
+  </div>
+  <div class="custom-file">
+    <input type="file" class="custom-file-input" id="inputGroupFile01" aria-describedby="inputGroupFileAddon01">
+    <label class="custom-file-label" for="inputGroupFile01">Choose file</label>
+  </div>
+</div>
 <c:import url="/WEB-INF/jsp/header.jsp" />
