@@ -26,6 +26,11 @@ public class AuthenticationController {
 		return "login";
 	}
 	
+	@RequestMapping(path="/survey", method=RequestMethod.GET)
+	public String displaySurveyView() {
+		return "survey";
+	}
+	
 	@RequestMapping(path="/login", method=RequestMethod.POST)
 	public String login(@RequestParam String userName, 
 						@RequestParam String password, 
