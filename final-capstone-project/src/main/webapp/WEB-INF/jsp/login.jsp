@@ -12,10 +12,10 @@
 					<h1><img class="icon" src="${pulseLogo}" height="40" width="40">  Pulse Survey</h1>
 					<form action="" autocomplete="off">
 						<div class="form-group">
-							<input type="text" class="form-control" name="username">
+							<input type="text" class="form-control" name="username" placeholder="Username">
 						</div>
 						<div class="form-group">
-							<input type="password" class="form-control" name="password">
+							<input type="password" class="form-control" name="password" placeholder="Password">
 						</div>
 						<button type="button" type="submit" id="sendlogin" class="btn btn-primary">login</button>
 					</form>
@@ -26,3 +26,4 @@
 </div>
 
 <c:import url="/WEB-INF/jsp/footer.jsp" />
+
