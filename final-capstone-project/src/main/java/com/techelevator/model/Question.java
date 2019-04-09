@@ -1,30 +1,19 @@
 package com.techelevator.model;
 
+import java.util.List;
+
 public class Question {
 	
 	private long questionId;
-	private long surveyId;
-	private int questionNumber;
 	private String questionText;
-	private String questionAnwser;
-
-	public int getQuestionNumber() {
-		return questionNumber;
-	}
-	public void setQuestionNumber(int questionNumber) {
-		this.questionNumber = questionNumber;
-	}
+	private List<Answer> answerList;
+	
+	
 	public long getQuestionId() {
 		return questionId;
 	}
 	public void setQuestionId(long questionId) {
 		this.questionId = questionId;
-	}
-	public long getSurveyId() {
-		return surveyId;
-	}
-	public void setSurveyId(long surveyId) {
-		this.surveyId = surveyId;
 	}
 	public String getQuestionText() {
 		return questionText;
@@ -32,11 +21,13 @@ public class Question {
 	public void setQuestionText(String questionText) {
 		this.questionText = questionText;
 	}
-	public String getQuestionAnwser() {
-		return questionAnwser;
+	public List<Answer> getAnswerList() {
+		return answerList;
 	}
-	public void setQuestionAnwser(String questionAnwser) {
-		this.questionAnwser = questionAnwser;
+	public void setAnswerList(List<Answer> answerList) {
+		this.answerList = answerList;
 	}
+	
+	
 	
 }

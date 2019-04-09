@@ -5,32 +5,36 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
 	<c:url var="pulseLogo" value="img/electricity.png" />
 	<img src="${pulseLogo}" height="40" width="40">
-	<c:url var="loginPage" value="/login" />
-	<a class="navbar-brand" href="${loginPage}">Pulse Survey</a>
+	<c:url var="surveyPage" value="/survey" />
+	<a class="navbar-brand" href="${surveyPage}">Pulse Survey</a>
 	<button class="navbar-toggler" type="button" data-toggle="collapse"
 		data-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02"
 		aria-expanded="false" aria-label="Toggle navigation">
 		<span class="navbar-toggler-icon"></span>
 	</button>
-
+	
 	<div class="collapse navbar-collapse" id="navbarTogglerDemo02">
-		<ul class="navbar-nav mr-auto mt-2 mt-lg-0">
-			<li class="nav-item active"><a class="nav-link" href="#">Home
-					<span class="sr-only">(current)</span>
-			</a></li>
-			<li class="nav-item"><a class="nav-link" href="#">Link</a></li>
-		</ul>
+	  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item active">
+        <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+      </li>
+    </ul>
 		<div class="btn-group">
-  <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-  	<c:url var="userLogo" value="img/icons/man.png" />
-    <img src="${userLogo}" height="40" width="40">  UserName
-  </button>
-  <div class="dropdown-menu dropdown-menu-right">
-    <button class="dropdown-item" type="button">View Users</button>
-    <button class="dropdown-item" type="button">View Log</button>
-    <button class="dropdown-item" type="button">Logout</button>
-  </div>
-</div>
+			<button type="button" class="btn btn-primary dropdown-toggle"
+				data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+				<c:url var="userLogo" value="img/icons/man.png" />
+				<img src="${userLogo}" height="40" width="40"> UserName
+			</button>
+			<div class="dropdown-menu dropdown-menu-right ml-auto mr-1">
+				<button class="dropdown-item" type="button">View Users</button>
+				<button class="dropdown-item" type="button">View Log</button>
+				<c:url var="logoutURL" value="logout" />
+				<form action="${logoutURL}" method="POST">
+					<button class="dropdown-item" type="submit">Logout</button>
+				</form>
+			</div>
+		</div>
 	</div>
 </nav>
 
@@ -104,22 +108,23 @@
 			Maecenas sed diam eget risus varius blandit.</p>
 		<small>8/24/19</small>
 	</div>
-</div>
-
-
-<div>
-	<h1 class="title" style="color: white">Upload Survey</h1>
-</div>
-<div class="uploadField">
-	<div class="input-group mb-3">
+	<div class="input-group mb-3 uploadField">
 		<div class="input-group-prepend">
 			<span class="input-group-text" id="inputGroupFileAddon01">Upload</span>
 		</div>
+		
 		<div class="custom-file">
-			<input type="file" class="custom-file-input" id="inputGroupFile01"
+			<input type="file" class="custom-file-input" id="inputGroupFile01" name="upload"
 				aria-describedby="inputGroupFileAddon01"> <label
 				class="custom-file-label" for="inputGroupFile01">Choose file</label>
 		</div>
+		<script> 
+		document.querySelector('.custom-file-input').addEventListener('change', (evt) => {console.log(evt)});
+		</script>
 	</div>
 </div>
+
+
+
+
 <c:import url="/WEB-INF/jsp/footer.jsp" />

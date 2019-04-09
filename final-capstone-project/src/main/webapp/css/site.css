@@ -19,3 +19,8 @@ body {
 	width:80%;
 	margin:auto;
 }
+
+label.btn.btn-light.btn-lg.btn-block.uploadField {
+    width: 80%;
+    margin: auto;
+}
