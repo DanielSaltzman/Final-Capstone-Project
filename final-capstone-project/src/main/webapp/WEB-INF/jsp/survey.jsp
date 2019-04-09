@@ -38,92 +38,92 @@
 		</div>
 </nav>
 
-<c:url var="editLogo" value="img/icons/edit.png" />
+<c:url var="cursorLogo" value="img/icons/cursor.png" />
 <c:url var="trashLogo" value="img/icons/trash.png" />
 
-<div class="list-group surveyView">
-	<div class="list-group-item">
-		<div class="d-flex w-100 justify-content-between">
-			<h5 class="mb-1">Survey #1</h5>
-			<small><a href="#">Edit</a> <img src="${editLogo}"
-				height="15" width="15"> <a href="#">Trash</a> <img
-				src="${trashLogo}" height="15" width="15"></small>
-		</div>
-		<p class="mb-1">Donec id elit non mi porta gravida at eget metus.
-			Maecenas sed diam eget risus varius blandit.</p>
-		<small>8/24/19</small>
-	</div>
-	<div class="list-group-item">
-		<div class="d-flex w-100 justify-content-between">
-			<h5 class="mb-1">Survey #2</h5>
-			<small><a href="#">Edit</a> <img src="${editLogo}"
-				height="15" width="15"> <a href="#">Trash</a> <img
-				src="${trashLogo}" height="15" width="15"></small>
-		</div>
-		<p class="mb-1">Donec id elit non mi porta gravida at eget metus.
-			Maecenas sed diam eget risus varius blandit.</p>
-		<small>8/24/19</small>
-	</div>
-	<div class="list-group-item">
-		<div class="d-flex w-100 justify-content-between">
-			<h5 class="mb-1">Survey #3</h5>
-			<small><a href="#">Edit</a> <img src="${editLogo}"
-				height="15" width="15"> <a href="#">Trash</a> <img
-				src="${trashLogo}" height="15" width="15"></small>
-		</div>
-		<p class="mb-1">Donec id elit non mi porta gravida at eget metus.
-			Maecenas sed diam eget risus varius blandit.</p>
-		<small>8/24/19</small>
-	</div>
-	<div class="list-group-item">
-		<div class="d-flex w-100 justify-content-between">
-			<h5 class="mb-1">Survey #4</h5>
-			<small><a href="#">Edit</a> <img src="${editLogo}"
-				height="15" width="15"> <a href="#">Trash</a> <img
-				src="${trashLogo}" height="15" width="15"></small>
-		</div>
-		<p class="mb-1">Donec id elit non mi porta gravida at eget metus.
-			Maecenas sed diam eget risus varius blandit.</p>
-		<small>8/24/19</small>
-	</div>
-	<div class="list-group-item">
-		<div class="d-flex w-100 justify-content-between">
-			<h5 class="mb-1">Survey #5</h5>
-			<small><a href="#">Edit</a> <img src="${editLogo}"
-				height="15" width="15"> <a href="#">Trash</a> <img
-				src="${trashLogo}" height="15" width="15"></small>
-		</div>
-		<p class="mb-1">Donec id elit non mi porta gravida at eget metus.
-			Maecenas sed diam eget risus varius blandit.</p>
-		<small>8/24/19</small>
-	</div>
-	<div class="list-group-item">
-		<div class="d-flex w-100 justify-content-between">
-			<h5 class="mb-1">Survey #6</h5>
-			<small><a href="#">Edit</a> <img src="${editLogo}"
-				height="15" width="15"> <a href="#">Trash</a> <img
-				src="${trashLogo}" height="15" width="15"></small>
-		</div>
-		<p class="mb-1">Donec id elit non mi porta gravida at eget metus.
-			Maecenas sed diam eget risus varius blandit.</p>
-		<small>8/24/19</small>
-	</div>
-	<div class="input-group mb-3 uploadField">
-		<div class="input-group-prepend">
-			<span class="input-group-text" id="inputGroupFileAddon01">Upload</span>
-		</div>
 
-		<div class="custom-file">
-			<input type="file" class="custom-file-input" id="inputGroupFile01"
-				name="upload" aria-describedby="inputGroupFileAddon01"> <label
-				class="custom-file-label" for="inputGroupFile01">Choose file</label>
+<div class="list-group surveyView">
+	<c:forEach var="survey" items="${surveys}">
+
+		<c:url value="/surveyDetails" var="surveyDetailsURL">
+			<c:param name="surveyId" value="${survey.surveyId}" />
+		</c:url>
+
+		<div class="list-group-item">
+			<div class="d-flex w-100 justify-content-between">
+				<h5 class="mb-1">
+					<c:out value="${survey.surveyName}"></c:out>
+				</h5>
+				<small><a href="${surveyDetailsURL}">View</a> <img
+					src="${cursorLogo}" height="15" width="15"></small>
+			</div>
+			<p class="mb-1">
+				<c:out value="Class Room: ${survey.room}"></c:out>
+			</p>
+			<small><c:out value="${survey.createdDate}"></c:out></small>
 		</div>
-		<script> 
-		document.querySelector('.custom-file-input').addEventListener('change', (evt) => {console.log(evt)});
-		</script>
-	</div>
+	</c:forEach>
+	<!-- Button trigger modal -->
+	<button type="button" class="btn btn-light btn-lg btn-block"
+		data-toggle="modal" data-target="#exampleModal">Upload Survey
+	</button>
 </div>
 
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog"
+	aria-labelledby="exampleModalLabel" aria-hidden="true">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="exampleModalLabel">Input Info</h5>
+				<button type="button" class="close" data-dismiss="modal"
+					aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="modal-body">
+				<form>
+				<label>Location:</label>
+					<select class="form-control">
+						<option>Columbus</option>
+						<option>Cleveland</option>
+						<option>Detroit</option>
+						<option>Pittsburgh</option>
+						<option>Cincinnati</option>
+					</select>
+					<br/>
+				<label>Cohort Number:</label>
+					<select class="form-control">
+						<option>1</option>
+						<option>2</option>
+						<option>3</option>
+						<option>4</option>
+						<option>5</option>
+						<option>6</option>
+						<option>7</option>
+						<option>8</option>
+					</select>
+					<br/>
+				<input type="text" class="form-control" placeholder="Section">
+				<br/>
+				<input type="text" class="form-control" placeholder="Instructor">
+				<br/>
+				<input type="text" class="form-control" placeholder="Topic">
+				<br/>
+					<div class="form-group">
+						<label for="exampleFormControlFile1">CSV File:</label> <input
+							type="file" class="form-control-file"
+							id="exampleFormControlFile1">
+					</div>
+				</form>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+				<button type="submit" class="btn btn-primary">Save changes</button>
+			</div>
+		</div>
+	</div>
+</div>
 
 
 

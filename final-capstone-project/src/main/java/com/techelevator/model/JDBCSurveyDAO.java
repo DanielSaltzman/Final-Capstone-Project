@@ -14,11 +14,13 @@ import org.springframework.stereotype.Component;
 public class JDBCSurveyDAO implements SurveyDAO {
 	
 	private JdbcTemplate jdbcTemplate;
+	
 
     @Autowired
     public JDBCSurveyDAO(DataSource datasource) {
         this.jdbcTemplate = new JdbcTemplate(datasource);
     }
+    
 
 	@Override
 	public List<Survey> getAllSurveys() {
