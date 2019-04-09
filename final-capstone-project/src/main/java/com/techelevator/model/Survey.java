@@ -7,6 +7,7 @@ public class Survey {
 	private long surveyId; 
 	private String surveyName;
 	private String createdDate;
+	private String room;
 	private List<Question> surveyList;
 	
 	
@@ -33,6 +34,12 @@ public class Survey {
 	}
 	public void setSurveyList(List<Question> surveyList) {
 		this.surveyList = surveyList;
+	}
+	public String getRoom() {
+		return room;
+	}
+	public void setRoom(String room) {
+		this.room = room;
 	}
 	
 }

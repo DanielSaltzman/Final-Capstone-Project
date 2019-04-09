@@ -12,30 +12,30 @@
 		aria-expanded="false" aria-label="Toggle navigation">
 		<span class="navbar-toggler-icon"></span>
 	</button>
-	
+
 	<div class="collapse navbar-collapse" id="navbarTogglerDemo02">
-	  <div class="collapse navbar-collapse" id="navbarSupportedContent">
-    <ul class="navbar-nav mr-auto">
-      <li class="nav-item active">
-        <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
-      </li>
-    </ul>
-		<div class="btn-group">
-			<button type="button" class="btn btn-primary dropdown-toggle"
-				data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-				<c:url var="userLogo" value="img/icons/man.png" />
-				<img src="${userLogo}" height="40" width="40"> UserName
-			</button>
-			<div class="dropdown-menu dropdown-menu-right ml-auto mr-1">
-				<button class="dropdown-item" type="button">View Users</button>
-				<button class="dropdown-item" type="button">View Log</button>
-				<c:url var="logoutURL" value="logout" />
-				<form action="${logoutURL}" method="POST">
-					<button class="dropdown-item" type="submit">Logout</button>
-				</form>
+		<div class="collapse navbar-collapse" id="navbarSupportedContent">
+			<ul class="navbar-nav mr-auto">
+				<li class="nav-item active"><a class="nav-link" href="#">Home
+						<span class="sr-only">(current)</span>
+				</a></li>
+			</ul>
+			<div class="btn-group">
+				<button type="button" class="btn btn-primary dropdown-toggle"
+					data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+					<c:url var="userLogo" value="img/icons/man.png" />
+					<img src="${userLogo}" height="40" width="40"> UserName
+				</button>
+				<div class="dropdown-menu dropdown-menu-right ml-auto mr-1">
+					<button class="dropdown-item" type="button">View Users</button>
+					<button class="dropdown-item" type="button">View Log</button>
+					<c:url var="logoutURL" value="logout" />
+					<form action="${logoutURL}" method="POST">
+						<button class="dropdown-item" type="submit">Logout</button>
+					</form>
+				</div>
 			</div>
 		</div>
-	</div>
 </nav>
 
 <c:url var="editLogo" value="img/icons/edit.png" />
@@ -112,10 +112,10 @@
 		<div class="input-group-prepend">
 			<span class="input-group-text" id="inputGroupFileAddon01">Upload</span>
 		</div>
-		
+
 		<div class="custom-file">
-			<input type="file" class="custom-file-input" id="inputGroupFile01" name="upload"
-				aria-describedby="inputGroupFileAddon01"> <label
+			<input type="file" class="custom-file-input" id="inputGroupFile01"
+				name="upload" aria-describedby="inputGroupFileAddon01"> <label
 				class="custom-file-label" for="inputGroupFile01">Choose file</label>
 		</div>
 		<script> 
