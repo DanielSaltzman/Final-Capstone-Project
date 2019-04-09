@@ -4,6 +4,6 @@ import java.util.List;
 
 public interface QuestionDAO {
 	
-	public List<Question> getQuestionsBySurveyId(int id); 
+	public List<Question> getQuestionsBySurveyId(long id); 
 
 }

@@ -38,7 +38,7 @@ public class JDBCSurveyDAO implements SurveyDAO {
 	@Override
 	public Survey getSurveyWithId(long id) {
 		
-		String sql = "SELECT * FROM survey WHERE survey_id = ?";
+		String sql = "SELECT survey_id, survey_date, survey_name, room, location, cohort_number, section, instructor, topic FROM survey WHERE survey_id = ? ; ";
 		
 		SqlRowSet result = jdbcTemplate.queryForRowSet(sql, id);
 		
@@ -55,6 +55,11 @@ public class JDBCSurveyDAO implements SurveyDAO {
 		survey.setCreatedDate(result.getString("survey_date"));
 		survey.setSurveyName(result.getString("survey_name"));
 		survey.setRoom(result.getString("room"));
+		survey.setLocation(result.getString("location"));
+		survey.setCohortNumber(result.getString("cohort_number"));
+		survey.setSection(result.getString("section"));
+		survey.setInstructor(result.getString("instructor"));
+		survey.setTopic(result.getString("topic"));
 		
 		return survey;
 	}

@@ -3,13 +3,13 @@
 -- *************************************************************************************************
 
 BEGIN;
-
+drop table if exists survey_question;
 DROP TABLE IF EXISTS app_user; 
 drop table if exists survey; 
 drop table if exists answer;
 drop table if exists question; 
 drop table if exists student; 
-drop table if exists survey_question;
+
 
 -- Create Statements Go Here
 
@@ -21,11 +21,16 @@ CREATE TABLE app_user (
   salt varchar(255) NOT NULL
 );
 
-create table survey 
-(survey_id serial PRIMARY KEY, 
+create table survey (
+survey_id serial PRIMARY KEY, 
 survey_date text NOT NULL,
+survey_name text NOT NULL,
 room text NOT NULL,
-survey_name text NOT NULL
+location text NOT NULL, 
+cohort_number text NOT NULL, 
+section text NOT NULL, 
+instructor text NOT NULL, 
+topic  text NOT NULL
 ); 
 
 create table answer

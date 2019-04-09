@@ -131,4 +131,10 @@ VALUES
 SELECT question.question_id, question.question_text from survey_question join question on question.question_id = survey_question.question_id where survey_id = ? ; 
 
 
+SELECT answer_id, student_id, answer_text from ANSWER where survey_id = ? AND question_id = ? 
 
+
+Select * from student join answer on answer.student_id = student.student_id join question on question.question_id = answer.question_id where question.question_id = ? and answer.survey_id = ?; 
+
+
+ 

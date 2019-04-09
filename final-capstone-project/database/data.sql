@@ -6,14 +6,14 @@ BEGIN;
 
 -- Insert statements go here
 
-INSERT INTO survey(survey_date, room, survey_name)
+INSERT INTO survey(survey_date, survey_name, room, location, cohort_number, section, instructor, topic)
 VALUES
-('Wednesday, May 23 2018 09:02 AM', 'tecbusjavab', 'survey one'),
-('Wednesday, May 23 2018 09:02 AM', 'tecbusjavag', 'survey one'), 
-('Thursday, May 24 2018 09:02 AM', 'tecbusjavab', 'survey two'), 
-('Thursday, May 24 2018 09:02 AM', 'tecbusjavag', 'survey two'),
-('Friday, May 25 2018 09:02 AM', 'tecbusjavab', 'survey three'), 
-('Friday, May 25 2018 09:02 AM', 'tecbusjavag', 'survey three');
+('Wednesday, May 23 2018 09:02 AM', 'survey one', 'tecbusjavab', 'Columbus', '7', 'what is a section?', 'Brian Lauvray', 'Magnets: How do they work?'),
+('Wednesday, May 23 2018 09:02 AM', 'survey one', 'tecbusjavag', 'Columbus', '7', 'what is a section?', 'Steve Carmichael', 'Magnets: How do they work?'),
+('Thursday, May 24 2018 09:02 AM', 'survey two','tecbusjavab', 'Columbus', '7', 'what is a section?', 'Brian Lauvray', 'Wide World of Slime'), 
+('Thursday, May 24 2018 09:02 AM', 'survey two','tecbusjavag', 'Columbus', '7', 'what is a section?', 'Steve Carmichael', 'Wide World of Slime'), 
+('Friday, May 25 2018 09:02 AM', 'survey three','tecbusjavab', 'Columbus', '7', 'what is a section?', 'Brian Lauvray', 'All About Dust Bunnies'),  
+('Friday, May 25 2018 09:02 AM', 'survey three','tecbusjavag', 'Columbus', '7', 'what is a section?', 'Steve Carmichael', 'All About Dust Bunnies'); 
 
 
 INSERT INTO answer(question_id, answer_text, student_id, survey_id)

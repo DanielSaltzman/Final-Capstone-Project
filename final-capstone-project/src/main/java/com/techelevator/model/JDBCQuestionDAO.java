@@ -21,7 +21,7 @@ public class JDBCQuestionDAO implements QuestionDAO {
     }
 
     @Override
-    public List<Question> getQuestionsBySurveyId(int id) {
+    public List<Question> getQuestionsBySurveyId(long id) {
     	String sql = "SELECT question.question_id, question.question_text from survey_question join question on question.question_id = survey_question.question_id where survey_id = ?"; 
     	SqlRowSet result = jdbcTemplate.queryForRowSet(sql, id);
 
