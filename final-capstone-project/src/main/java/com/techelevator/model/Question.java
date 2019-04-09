@@ -6,7 +6,6 @@ public class Question {
 	
 	private long questionId;
 	private String questionText;
-	private List<Answer> answerList;
 	
 	
 	public long getQuestionId() {
@@ -21,12 +20,7 @@ public class Question {
 	public void setQuestionText(String questionText) {
 		this.questionText = questionText;
 	}
-	public List<Answer> getAnswerList() {
-		return answerList;
-	}
-	public void setAnswerList(List<Answer> answerList) {
-		this.answerList = answerList;
-	}
+
 	
 	
 	

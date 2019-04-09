@@ -1,19 +1,11 @@
--- *****************************************************************************
--- This script contains INSERT statements for populating tables with seed data
--- *****************************************************************************
-
-BEGIN;
-
--- Insert statements go here
-
-INSERT INTO survey(survey_date, survey_name, room, location, cohort_number, section, instructor, topic)
+INSERT INTO survey(survey_date, room, survey_name)
 VALUES
-('Wednesday, May 23 2018 09:02 AM', 'survey one', 'tecbusjavab', 'Columbus', '7', 'what is a section?', 'Brian Lauvray', 'Magnets: How do they work?'),
-('Wednesday, May 23 2018 09:02 AM', 'survey one', 'tecbusjavag', 'Columbus', '7', 'what is a section?', 'Steve Carmichael', 'Magnets: How do they work?'),
-('Thursday, May 24 2018 09:02 AM', 'survey two','tecbusjavab', 'Columbus', '7', 'what is a section?', 'Brian Lauvray', 'Wide World of Slime'), 
-('Thursday, May 24 2018 09:02 AM', 'survey two','tecbusjavag', 'Columbus', '7', 'what is a section?', 'Steve Carmichael', 'Wide World of Slime'), 
-('Friday, May 25 2018 09:02 AM', 'survey three','tecbusjavab', 'Columbus', '7', 'what is a section?', 'Brian Lauvray', 'All About Dust Bunnies'),  
-('Friday, May 25 2018 09:02 AM', 'survey three','tecbusjavag', 'Columbus', '7', 'what is a section?', 'Steve Carmichael', 'All About Dust Bunnies'); 
+('Wednesday, May 23 2018 09:02 AM', 'tecbusjavab', 'survey one'),
+('Wednesday, May 23 2018 09:02 AM', 'tecbusjavag', 'survey one'), 
+('Thursday, May 24 2018 09:02 AM', 'tecbusjavab', 'survey two'), 
+('Thursday, May 24 2018 09:02 AM', 'tecbusjavag', 'survey two'),
+('Friday, May 25 2018 09:02 AM', 'tecbusjavab', 'survey three'), 
+('Friday, May 25 2018 09:02 AM', 'tecbusjavag', 'survey three');
 
 
 INSERT INTO answer(question_id, answer_text, student_id, survey_id)
@@ -135,4 +127,14 @@ VALUES
 ('STUDENT1', 'Bobby', 'Keys'), 
 ('STUDENT2', 'Nicky', 'Hopkins');
 
-COMMIT;
+
+SELECT question.question_id, question.question_text from survey_question join question on question.question_id = survey_question.question_id where survey_id = ? ; 
+
+
+SELECT answer_id, student_id, answer_text from ANSWER where survey_id = ? AND question_id = ? 
+
+
+Select * from student join answer on answer.student_id = student.student_id join question on question.question_id = answer.question_id where question.question_id = ? and answer.survey_id = ?; 
+
+
+ 
