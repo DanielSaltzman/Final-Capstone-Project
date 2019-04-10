@@ -27,8 +27,7 @@ survey_date text NOT NULL,
 survey_name text NOT NULL,
 room text NOT NULL,
 location text NOT NULL, 
-cohort_number text NOT NULL, 
-section text NOT NULL, 
+cohort_number text NOT NULL,  
 instructor text NOT NULL, 
 topic  text NOT NULL
 ); 
@@ -48,8 +47,7 @@ question_text text NOT NULL
 
 create table student
 (student_id text PRIMARY KEY, 
-student_first_name text NOT NULL, 
-student_last_name text NOT NULL
+student_name text NOT NULL 
 ); 
 
 create table survey_question(
