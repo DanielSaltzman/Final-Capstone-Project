@@ -19,6 +19,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.techelevator.model.Question;
+import com.techelevator.model.QuestionDAO;
 import com.techelevator.model.Survey;
 import com.techelevator.model.SurveyDAO;
 import com.techelevator.model.UserDAO;
@@ -38,6 +40,9 @@ public class AuthenticationController {
 	
 	@Autowired
 	private SurveyDAO surveyDao;
+	
+	@Autowired
+	private QuestionDAO questionDao;
 	
 	@Value("${path}")
 	private String path;
@@ -67,6 +72,10 @@ public class AuthenticationController {
 				map.addAttribute("selectedSurvey", survey);
 			}
 		}
+		
+		List<Question> questionList = questionDao.getQuestionsBySurveyId(surveyId);
+		
+		map.addAttribute("questions", questionList);
 		
 		return "surveyDetails";
 	}

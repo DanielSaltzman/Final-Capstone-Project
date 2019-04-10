@@ -39,8 +39,41 @@
 </nav>
 
 <section>
-	<div>
-	<h1><c:out value="${selectedSurvey.surveyName}"></c:out></h1>
+	<h1>
+		<c:out value="${selectedSurvey.surveyName}"></c:out>
+	</h1>
+	</br> </br>
+	<div class="infoData">
+		<h4>
+			<c:out value="Location: ${selectedSurvey.location}"></c:out>
+		</h4>
+		<h4>
+			<c:out value="Cohort Number: ${selectedSurvey.cohortNumber}"></c:out>
+		</h4>
+		<h4>
+			<c:out value="Section: ${selectedSurvey.section}"></c:out>
+		</h4>
+		<h4>
+			<c:out value="Instructor: ${selectedSurvey.instructor}"></c:out>
+		</h4>
+		<h4>
+			<c:out value="Topic: ${selectedSurvey.topic}"></c:out>
+		</h4>
 	</div>
+	</br>
+	</br>
+	<div class="list-group">
+	<c:forEach var="question" items="${questions}">
+		<div class="list-group-item">
+			<div class="d-flex w-100 justify-content-between">
+				<h5 class="mb-1">
+					<c:out value="${question.questionText}"></c:out>
+				</h5>
+				<small><a href="#">View</a> <img
+					src="${cursorLogo}" height="15" width="15"></small>
+			</div>
+		</div>
+	</c:forEach>
+</div>
 </section>
 <c:import url="/WEB-INF/jsp/footer.jsp" />

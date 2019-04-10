@@ -71,5 +71,4 @@ public class JDBCUserDAO implements UserDAO {
 
 		return thisUser;
 	}
-
 }
