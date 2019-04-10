@@ -10,7 +10,6 @@ public class Survey {
 	private String room;
 	private String location; 
 	private String cohortNumber; 
-	private String section; 
 	private String instructor; 
 	private String topic; 
 	private List<Question> surveyList;
@@ -51,12 +50,7 @@ public class Survey {
 	public void setCohortNumber(String cohortNumber) {
 		this.cohortNumber = cohortNumber;
 	}
-	public String getSection() {
-		return section;
-	}
-	public void setSection(String section) {
-		this.section = section;
-	}
+	
 	public String getInstructor() {
 		return instructor;
 	}

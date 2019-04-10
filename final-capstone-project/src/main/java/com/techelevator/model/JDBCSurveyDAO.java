@@ -59,7 +59,6 @@ public class JDBCSurveyDAO implements SurveyDAO {
 		survey.setRoom(result.getString("room"));
 		survey.setLocation(result.getString("location"));
 		survey.setCohortNumber(result.getString("cohort_number"));
-		survey.setSection(result.getString("section"));
 		survey.setInstructor(result.getString("instructor"));
 		survey.setTopic(result.getString("topic"));
 		
