@@ -27,7 +27,10 @@
 					<img src="${userLogo}" height="40" width="40"> UserName
 				</button>
 				<div class="dropdown-menu dropdown-menu-right ml-auto mr-1">
-					<button class="dropdown-item" type="button">View Users</button>
+				<c:url var="userViewURL" value="userView" />
+					<form action="${userViewURL}" method="GET">
+					<button class="dropdown-item" type="submit">View Users</button>
+					</form>
 					<button class="dropdown-item" type="button">View Log</button>
 					<c:url var="logoutURL" value="logout" />
 					<form action="${logoutURL}" method="POST">
@@ -83,17 +86,13 @@
 			</div>
 			<div class="modal-body">
 				<form>
-				<label>Location:</label>
-					<select class="form-control">
+					<label>Location:</label> <select class="form-control">
 						<option>Columbus</option>
 						<option>Cleveland</option>
 						<option>Detroit</option>
 						<option>Pittsburgh</option>
 						<option>Cincinnati</option>
-					</select>
-					<br/>
-				<label>Cohort Number:</label>
-					<select class="form-control">
+					</select> <br /> <label>Cohort Number:</label> <select class="form-control">
 						<option>1</option>
 						<option>2</option>
 						<option>3</option>
@@ -102,14 +101,9 @@
 						<option>6</option>
 						<option>7</option>
 						<option>8</option>
-					</select>
-					<br/>
-				<input type="text" class="form-control" placeholder="Section">
-				<br/>
-				<input type="text" class="form-control" placeholder="Instructor">
-				<br/>
-				<input type="text" class="form-control" placeholder="Topic">
-				<br/>
+					</select> <br /> <input type="text" class="form-control"
+						placeholder="Instructor"> <br /> <input type="text"
+						class="form-control" placeholder="Topic"> <br />
 					<div class="form-group">
 						<label for="exampleFormControlFile1">CSV File:</label> <input
 							type="file" class="form-control-file"

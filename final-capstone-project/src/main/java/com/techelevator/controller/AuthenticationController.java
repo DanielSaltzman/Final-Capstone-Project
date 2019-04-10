@@ -116,6 +116,19 @@ public class AuthenticationController {
 		return "redirect:/login";
 	}
 	
+	@RequestMapping(path="/userView", method=RequestMethod.POST)
+	public String addUser(@RequestParam String userName, @RequestParam String password, @RequestParam String role) {
+		
+		userDAO.saveUser(userName, password, role);
+		
+		return "userView";
+	}
+	
+	@RequestMapping(path="/userView", method=RequestMethod.GET)
+	public String displayUserView() {
+		return "userView";
+	}
+	
 	private File getCSVFilePath() {
 		String serverPath = getServerContextPath();
 		File filePath = new File(serverPath);
