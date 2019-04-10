@@ -36,8 +36,8 @@ public class JDBCQuestionDAO implements QuestionDAO {
 private Question mapRowToQuestion(SqlRowSet result) {
 		
 		Question question = new Question();
-		question.setQuestionId(result.getLong("question.question_id")); 
-		question.setQuestionText(result.getString("question.question_text"));  
+		question.setQuestionId(result.getLong("question_id")); 
+		question.setQuestionText(result.getString("question_text"));  
 
 		return question;
 	}
