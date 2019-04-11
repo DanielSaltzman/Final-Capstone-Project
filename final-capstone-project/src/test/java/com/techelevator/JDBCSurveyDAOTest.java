@@ -27,4 +27,17 @@ public class JDBCSurveyDAOTest extends DAOIntegrationTest {
 		Assert.assertNotEquals(0, testList.size());
 	}
 	
+	@Test
+	public void getSurveyWithId_returns_the_correct_survey() {
+		Survey survey = SurveyDAO.getSurveyWithId(1);
+		
+		Assert.assertEquals("Wednesday, May 23 2018 09:02 AM", survey.getCreatedDate());
+		Assert.assertEquals("survey one", survey.getSurveyName());
+		Assert.assertEquals("tecbusjavab", survey.getRoom());
+		Assert.assertEquals("Columbus", survey.getCampus());
+		Assert.assertEquals("7", survey.getCohortNumber());
+		Assert.assertEquals("Brian Lauvray", survey.getInstructor());
+		Assert.assertEquals("Magnets: How do they work?", survey.getTopic());
+	}
+	
 }
