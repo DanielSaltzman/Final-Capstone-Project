@@ -23,6 +23,7 @@ public class JDBCQuestionDAO implements QuestionDAO {
     @Override
     public List<Question> getQuestionsBySurveyId(long id) {
     	String sql = "SELECT question.question_id, question.question_text from survey_question join question on question.question_id = survey_question.question_id where survey_id = ?"; 
+    	
     	SqlRowSet result = jdbcTemplate.queryForRowSet(sql, id);
 
     	List<Question> questions = new ArrayList<Question>();
@@ -32,12 +33,11 @@ public class JDBCQuestionDAO implements QuestionDAO {
     	return questions;
     }
 	
-	
-private Question mapRowToQuestion(SqlRowSet result) {
+    private Question mapRowToQuestion(SqlRowSet result) {
 		
 		Question question = new Question();
-		question.setQuestionId(result.getLong("question.question_id")); 
-		question.setQuestionText(result.getString("question.question_text"));  
+		question.setQuestionId(result.getLong("question_id")); 
+		question.setQuestionText(result.getString("question_text"));  
 
 		return question;
 	}
@@ -45,3 +45,4 @@ private Question mapRowToQuestion(SqlRowSet result) {
 
 
 }
+

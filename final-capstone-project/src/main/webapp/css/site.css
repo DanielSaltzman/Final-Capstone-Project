@@ -24,3 +24,44 @@ label.btn.btn-light.btn-lg.btn-block.uploadField {
     width: 80%;
     margin: auto;
 }
+
+.detailSection {
+	clear: both;
+	display: block;
+	margin: 20px auto;
+	vertical-align: top;
+	text-align: center;
+	min-height: 450px;
+	background-color: #FFF;
+	border-radius: 7px;
+	padding: 40px;
+	width:80%;
+} 
+
+.userSection {
+	clear: both;
+	display: block;
+	margin: 20px auto;
+	vertical-align: top;
+	text-align: left;
+	min-height: 450px;
+	background-color: #FFF;
+	border-radius: 7px;
+	padding: 40px;
+	width:80%;
+} 
+
+.flexBox {
+	display:flex;
+}
+
+.flexItem {
+	width:50%;
+}
+
+.title {
+	vertical-align: top;
+}
+#textLeft {
+	text-align:left;
+}
