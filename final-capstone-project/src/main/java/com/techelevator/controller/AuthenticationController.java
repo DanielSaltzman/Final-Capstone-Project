@@ -19,6 +19,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.techelevator.model.CsvData;
+import com.techelevator.model.CsvParser;
 import com.techelevator.model.Question;
 import com.techelevator.model.QuestionDAO;
 import com.techelevator.model.Survey;
@@ -30,10 +32,11 @@ import com.techelevator.model.UserDAO;
 public class AuthenticationController {
 
 	private UserDAO userDAO;
+	private CsvParser csvParser = new CsvParser(); 
 
 	@Autowired
 	public AuthenticationController(UserDAO userDAO) {
-		this.userDAO = userDAO;
+		this.userDAO = userDAO; 
 	}
 	
 	@Autowired
@@ -41,6 +44,7 @@ public class AuthenticationController {
 	
 	@Autowired
 	private SurveyDAO surveyDao;
+	
 	
 	@Autowired
 	private QuestionDAO questionDao;
@@ -90,12 +94,18 @@ public class AuthenticationController {
 	}
 	
 	@RequestMapping(path="/uploadFile", method=RequestMethod.POST)
-	public String handleFileUpload(SurveySubmission submission , ModelMap map) {
+	public String handleFileUpload(SurveySubmission submission , ModelMap map) throws IOException {
 		
 		File csvPath = getCSVFilePath();
 		String csvName = csvPath + File.separator + "csvFile";
 		
 		createCSV(submission.getFile(), csvName);
+
+// grab the file path and the submission object and pass it into the database writer		
+		List<CsvData> csvData = csvParser.getListOfCSVDataFromFile(csvName);  
+// get the survey id before you insert it
+//		long surveyId = surveyDao.getNextSurveyId(); 
+		surveyDao.createNewSurvey(csvData.get(0).getSurveyDate(), csvData.get(0).getSurveyTitle(), csvData.get(0).getSurveyRoom(), submission.getLocation(), submission.getCohortNumber(), submission.getInstructor(), submission.getTopic());
 		
 		return "login";
 	}

@@ -10,21 +10,42 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class CSVReaderWithHeaderAutoDeteection {
-
-
+public class CsvParser {
+//	private  SurveyDAO surveyDAO; 
+//	
+//
+//
+//	public long uploadSurveyFromCsvToDatabase(SurveySubmission submission, String csvFilePath) throws IOException {
+//		List<CsvData> scrapedData = getListOfCSVDataFromFile(csvFilePath); 
+//		String location = submission.getLocation(); 
+//		String cohortNumber = submission.getCohortNumber(); 
+//		String instructor = submission.getInstructor(); 
+//		String topic = submission.getTopic(); 
+//		String date = scrapedData.get(0).getSurveyDate(); 
+//		String surveyName = scrapedData.get(0).getSurveyTitle(); 
+//		String room  = scrapedData.get(0).getSurveyRoom(); 
+//		Long surveyId = surveyDAO.getNextSurveyId(); 
+//		
+//		surveyDAO.createNewSurvey(date, surveyName, room, location, cohortNumber, instructor, topic); 
+//		
+//		return surveyId; 
+//	}
+	
+		
+	
 	public List<CsvData> getListOfCSVDataFromFile(String path) throws IOException {
 		
 		List<CsvData> returnList = new ArrayList<CsvData>();
-	; 
 		
-		 String SAMPLE_CSV_FILE_PATH = path;
 
-			BufferedReader bufferedReader = new BufferedReader(new FileReader(SAMPLE_CSV_FILE_PATH));
+			BufferedReader bufferedReader = new BufferedReader(new FileReader(path));
 			String surveyTitle = bufferedReader.readLine().replace(",,,,,,,,", "");
 			String surveyDate = bufferedReader.readLine().replace(",,,,,,,,", "").replace("\"", "");
 			String surveyRoom = bufferedReader.readLine().replace(",,,,,,,,", "").replace("Room: ", "");
 			
+			bufferedReader.readLine();
+			bufferedReader.readLine();
+			bufferedReader.readLine();
 
 			CSVParser csvParser = new CSVParser(bufferedReader, CSVFormat.DEFAULT
 					.withHeader("Presence", "Student Names", "Student Id", "Total Score (0 - 100)", "Number of correct answers", "The pace of yesterday's class was:",
@@ -39,17 +60,23 @@ public class CSVReaderWithHeaderAutoDeteection {
 				
 				csvLine.setPresenceAnswer(csvRecord.get("Presence"));
 				csvLine.setStudentName(csvRecord.get("Student Names"));
-				csvLine.setStudentId("Student ID");
+				csvLine.setStudentId(csvRecord.get("Student ID"));
 				csvLine.setPaceOfYesterdaysClassAnswer(csvRecord.get("The pace of yesterday's class was:"));
 				csvLine.setContentOfPreviousClassAnswer(csvRecord.get("The content of the previous class was:"));
 				csvLine.setUnderstandingOfPreviousDaysMaterialAnswer(csvRecord
 						.get("I feel my level of understanding of the previous day's material is:"));
 				csvLine.setEnergyLevel(csvRecord.get("On a scale of 1-10, my energy level today is:"));
+				csvLine.setSurveyTitle(surveyTitle);
+				csvLine.setSurveyDate(surveyDate);
+				csvLine.setSurveyRoom(surveyRoom);
+				returnList.add(csvLine); 
 			 
 			}
 			csvParser.close(); 
 			bufferedReader.close(); 
-		
+// get rid of last record that stores the scores of all students 
+			
+			returnList.remove(returnList.size() -1); 
 
 
 		return returnList;
