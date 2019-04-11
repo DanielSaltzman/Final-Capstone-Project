@@ -24,7 +24,7 @@
 				<button type="button" class="btn btn-primary dropdown-toggle"
 					data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 					<c:url var="userLogo" value="img/icons/man.png" />
-					<img src="${userLogo}" height="40" width="40"> UserName
+					<img src="${userLogo}" height="40" width="40"> <c:out value="${currentUser.userName}"></c:out>
 				</button>
 				<div class="dropdown-menu dropdown-menu-right ml-auto mr-1">
 				<c:url var="userViewURL" value="userView" />

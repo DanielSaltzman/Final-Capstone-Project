@@ -24,13 +24,16 @@
 				<button type="button" class="btn btn-primary dropdown-toggle"
 					data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 					<c:url var="userLogo" value="img/icons/man.png" />
-					<img src="${userLogo}" height="40" width="40"> UserName
+					<img src="${userLogo}" height="40" width="40"> <c:out value="${currentUser.userName}"></c:out>
 				</button>
 				<div class="dropdown-menu dropdown-menu-right ml-auto mr-1">
-					<button class="dropdown-item" type="button">View Users</button>
+					<c:url var="userViewURL" value="userView" />
+					<form action="${userViewURL}" method="GET">
+						<button class="dropdown-item" type="button">View Users</button>
+					</form>
 					<button class="dropdown-item" type="button">View Log</button>
 					<c:url var="logoutURL" value="logout" />
-					<form action="${logoutURL}" method="GET">
+					<form action="${logoutURL}" method="POST">
 						<button class="dropdown-item" type="submit">Logout</button>
 					</form>
 				</div>
@@ -41,27 +44,27 @@
 <section class="detailSection">
 	<div class="flexBox">
 		<div class="flexItem title">
-		</br>
+			</br>
 			<h1>
 				<c:out value="${selectedSurvey.surveyName}"></c:out>
 			</h1>
 		</div>
 		<div class="flexItem">
-			<div style="display:in-line">
-			<h4>
-				<c:out value="Location: ${selectedSurvey.location}"></c:out>
-			</h4>
-			<h4>
-				<c:out value="Cohort Number: ${selectedSurvey.cohortNumber}"></c:out>
-			</h4>
+			<div style="display: in-line">
+				<h4>
+					<c:out value="Location: ${selectedSurvey.location}"></c:out>
+				</h4>
+				<h4>
+					<c:out value="Cohort Number: ${selectedSurvey.cohortNumber}"></c:out>
+				</h4>
 			</div>
-			<div style="display:in-line">
-			<h4>
-				<c:out value="Instructor: ${selectedSurvey.instructor}"></c:out>
-			</h4>
-			<h4>
-				<c:out value="Topic: ${selectedSurvey.topic}"></c:out>
-			</h4>
+			<div style="display: in-line">
+				<h4>
+					<c:out value="Instructor: ${selectedSurvey.instructor}"></c:out>
+				</h4>
+				<h4>
+					<c:out value="Topic: ${selectedSurvey.topic}"></c:out>
+				</h4>
 			</div>
 		</div>
 	</div>

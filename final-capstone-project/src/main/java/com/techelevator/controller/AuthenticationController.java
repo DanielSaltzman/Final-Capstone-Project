@@ -53,31 +53,39 @@ public class AuthenticationController {
 	}
 	
 	@RequestMapping(path="/survey", method=RequestMethod.GET)
-	public String displaySurveyView(ModelMap map) {
+	public String displaySurveyView(ModelMap map, HttpSession session) {
 		
-		List<Survey> surveyList = surveyDao.getAllSurveys();
-		
-		map.addAttribute("surveys", surveyList);
-		
-		return "survey";
+		if(session.getAttribute("currentUser") != null) {
+			List<Survey> surveyList = surveyDao.getAllSurveys();
+			
+			map.addAttribute("surveys", surveyList);
+			
+			return "survey";
+		} else {
+			return "redirect:/login";
+		}
 	}
 	
 	@RequestMapping(path="/surveyDetails", method=RequestMethod.GET)
-	public String displaySurveyDetailView(ModelMap map, @RequestParam long surveyId) {
+	public String displaySurveyDetailView(ModelMap map, @RequestParam long surveyId, HttpSession session) {
 		
-		List<Survey> surveyList = surveyDao.getAllSurveys();
-		
-		for(Survey survey : surveyList) {
-			if(survey.getSurveyId() == surveyId) {
-				map.addAttribute("selectedSurvey", survey);
+		if(session.getAttribute("currentUser") != null) {
+			List<Survey> surveyList = surveyDao.getAllSurveys();
+			
+			for(Survey survey : surveyList) {
+				if(survey.getSurveyId() == surveyId) {
+					map.addAttribute("selectedSurvey", survey);
+				}
 			}
+			List<Question> questionList = questionDao.getQuestionsBySurveyId(surveyId);
+			
+			map.addAttribute("questions", questionList);
+			
+			return "surveyDetails";
+		} else {
+			return "redirect:/login";
 		}
 		
-		List<Question> questionList = questionDao.getQuestionsBySurveyId(surveyId);
-		
-		map.addAttribute("questions", questionList);
-		
-		return "surveyDetails";
 	}
 	
 	@RequestMapping(path="/uploadFile", method=RequestMethod.POST)
@@ -94,20 +102,15 @@ public class AuthenticationController {
 	@RequestMapping(path="/login", method=RequestMethod.POST)
 	public String login(@RequestParam String userName, 
 						@RequestParam String password, 
-						@RequestParam(required=false) String destination,
 						HttpSession session) {
 		if(userDAO.searchForUsernameAndPassword(userName, password)) {
 			session.setAttribute("currentUser", userDAO.getUserByUserName(userName));
-			
-			if(destination != null && ! destination.isEmpty()) {
-				return "redirect:" + destination;
-			} else {
-				return "redirect:/users/"+userName;
-			}
+			return "redirect:/survey";
 		} else {
 			return "redirect:/login";
 		}
 	}
+	
 
 	@RequestMapping(path="/logout", method=RequestMethod.POST)
 	public String logout(ModelMap model, HttpSession session) {
