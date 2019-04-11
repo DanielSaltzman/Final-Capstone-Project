@@ -5,6 +5,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.List;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpSession;
@@ -18,6 +19,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.techelevator.model.Question;
+import com.techelevator.model.QuestionDAO;
+import com.techelevator.model.Survey;
+import com.techelevator.model.SurveyDAO;
 import com.techelevator.model.UserDAO;
 
 @Controller
@@ -33,6 +38,12 @@ public class AuthenticationController {
 	@Autowired
 	ServletContext servletContext;
 	
+	@Autowired
+	private SurveyDAO surveyDao;
+	
+	@Autowired
+	private QuestionDAO questionDao;
+	
 	@Value("${path}")
 	private String path;
 
@@ -42,8 +53,31 @@ public class AuthenticationController {
 	}
 	
 	@RequestMapping(path="/survey", method=RequestMethod.GET)
-	public String displaySurveyView() {
+	public String displaySurveyView(ModelMap map) {
+		
+		List<Survey> surveyList = surveyDao.getAllSurveys();
+		
+		map.addAttribute("surveys", surveyList);
+		
 		return "survey";
+	}
+	
+	@RequestMapping(path="/surveyDetails", method=RequestMethod.GET)
+	public String displaySurveyDetailView(ModelMap map, @RequestParam long surveyId) {
+		
+		List<Survey> surveyList = surveyDao.getAllSurveys();
+		
+		for(Survey survey : surveyList) {
+			if(survey.getSurveyId() == surveyId) {
+				map.addAttribute("selectedSurvey", survey);
+			}
+		}
+		
+		List<Question> questionList = questionDao.getQuestionsBySurveyId(surveyId);
+		
+		map.addAttribute("questions", questionList);
+		
+		return "surveyDetails";
 	}
 	
 	@RequestMapping(path="/uploadFile", method=RequestMethod.POST)
@@ -80,6 +114,19 @@ public class AuthenticationController {
 		model.remove("currentUser");
 		session.invalidate();
 		return "redirect:/login";
+	}
+	
+	@RequestMapping(path="/userView", method=RequestMethod.POST)
+	public String addUser(@RequestParam String userName, @RequestParam String password, @RequestParam String role) {
+		
+		userDAO.saveUser(userName, password, role);
+		
+		return "userView";
+	}
+	
+	@RequestMapping(path="/userView", method=RequestMethod.GET)
+	public String displayUserView() {
+		return "userView";
 	}
 	
 	private File getCSVFilePath() {
