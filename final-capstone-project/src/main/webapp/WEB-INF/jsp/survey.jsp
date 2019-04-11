@@ -85,35 +85,38 @@
 				</button>
 			</div>
 			<div class="modal-body">
-				<form>
-					<label>Location:</label> <select class="form-control">
-						<option>Columbus</option>
-						<option>Cleveland</option>
-						<option>Detroit</option>
-						<option>Pittsburgh</option>
-						<option>Cincinnati</option>
-					</select> <br /> <label>Cohort Number:</label> <select class="form-control">
-						<option>1</option>
-						<option>2</option>
-						<option>3</option>
-						<option>4</option>
-						<option>5</option>
-						<option>6</option>
-						<option>7</option>
-						<option>8</option>
+				<form action="<c:url value="uploadFile"/>" method="POST" enctype="multipart/form-data">
+					<label>Location:</label> <select class="form-control" name = "location">
+						<option value = "Columbus" >Columbus</option>
+						<option value = "Cleveland">Cleveland</option>
+						<option value = "Detroit">Detroit</option>
+						<option value = "Pittsburgh">Pittsburgh</option>
+						<option value = "Cincinnati" >Cincinnati</option>
+					</select> <br /> <label>Cohort Number:</label> <select class="form-control" name = "cohortNumber">
+						<option value = "1">1</option>
+						<option value = "2">2</option>
+						<option value = "3">3</option>
+						<option value = "4">4</option>
+						<option value = "5">5</option>
+						<option value = "6"> 6</option>
+						<option value = "7">7</option>
+						<option value = "8">8</option>
+						<option value = "9">9</option>
+						<option value = "10">10</option>
 					</select> <br /> <input type="text" class="form-control"
-						placeholder="Instructor"> <br /> <input type="text"
-						class="form-control" placeholder="Topic"> <br />
+						placeholder="Instructor" name = "instructor"> <br /> 
+						<input type="text"
+						class="form-control" placeholder="Topic" name = "topic"> <br />
 					<div class="form-group">
 						<label for="exampleFormControlFile1">CSV File:</label> <input
 							type="file" class="form-control-file"
-							id="exampleFormControlFile1">
+							id="exampleFormControlFile1" name = "file">
 					</div>
-				</form>
-			</div>
-			<div class="modal-footer">
+					<div class="modal-footer">
 				<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
 				<button type="submit" class="btn btn-primary">Save changes</button>
+			</div>
+			</form>
 			</div>
 		</div>
 	</div>

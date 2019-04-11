@@ -23,6 +23,7 @@ import com.techelevator.model.Question;
 import com.techelevator.model.QuestionDAO;
 import com.techelevator.model.Survey;
 import com.techelevator.model.SurveyDAO;
+import com.techelevator.model.SurveySubmission;
 import com.techelevator.model.UserDAO;
 
 @Controller
@@ -89,12 +90,12 @@ public class AuthenticationController {
 	}
 	
 	@RequestMapping(path="/uploadFile", method=RequestMethod.POST)
-	public String handleFileUpload(@RequestParam MultipartFile file, ModelMap map) {
+	public String handleFileUpload(SurveySubmission submission , ModelMap map) {
 		
 		File csvPath = getCSVFilePath();
 		String csvName = csvPath + File.separator + "csvFile";
 		
-		createCSV(file, csvName);
+		createCSV(submission.getFile(), csvName);
 		
 		return "login";
 	}

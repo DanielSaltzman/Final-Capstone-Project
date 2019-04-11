@@ -13,21 +13,19 @@ import java.util.List;
 public class CSVReaderWithHeaderAutoDeteection {
 
 
-	public List<CsvData> getListOfCSVDataFromFile() throws IOException {
+	public List<CsvData> getListOfCSVDataFromFile(String path) throws IOException {
 		
 		List<CsvData> returnList = new ArrayList<CsvData>();
 	; 
 		
-		 String SAMPLE_CSV_FILE_PATH = "prototyping/sampleCSV.csv";
+		 String SAMPLE_CSV_FILE_PATH = path;
 
 			BufferedReader bufferedReader = new BufferedReader(new FileReader(SAMPLE_CSV_FILE_PATH));
 			String surveyTitle = bufferedReader.readLine().replace(",,,,,,,,", "");
 			String surveyDate = bufferedReader.readLine().replace(",,,,,,,,", "").replace("\"", "");
 			String surveyRoom = bufferedReader.readLine().replace(",,,,,,,,", "").replace("Room: ", "");
 
-			System.out.println(surveyTitle);
-			System.out.println(surveyDate);
-			System.out.println(surveyRoom);
+
 			
 
 			CSVParser csvParser = new CSVParser(bufferedReader, CSVFormat.DEFAULT
