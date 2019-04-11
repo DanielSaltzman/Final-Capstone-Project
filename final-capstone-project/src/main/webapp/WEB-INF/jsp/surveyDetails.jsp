@@ -52,7 +52,7 @@
 		<div class="flexItem">
 			<div style="display: in-line">
 				<h4>
-					<c:out value="Location: ${selectedSurvey.location}"></c:out>
+					<c:out value="Location: ${selectedSurvey.campus}"></c:out>
 				</h4>
 				<h4>
 					<c:out value="Cohort Number: ${selectedSurvey.cohortNumber}"></c:out>

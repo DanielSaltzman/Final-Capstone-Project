@@ -25,6 +25,7 @@ public class JDBCAnswerDAOTest extends DAOIntegrationTest {
 	
 	@Test
 	public void getAnswersBySurveyIdAndQuestionId_returns_the_correct_number_of_answers() {
+		
 		List<Answer> test = AnswerDAO.getAnswersBySurveyIdAndQuestionId(1, 1);
 		
 		
