@@ -24,8 +24,6 @@ public class CSVReaderWithHeaderAutoDeteection {
 			String surveyTitle = bufferedReader.readLine().replace(",,,,,,,,", "");
 			String surveyDate = bufferedReader.readLine().replace(",,,,,,,,", "").replace("\"", "");
 			String surveyRoom = bufferedReader.readLine().replace(",,,,,,,,", "").replace("Room: ", "");
-
-
 			
 
 			CSVParser csvParser = new CSVParser(bufferedReader, CSVFormat.DEFAULT
