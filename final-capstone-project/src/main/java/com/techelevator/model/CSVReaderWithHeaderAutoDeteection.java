@@ -16,6 +16,9 @@ public class CSVReaderWithHeaderAutoDeteection {
 // Create a new buffered reader to read through CSV file    	
 		BufferedReader bufferedReader = new BufferedReader(new FileReader(SAMPLE_CSV_FILE_PATH));
 // pull the first three lines of the file and strip of excess data
+		
+// These first three lines combined with the data that is submitted from the form (location, cohort #, instructor, topic)
+// when the CSV is uploaded Should be able to provide everything needed for the survey table
 		String surveyTitle = bufferedReader.readLine().replace(",,,,,,,,", "");
 		String surveyDate = bufferedReader.readLine().replace(",,,,,,,,", "").replace("\"", "");
 		String surveyRoom = bufferedReader.readLine().replace(",,,,,,,,", "").replace("Room: ", "");
@@ -31,6 +34,9 @@ public class CSVReaderWithHeaderAutoDeteection {
 		bufferedReader.readLine();
 		bufferedReader.readLine();
 
+// This will start parsing the CSV by the defined header listed below. 
+// I'm ignoring the total scores and number of correct answers columns because we aren't using them for anything. 
+		
 		CSVParser csvParser = new CSVParser(bufferedReader, CSVFormat.DEFAULT
 				.withHeader("Presence", "Student Names", "Student Id", "The pace of yesterday's class was:",
 						"The content of the previous class was:",
@@ -40,9 +46,10 @@ public class CSVReaderWithHeaderAutoDeteection {
 	
 		for (CSVRecord csvRecord : csvParser) {
 			
-			// Accessing values by Header names
+// Accessing values by getting the header names for each row on the table
 
 			String presence = csvRecord.get("Presence");
+		
 			String studentNames = csvRecord.get("Student Names");
 			String studentID = csvRecord.get("Student ID");
 			String thePaceOfYesterdaysClass = csvRecord.get("The pace of yesterday's class was:");
@@ -51,6 +58,9 @@ public class CSVReaderWithHeaderAutoDeteection {
 					.get("I feel my level of understanding of the previous day's material is:");
 			String energyLevel = csvRecord.get("On a scale of 1-10, my energy level today is:");
 
+			
+// This prints out all the records in a nicely formatted table so I could visualize what was happening. 
+// This is where we should start inserting these into objects or perhaps directly into the tables. I think that might be the best idea.
 			System.out.println("Record No - " + csvRecord.getRecordNumber());
 			System.out.println("---------------");
 			System.out.println("Presence: " + presence);
