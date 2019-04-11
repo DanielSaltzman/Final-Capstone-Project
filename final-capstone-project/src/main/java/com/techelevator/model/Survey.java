@@ -8,7 +8,7 @@ public class Survey {
 	private String createdDate;
 	private String surveyName;
 	private String room;
-	private String location; 
+	private String campus; 
 	private String cohortNumber; 
 	private String instructor; 
 	private String topic; 
@@ -38,11 +38,11 @@ public class Survey {
 	public void setRoom(String room) {
 		this.room = room;
 	}
-	public String getLocation() {
-		return location;
+	public String getCampus() {
+		return campus;
 	}
-	public void setLocation(String location) {
-		this.location = location;
+	public void setCampus(String campus) {
+		this.campus = campus;
 	}
 	public String getCohortNumber() {
 		return cohortNumber;

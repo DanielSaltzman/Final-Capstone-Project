@@ -6,7 +6,7 @@ BEGIN;
 
 -- Insert statements go here
 
-INSERT INTO survey(survey_date, survey_name, room, location, cohort_number, instructor, topic)
+INSERT INTO survey(survey_date, survey_name, room, campus, cohort_number, instructor, topic)
 VALUES
 ('Wednesday, May 23 2018 09:02 AM', 'survey one', 'tecbusjavab', 'Columbus', '7',  'Brian Lauvray', 'Magnets: How do they work?'),
 ('Wednesday, May 23 2018 09:02 AM', 'survey one', 'tecbusjavag', 'Columbus', '7',  'Steve Carmichael', 'Magnets: How do they work?'),

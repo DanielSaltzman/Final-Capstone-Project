@@ -38,7 +38,7 @@ public class JDBCAnswerDAO implements AnswerDAO {
 		Answer answer = new Answer(); 
 		
 		answer.setAnswerId(result.getLong("answer_id"));
-		answer.setStudentId(result.getLong("student_id"));
+		answer.setStudentId(result.getString("student_id"));
 		answer.setAnswerText(result.getString("answer_text"));
 		
 		return answer; 

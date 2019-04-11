@@ -2,7 +2,7 @@ package com.techelevator.model;
 
 public class Answer {
 	private long answerId;
-	private long studentId;
+	private String studentId;
 	private String answerText;
 	
 	
@@ -12,10 +12,10 @@ public class Answer {
 	public void setAnswerId(long answerId) {
 		this.answerId = answerId;
 	}
-	public long getStudentId() {
+	public String getStudentId() {
 		return studentId;
 	}
-	public void setStudentId(long studentId) {
+	public void setStudentId(String studentId) {
 		this.studentId = studentId;
 	}
 	public String getAnswerText() {
