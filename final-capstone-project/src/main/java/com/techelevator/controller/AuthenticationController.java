@@ -24,6 +24,7 @@ import com.techelevator.model.QuestionDAO;
 import com.techelevator.model.Survey;
 import com.techelevator.model.SurveyDAO;
 import com.techelevator.model.SurveySubmission;
+import com.techelevator.model.User;
 import com.techelevator.model.UserDAO;
 
 @Controller
@@ -125,11 +126,24 @@ public class AuthenticationController {
 		
 		userDAO.saveUser(userName, password, role);
 		
-		return "userView";
+		return "redirect:/survey";
+	}
+	
+	@RequestMapping(path="/deleteUser", method=RequestMethod.POST)
+	public String addUser(@RequestParam long id) {
+		
+		userDAO.deleteUser(id);
+		
+		return "redirect:/survey";
 	}
 	
 	@RequestMapping(path="/userView", method=RequestMethod.GET)
-	public String displayUserView() {
+	public String displayUserView(ModelMap map) {
+		
+		List<User> userList = userDAO.getAllUsers();
+		
+		map.addAttribute("users", userList);
+		
 		return "userView";
 	}
 	

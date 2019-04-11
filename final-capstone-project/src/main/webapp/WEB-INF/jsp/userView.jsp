@@ -24,7 +24,8 @@
 				<button type="button" class="btn btn-primary dropdown-toggle"
 					data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 					<c:url var="userLogo" value="img/icons/man.png" />
-					<img src="${userLogo}" height="40" width="40"> UserName
+					<img src="${userLogo}" height="40" width="40">
+					<c:out value="${currentUser.userName}"></c:out>
 				</button>
 				<div class="dropdown-menu dropdown-menu-right ml-auto mr-1">
 					<c:url var="userViewURL" value="userView" />
@@ -41,39 +42,99 @@
 		</div>
 </nav>
 
-<section class="userSection">
-	<h1>Add User</h1>
-	</br>
-		<form id="textLeft" action="${userViewURL}" method="POST">
-			<div class="form-group">
-				<label for="exampleInputEmail1">Username</label>
-				<input type="text" class="form-control" id="exampleInputEmail1"
-					aria-describedby="emailHelp" placeholder="Enter Username" name="userName">
-			</div>
-			<div class="form-group">
-				<label for="exampleInputPassword1">Password</label>
-				<input type="password" class="form-control"
-					id="exampleInputPassword1" placeholder="Password" name="password">
-			</div>
-			<p>Role</p>
-			<div class="form-check form-check-inline">
-				<input class="form-check-input" type="radio"
-					name="role" id="inlineRadio1" value="Admin">
-				<label class="form-check-label" for="inlineRadio1">Admin</label>
-			</div>
-			<div class="form-check form-check-inline">
-				<input class="form-check-input" type="radio"
-					name="role" id="inlineRadio2" value="User">
-				<label class="form-check-label" for="inlineRadio2">Normal
-					User</label>
-			</div>
-			</br>
-			</br>
-			<button type="submit" class="btn btn-primary">Submit</button>
-		</form>
-</section>
+<c:url var="trashLogo" value="img/icons/trash.png" />
 
+<div class="list-group surveyView">
+	<c:forEach var="user" items="${users}">
 
+		<div class="list-group-item">
+			<div class="d-flex w-100 justify-content-between">
+				<h5 class="mb-1">
+					<c:out value="${user.userName}"></c:out>
+				</h5>
+				<!-- Button trigger modals -->
+				<small><button type="button" class="btn btn-primary"
+						data-toggle="modal" data-target="#newModal${user.userNameId}">Delete</button>
+					<button type="button" class="btn btn-primary">Modify</button></small>
+
+				<!-- Delete Modal -->
+				<div class="modal fade" id="newModal${user.userNameId}" tabindex="-1" role="dialog"
+					aria-labelledby="exampleModalLabel" aria-hidden="true">
+					<div class="modal-dialog" role="document">
+						<div class="modal-content">
+							<div class="modal-header">
+								<h5 class="modal-title" id="exampleModalLabel">Are you
+									Sure?</h5>
+								<button type="button" class="close" data-dismiss="modal"
+									aria-label="Close">
+									<span aria-hidden="true">&times;</span>
+								</button>
+							</div>
+							<div class="modal-body">
+							<c:url var="deleteUserURL" value="deleteUser" />
+							<form action="${deleteUserURL}" method="POST">
+							<input type="hidden" value="${user.userNameId}" name="id">
+								<button type="submit" class="btn btn-primary">Yes</button>
+								<button type="button" class="btn btn-primary" data-dismiss="modal">No</button>
+							</form>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<p class="mb-1">
+				<c:out value="Role: ${user.role}"></c:out>
+			</p>
+		</div>
+	</c:forEach>
+	<!-- Button trigger modal -->
+	<button type="button" class="btn btn-light btn-lg btn-block"
+		data-toggle="modal" data-target="#exampleModal">Add User</button>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog"
+	aria-labelledby="exampleModalLabel" aria-hidden="true">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="exampleModalLabel">Input User</h5>
+				<button type="button" class="close" data-dismiss="modal"
+					aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="modal-body">
+				<form id="textLeft" action="${userViewURL}" method="POST">
+					<div class="form-group">
+						<label for="exampleInputEmail1">Username</label> <input
+							type="text" class="form-control" id="exampleInputEmail1"
+							aria-describedby="emailHelp" placeholder="Enter Username"
+							name="userName">
+					</div>
+					<div class="form-group">
+						<label for="exampleInputPassword1">Password</label> <input
+							type="password" class="form-control" id="exampleInputPassword1"
+							placeholder="Password" name="password">
+					</div>
+					<p>Role</p>
+					<div class="form-check form-check-inline">
+						<input class="form-check-input" type="radio" name="role"
+							id="inlineRadio1" value="Admin"> <label
+							class="form-check-label" for="inlineRadio1">Admin</label>
+					</div>
+					<div class="form-check form-check-inline">
+						<input class="form-check-input" type="radio" name="role"
+							id="inlineRadio2" value="User"> <label
+							class="form-check-label" for="inlineRadio2">Normal User</label>
+					</div>
+					</br> </br>
+					<button type="submit" class="btn btn-primary">Submit</button>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
 
 
 <c:import url="/WEB-INF/jsp/footer.jsp" />

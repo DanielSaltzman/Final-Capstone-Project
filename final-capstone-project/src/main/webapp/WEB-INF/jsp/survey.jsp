@@ -41,10 +41,6 @@
 		</div>
 </nav>
 
-<c:url var="cursorLogo" value="img/icons/cursor.png" />
-<c:url var="trashLogo" value="img/icons/trash.png" />
-
-
 <div class="list-group surveyView">
 	<c:forEach var="survey" items="${surveys}">
 
@@ -57,8 +53,7 @@
 				<h5 class="mb-1">
 					<c:out value="${survey.surveyName}"></c:out>
 				</h5>
-				<small><a href="${surveyDetailsURL}">View</a> <img
-					src="${cursorLogo}" height="15" width="15"></small>
+				<small><a href="${surveyDetailsURL}"><button type="button" class="btn btn-primary">View</button></a></small>
 			</div>
 			<p class="mb-1">
 				<c:out value="Class Room: ${survey.room}"></c:out>
