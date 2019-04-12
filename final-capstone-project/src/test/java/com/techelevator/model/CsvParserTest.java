@@ -8,7 +8,7 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-public class CsvDatabaseWriterTest {
+public class CsvParserTest {
 	
 	private CsvParser dbw; 
 	private String filepath; 
