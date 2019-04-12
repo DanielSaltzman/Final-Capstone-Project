@@ -61,6 +61,7 @@ public class CsvParser {
 // get rid of last record that stores the scores of all students 
 			
 			returnList.remove(returnList.size() -1); 
+			returnList.remove(0); 
 
 
 		return returnList;
