@@ -34,7 +34,10 @@
 						<form action="${userViewURL}" method="GET">
 							<button class="dropdown-item" type="submit">View Users</button>
 						</form>
+						<c:url var="logViewURL" value="log" />
+						<form action="${logViewURL}" method="GET">
 						<button class="dropdown-item" type="button">View Log</button>
+						</form>
 					</c:if>
 					<button class="dropdown-item" type="submit" data-toggle="modal"
 						data-target="#changePasswordModal">Change Password</button>

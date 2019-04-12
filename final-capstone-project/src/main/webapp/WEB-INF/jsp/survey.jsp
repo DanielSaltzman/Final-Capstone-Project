@@ -34,7 +34,10 @@
 						<form action="${userViewURL}" method="GET">
 							<button class="dropdown-item" type="submit">View Users</button>
 						</form>
-						<button class="dropdown-item" type="button">View Log</button>
+						<c:url var="logViewURL" value="log" />
+						<form action="${logViewURL}" method="GET">
+							<button class="dropdown-item" type="submit">View Log</button>
+						</form>
 					</c:if>
 					<button class="dropdown-item" type="submit" data-toggle="modal"
 						data-target="#changePasswordModal">Change Password</button>
@@ -146,15 +149,15 @@
 			<div class="modal-body">
 				<c:url var="changePasswordURL" value="changePassword" />
 				<div class="form-group">
-				<form action="${changePasswordURL}" method="POST">
-					<label for="exampleInputPassword1">Password</label> <input
-						type="password" class="form-control" id="exampleInputPassword1"
-						placeholder="Password" name="password">
-						<input
-						type="hidden" class="form-control" value="${currentUser.userName}" name="userName">
+					<form action="${changePasswordURL}" method="POST">
+						<label for="exampleInputPassword1">Password</label> <input
+							type="password" class="form-control" id="exampleInputPassword1"
+							placeholder="Password" name="password"> <input
+							type="hidden" class="form-control"
+							value="${currentUser.userName}" name="userName">
 					</form>
 				</div>
-				
+
 			</div>
 			<div class="modal-footer">
 				<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>

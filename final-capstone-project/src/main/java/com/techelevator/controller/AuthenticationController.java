@@ -59,6 +59,9 @@ public class AuthenticationController {
 	@Autowired
 	private StudentDAO studentDao; 
 	
+//	@Autowired
+//	private LogDAO logDao; 
+	
 	@Autowired
 	private SurveyQuestionDAO surveyQuestionDao; 
 	
@@ -243,6 +246,21 @@ public class AuthenticationController {
 			map.addAttribute("users", userList);
 			
 			return "userView";
+		}
+		
+		return "redirect:/login";
+	}
+	
+	@RequestMapping(path="/log", method=RequestMethod.GET)
+	public String displayLogView(ModelMap map, HttpSession session) {
+		
+		if(((User) session.getAttribute("currentUser")).getRole().equals("Admin")) {
+			
+//			List<Log> logList = logDao.getAllLogs();
+			
+//			map.addAttribute("users", logList);
+			
+			return "log";
 		}
 		
 		return "redirect:/login";
