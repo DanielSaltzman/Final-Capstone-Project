@@ -187,10 +187,14 @@ public class AuthenticationController {
 	public String login(@RequestParam String userName, 
 						@RequestParam String password, 
 						HttpSession session) {
+		
 		if(userDAO.searchForUsernameAndPassword(userName, password)) {
 			session.setAttribute("currentUser", userDAO.getUserByUserName(userName));
+			User user = ((User) session.getAttribute("currentUser"));
+			logDao.inserLog(user.getUserName(), "Successful Login");
 			return "redirect:/survey";
 		} else {
+			logDao.inserLog("Unknown", "Failed Login");
 			return "redirect:/login";
 		}
 	}
@@ -199,6 +203,10 @@ public class AuthenticationController {
 	public String changePassword(@RequestParam String userName, @RequestParam String password, HttpSession session, ModelMap model) {
 		
 		userDAO.updatePassword(userName, password);
+		
+		User user = ((User) session.getAttribute("currentUser"));
+		
+		logDao.inserLog(user.getUserName(), "User Changed Password");
 		
 		model.remove("currentUser");
 		session.invalidate();
@@ -210,6 +218,11 @@ public class AuthenticationController {
 
 	@RequestMapping(path="/logout", method=RequestMethod.POST)
 	public String logout(ModelMap model, HttpSession session) {
+		
+		User user = ((User) session.getAttribute("currentUser"));
+		
+		logDao.inserLog(user.getUserName(), "User Logged Out");
+		
 		model.remove("currentUser");
 		session.invalidate();
 		return "redirect:/login";
@@ -218,13 +231,21 @@ public class AuthenticationController {
 	@RequestMapping(path="/userView", method=RequestMethod.POST)
 	public String addUser(@RequestParam String userName, @RequestParam String password, @RequestParam String role, HttpSession session) {
 		
+		User user = ((User) session.getAttribute("currentUser"));
+		
+		logDao.inserLog(user.getUserName(), "Admin Added New User");
+		
 		userDAO.saveUser(userName, password, role);
 		
 		return "redirect:/userView";
 	}
 	
 	@RequestMapping(path="/deleteUser", method=RequestMethod.POST)
-	public String addUser(@RequestParam long id) {
+	public String addUser(@RequestParam long id, HttpSession session) {
+		
+		User user = ((User) session.getAttribute("currentUser"));
+		
+		logDao.inserLog(user.getUserName(), "Admin Deleted User");
 		
 		userDAO.deleteUser(id);
 		
@@ -232,7 +253,11 @@ public class AuthenticationController {
 	}
 	
 	@RequestMapping(path="/editUser", method=RequestMethod.POST)
-	public String editUser(@RequestParam long id, @RequestParam String role) {
+	public String editUser(@RequestParam long id, @RequestParam String role, HttpSession session) {
+		
+		User user = ((User) session.getAttribute("currentUser"));
+		
+		logDao.inserLog(user.getUserName(), "Admin Changed User Role");
 		
 		if(role.equals("Admin")) {
 			userDAO.updateRole("User", id);
@@ -261,11 +286,13 @@ public class AuthenticationController {
 	@RequestMapping(path="/log", method=RequestMethod.GET)
 	public String displayLogView(ModelMap map, HttpSession session) {
 		
+		User user = (User) session.getAttribute("currentUser");
+		
 		if(((User) session.getAttribute("currentUser")).getRole().equals("Admin")) {
 			
 			List<Log> logList = logDao.getAllLogs();
 		
-			map.addAttribute("users", logList);
+			map.addAttribute("logs", logList);
 			
 			return "log";
 		}

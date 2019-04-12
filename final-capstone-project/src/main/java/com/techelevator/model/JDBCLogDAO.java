@@ -46,9 +46,9 @@ public class JDBCLogDAO implements LogDAO {
 	}
 
 	@Override
-	public void inserLog(Log logToInsert) {
+	public void inserLog(String editingUser, String logText) {
 		String sql = "insert into log (editing_user, log_text) VALUES (?, ?)"; 
-		jdbcTemplate.update(sql, logToInsert.getEditingUser(), logToInsert.getLogText()); 
+		jdbcTemplate.update(sql, editingUser, logText); 
 		
 	}
 

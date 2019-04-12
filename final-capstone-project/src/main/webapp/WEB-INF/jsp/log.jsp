@@ -36,7 +36,7 @@
 						</form>
 						<c:url var="logViewURL" value="log" />
 						<form action="${logViewURL}" method="GET">
-						<button class="dropdown-item" type="button">View Log</button>
+							<button class="dropdown-item" type="button">View Log</button>
 						</form>
 					</c:if>
 					<button class="dropdown-item" type="submit" data-toggle="modal"
@@ -50,14 +50,17 @@
 			</div>
 		</div>
 </nav>
-
-<ul class="list-group">
-  <li class="list-group-item">Cras justo odio</li>
-  <li class="list-group-item">Dapibus ac facilisis in</li>
-  <li class="list-group-item">Morbi leo risus</li>
-  <li class="list-group-item">Porta ac consectetur ac</li>
-  <li class="list-group-item">Vestibulum at eros</li>
-</ul>
+<div class="list-group-item surveyView">
+<c:forEach var="log" items="${logs}">
+			<div class="d-flex w-100 justify-content-between">
+				<h5 class="mb-1">
+					<c:out value="${log.logText}"></c:out>
+				</h5>
+				<small><c:out value="${log.timestamp}"/></small>
+			</div>
+			<small><c:out value="${log.editingUser}"/></small>
+</c:forEach>
+</div>
 
 
 <c:import url="/WEB-INF/jsp/footer.jsp" />
