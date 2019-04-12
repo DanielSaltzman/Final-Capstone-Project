@@ -138,7 +138,11 @@ public class AuthenticationController {
 	}
 	
 	@RequestMapping(path="/uploadFile", method=RequestMethod.POST)
-	public String handleFileUpload(SurveySubmission submission , ModelMap map) throws IOException {
+	public String handleFileUpload(SurveySubmission submission , ModelMap map, HttpSession session) throws IOException {
+		
+		User user = ((User) session.getAttribute("currentUser"));
+		
+		
 		
 		File csvPath = getCSVFilePath();
 		String csvName = csvPath + File.separator + "csvFile";
@@ -255,8 +259,6 @@ public class AuthenticationController {
 	
 	@RequestMapping(path="/log", method=RequestMethod.GET)
 	public String displayLogView(ModelMap map, HttpSession session) {
-		
-		User user = ((User) session.getAttribute("currentUser"));
 		
 		if(((User) session.getAttribute("currentUser")).getRole().equals("Admin")) {
 			

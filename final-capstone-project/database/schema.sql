@@ -19,7 +19,7 @@ CREATE TABLE log (
  log_event serial PRIMARY KEY, 
  editing_user text not null, 
  log_text text not null, 
- date TIMESTAMP default current_timestamp
+ event_date TIMESTAMP default current_timestamp
 );
 
 CREATE TABLE app_user (
