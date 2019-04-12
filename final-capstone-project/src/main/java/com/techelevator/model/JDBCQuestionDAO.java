@@ -42,6 +42,16 @@ public class JDBCQuestionDAO implements QuestionDAO {
 		return question;
 	}
 
+	@Override
+	public long getQuestionIdByQuestionText(String questionText) {
+		String sql = "select question_id from question where question_text LIKE ?"; 
+		SqlRowSet nextIdResult = jdbcTemplate.queryForRowSet(sql, questionText);
+		if (nextIdResult.next()) {
+			return nextIdResult.getLong(1);
+		} else {
+			throw new RuntimeException("Something went wrong while getting an id for the new survey");
+		}
+	}
 
 
 }

@@ -43,6 +43,12 @@ public class JDBCAnswerDAO implements AnswerDAO {
 		
 		return answer; 
 	}
+
+	@Override
+	public void createNewAnswer(long questionId, String answerText, String studentId, long surveyId) {
+		String sql = "Insert INTO answer (question_id, answer_text, student_id, survey_id) Values (?, ?, ?, ?)"; 
+		jdbcTemplate.update(sql, questionId, answerText, studentId, surveyId);
+	}
 	
 	
 

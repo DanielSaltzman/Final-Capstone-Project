@@ -19,10 +19,14 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.techelevator.model.AnswerDAO;
+import com.techelevator.model.CsvData;
+import com.techelevator.model.CsvParser;
 import com.techelevator.model.Question;
 import com.techelevator.model.QuestionDAO;
 import com.techelevator.model.Survey;
 import com.techelevator.model.SurveyDAO;
+import com.techelevator.model.SurveyQuestionDAO;
 import com.techelevator.model.SurveySubmission;
 import com.techelevator.model.User;
 import com.techelevator.model.UserDAO;
@@ -31,10 +35,11 @@ import com.techelevator.model.UserDAO;
 public class AuthenticationController {
 
 	private UserDAO userDAO;
+	private CsvParser csvParser = new CsvParser(); 
 
 	@Autowired
 	public AuthenticationController(UserDAO userDAO) {
-		this.userDAO = userDAO;
+		this.userDAO = userDAO; 
 	}
 	
 	@Autowired
@@ -44,7 +49,13 @@ public class AuthenticationController {
 	private SurveyDAO surveyDao;
 	
 	@Autowired
+	private AnswerDAO answerDao;
+	
+	@Autowired
 	private QuestionDAO questionDao;
+	
+	@Autowired
+	private SurveyQuestionDAO surveyQuestionDao; 
 	
 	@Value("${path}")
 	private String path;
@@ -91,17 +102,45 @@ public class AuthenticationController {
 	}
 	
 	@RequestMapping(path="/uploadFile", method=RequestMethod.POST)
-	public String handleFileUpload(SurveySubmission submission , ModelMap map) {
+	public String handleFileUpload(SurveySubmission submission , ModelMap map) throws IOException {
 		
 		File csvPath = getCSVFilePath();
 		String csvName = csvPath + File.separator + "csvFile";
 		
 		createCSV(submission.getFile(), csvName);
+
+// grab the file path and the submission object and pass it into the database writer		
+		List<CsvData> csvData = csvParser.getListOfCSVDataFromFile(csvName);  
+// get the survey id before you insert it
+		surveyDao.createNewSurvey(csvData.get(0).getSurveyDate(), csvData.get(0).getSurveyTitle(), csvData.get(0).getSurveyRoom(), submission.getLocation(), submission.getCohortNumber(), submission.getInstructor(), submission.getTopic());
+		long surveyId = surveyDao.getNextSurveyId() -1; 
+		long question1Id = questionDao.getQuestionIdByQuestionText(csvData.get(0).getQuestion1()); 
+		long question2Id = questionDao.getQuestionIdByQuestionText(csvData.get(0).getQuestion2()); 
+		long question3Id = questionDao.getQuestionIdByQuestionText(csvData.get(0).getQuestion3());  
+		long question4Id = questionDao.getQuestionIdByQuestionText(csvData.get(0).getQuestion4()); 
+		long question5Id = questionDao.getQuestionIdByQuestionText(csvData.get(0).getQuestion5());  
+
+// insert each answer on the csv into answer line by line	
+		for (CsvData eachLine : csvData) {
+			answerDao.createNewAnswer(question1Id, eachLine.getPresenceAnswer(), eachLine.getStudentId(), surveyId);
+			answerDao.createNewAnswer(question2Id, eachLine.getPaceOfYesterdaysClassAnswer(), eachLine.getStudentId(), surveyId);
+			answerDao.createNewAnswer(question3Id, eachLine.getContentOfPreviousClassAnswer(), eachLine.getStudentId(), surveyId);
+			answerDao.createNewAnswer(question4Id, eachLine.getUnderstandingOfPreviousDaysMaterialAnswer(), eachLine.getStudentId(), surveyId);
+			answerDao.createNewAnswer(question5Id, eachLine.getEnergyLevel(), eachLine.getStudentId(), surveyId);
+			
+		}
+// insert each question on the survey into survey_question		
+		surveyQuestionDao.createNewRow(question1Id, surveyId);
+		surveyQuestionDao.createNewRow(question2Id, surveyId);
+		surveyQuestionDao.createNewRow(question3Id, surveyId);
+		surveyQuestionDao.createNewRow(question4Id, surveyId);
+		surveyQuestionDao.createNewRow(question5Id, surveyId);
+
 		
-		return "login";
+		return "redirect:/survey";
 	}
 	
-	@RequestMapping(path="/login", method=RequestMethod.POST)
+	@RequestMapping(path="/login", method=RequestMethod.POST) 
 	public String login(@RequestParam String userName, 
 						@RequestParam String password, 
 						HttpSession session) {
@@ -122,11 +161,11 @@ public class AuthenticationController {
 	}
 	
 	@RequestMapping(path="/userView", method=RequestMethod.POST)
-	public String addUser(@RequestParam String userName, @RequestParam String password, @RequestParam String role) {
+	public String addUser(@RequestParam String userName, @RequestParam String password, @RequestParam String role, HttpSession session) {
 		
 		userDAO.saveUser(userName, password, role);
 		
-		return "redirect:/survey";
+		return "redirect:/userView";
 	}
 	
 	@RequestMapping(path="/deleteUser", method=RequestMethod.POST)
@@ -134,7 +173,7 @@ public class AuthenticationController {
 		
 		userDAO.deleteUser(id);
 		
-		return "redirect:/survey";
+		return "redirect:/userView";
 	}
 	
 	@RequestMapping(path="/editUser", method=RequestMethod.POST)
@@ -146,17 +185,22 @@ public class AuthenticationController {
 			userDAO.updateRole("Admin", id);
 		}
 		
-		return "redirect:/survey";
+		return "redirect:/userView";
 	}
 	
 	@RequestMapping(path="/userView", method=RequestMethod.GET)
-	public String displayUserView(ModelMap map) {
+	public String displayUserView(ModelMap map, HttpSession session) {
 		
-		List<User> userList = userDAO.getAllUsers();
+		if(((User) session.getAttribute("currentUser")).getRole().equals("Admin")) {
+			
+			List<User> userList = userDAO.getAllUsers();
+			
+			map.addAttribute("users", userList);
+			
+			return "userView";
+		}
 		
-		map.addAttribute("users", userList);
-		
-		return "userView";
+		return "redirect:/login";
 	}
 	
 	private File getCSVFilePath() {

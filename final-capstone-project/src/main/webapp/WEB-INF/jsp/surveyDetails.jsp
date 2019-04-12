@@ -24,7 +24,8 @@
 				<button type="button" class="btn btn-primary dropdown-toggle"
 					data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 					<c:url var="userLogo" value="img/icons/man.png" />
-					<img src="${userLogo}" height="40" width="40"> <c:out value="${currentUser.userName}"></c:out>
+					<img src="${userLogo}" height="40" width="40">
+					<c:out value="${currentUser.userName}"></c:out>
 				</button>
 				<div class="dropdown-menu dropdown-menu-right ml-auto mr-1">
 					<c:url var="userViewURL" value="userView" />
@@ -76,8 +77,39 @@
 					<h5 class="mb-1">
 						<c:out value="${question.questionText}"></c:out>
 					</h5>
-					<small><a href="#" onclick="myFunction();">View</a> <img
-						src="${cursorLogo}" height="15" width="15"></small>
+					
+					<!-- Button trigger modal -->
+					<small><button type="button" class="btn btn-primary"
+							data-toggle="modal"
+							data-target="#viewAnswerModal${selectedSurvey.surveyId}">View</button>
+							
+						<!-- View Answers Modal -->
+						<div class="modal fade" id="viewAnswerModal${selectedSurvey.surveyId}" tabindex="-1"
+							role="dialog" aria-labelledby="exampleModalLabel"
+							aria-hidden="true">
+							<div class="modal-dialog" role="document">
+								<div class="modal-content">
+									<div class="modal-header">
+										<h5 class="modal-title" id="exampleModalLabel">Student Answers</h5>
+										<button type="button" class="close" data-dismiss="modal"
+											aria-label="Close">
+											<span aria-hidden="true">&times;</span>
+										</button>
+									</div>
+									<div class="modal-body">
+									
+									
+									
+									</div>
+									<div class="modal-footer">
+										<button type="button" class="btn btn-secondary"
+											data-dismiss="modal">Close</button>
+										<button type="button" class="btn btn-primary">Save
+											changes</button>
+									</div>
+								</div>
+							</div>
+						</div>
 				</div>
 			</div>
 		</c:forEach>

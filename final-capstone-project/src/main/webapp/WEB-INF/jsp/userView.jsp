@@ -29,7 +29,7 @@
 				</button>
 				<div class="dropdown-menu dropdown-menu-right ml-auto mr-1">
 					<c:url var="userViewURL" value="userView" />
-					<form action="${userViewURL}" method="POST">
+					<form action="${userViewURL}" method="GET">
 						<button class="dropdown-item" type="submit">View Users</button>
 					</form>
 					<button class="dropdown-item" type="button">View Log</button>
@@ -52,6 +52,7 @@
 				<h5 class="mb-1">
 					<c:out value="${user.userName}"></c:out>
 				</h5>
+				
 				<!-- Button trigger modals -->
 				<small><button type="button" class="btn btn-primary"
 						data-toggle="modal" data-target="#deleteModal${user.userNameId}">Delete</button>
@@ -81,6 +82,7 @@
 						</div>
 					</div>
 				</div>
+				
 				<!-- Update Modal -->
 				<div class="modal fade" id="updateModal${user.userNameId}" tabindex="-1" role="dialog"
 					aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -111,13 +113,13 @@
 			</p>
 		</div>
 	</c:forEach>
-	<!-- Button trigger modal -->
+	<!-- Button trigger Add User modal -->
 	<button type="button" class="btn btn-light btn-lg btn-block"
-		data-toggle="modal" data-target="#exampleModal">Add User</button>
+		data-toggle="modal" data-target="#addUserModal">Add User</button>
 </div>
 
-<!-- Modal -->
-<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog"
+<!-- Add User Modal -->
+<div class="modal fade" id="addUserModal" tabindex="-1" role="dialog"
 	aria-labelledby="exampleModalLabel" aria-hidden="true">
 	<div class="modal-dialog" role="document">
 		<div class="modal-content">

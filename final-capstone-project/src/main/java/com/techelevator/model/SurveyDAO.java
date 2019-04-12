@@ -8,4 +8,9 @@ public interface SurveyDAO {
 	
 	public Survey getSurveyWithId(long id);
 	
+	public long getNextSurveyId(); 
+
+	public void createNewSurvey(String surveyDate, String surveyName, String room, String location, String cohortNumber,
+			String instructor, String topic); 
+	
 }

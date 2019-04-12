@@ -24,14 +24,19 @@
 				<button type="button" class="btn btn-primary dropdown-toggle"
 					data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 					<c:url var="userLogo" value="img/icons/man.png" />
-					<img src="${userLogo}" height="40" width="40"> <c:out value="${currentUser.userName}"></c:out>
+					<img src="${userLogo}" height="40" width="40">
+					<c:out value="${currentUser.userName}"></c:out>
 				</button>
 				<div class="dropdown-menu dropdown-menu-right ml-auto mr-1">
-				<c:url var="userViewURL" value="userView" />
+				<c:set var="adminCheck" value="${currentUser.role}"/>
+				<c:if test="${adminCheck == 'Admin'}">
+					<c:url var="userViewURL" value="userView" />
 					<form action="${userViewURL}" method="GET">
-					<button class="dropdown-item" type="submit">View Users</button>
+						<button class="dropdown-item" type="submit">View Users</button>
 					</form>
 					<button class="dropdown-item" type="button">View Log</button>
+					</c:if>
+					
 					<c:url var="logoutURL" value="logout" />
 					<form action="${logoutURL}" method="POST">
 						<button class="dropdown-item" type="submit">Logout</button>
@@ -53,7 +58,8 @@
 				<h5 class="mb-1">
 					<c:out value="${survey.surveyName}"></c:out>
 				</h5>
-				<small><a href="${surveyDetailsURL}"><button type="button" class="btn btn-primary">View</button></a></small>
+				<small><a href="${surveyDetailsURL}"><button
+							type="button" class="btn btn-primary">View</button></a></small>
 			</div>
 			<p class="mb-1">
 				<c:out value="Class Room: ${survey.room}"></c:out>
@@ -80,38 +86,43 @@
 				</button>
 			</div>
 			<div class="modal-body">
-				<form action="<c:url value="uploadFile"/>" method="POST" enctype="multipart/form-data">
-					<label>Location:</label> <select class="form-control" name = "location">
-						<option value = "Columbus" >Columbus</option>
-						<option value = "Cleveland">Cleveland</option>
-						<option value = "Detroit">Detroit</option>
-						<option value = "Pittsburgh">Pittsburgh</option>
-						<option value = "Cincinnati" >Cincinnati</option>
-					</select> <br /> <label>Cohort Number:</label> <select class="form-control" name = "cohortNumber">
-						<option value = "1">1</option>
-						<option value = "2">2</option>
-						<option value = "3">3</option>
-						<option value = "4">4</option>
-						<option value = "5">5</option>
-						<option value = "6"> 6</option>
-						<option value = "7">7</option>
-						<option value = "8">8</option>
-						<option value = "9">9</option>
-						<option value = "10">10</option>
+				<form action="<c:url value="uploadFile"/>" method="POST"
+					enctype="multipart/form-data">
+					<label>Location:</label> <select class="form-control"
+						name="location">
+						<option value="Columbus">Columbus</option>
+						<option value="Cleveland">Cleveland</option>
+						<option value="Detroit">Detroit</option>
+						<option value="Pittsburgh">Pittsburgh</option>
+						<option value="Cincinnati">Cincinnati</option>
+					</select> <br /> <label>Cohort Number:</label> <select class="form-control"
+						name="cohortNumber">
+						<option value="1">1</option>
+						<option value="2">2</option>
+						<option value="3">3</option>
+						<option value="4">4</option>
+						<option value="5">5</option>
+						<option value="6">6</option>
+						<option value="7">7</option>
+						<option value="8">8</option>
+						<option value="9">9</option>
+						<option value="10">10</option>
 					</select> <br /> <input type="text" class="form-control"
-						placeholder="Instructor" name = "instructor"> <br /> 
-						<input type="text"
-						class="form-control" placeholder="Topic" name = "topic"> <br />
+						placeholder="Instructor" name="instructor"> <br /> <input
+						type="text" class="form-control" placeholder="Topic" name="topic">
+					<br />
 					<div class="form-group">
 						<label for="exampleFormControlFile1">CSV File:</label> <input
 							type="file" class="form-control-file"
-							id="exampleFormControlFile1" name = "file">
+							id="exampleFormControlFile1" name="file">
 					</div>
 					<div class="modal-footer">
-				<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-				<button type="submit" class="btn btn-primary">Save changes</button>
-			</div>
-			</form>
+						<button type="button" class="btn btn-secondary"
+							data-dismiss="modal">Close</button>
+						<button type="submit" class="btn btn-primary">Save
+							changes</button>
+					</div>
+				</form>
 			</div>
 		</div>
 	</div>
