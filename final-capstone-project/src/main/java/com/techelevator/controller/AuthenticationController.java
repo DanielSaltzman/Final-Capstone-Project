@@ -142,6 +142,7 @@ public class AuthenticationController {
 		
 		User user = ((User) session.getAttribute("currentUser"));
 		
+		logDao.inserLog(user.getUserName(), "Uploaded Survey");
 		
 		
 		File csvPath = getCSVFilePath();

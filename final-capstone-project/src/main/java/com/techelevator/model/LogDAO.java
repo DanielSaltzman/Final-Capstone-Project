@@ -6,4 +6,5 @@ public interface LogDAO {
 	
 	public List<Log> getAllLogs(); 
 
+	public void inserLog(Log logToInsert); 
 }
