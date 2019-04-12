@@ -56,7 +56,7 @@ public class JDBCSurveyDAO implements SurveyDAO {
 
 	@Override
 	public long getNextSurveyId() {
-		SqlRowSet nextIdResult = jdbcTemplate.queryForRowSet("SELECT nextval('seq_survey_id')");
+		SqlRowSet nextIdResult = jdbcTemplate.queryForRowSet("SELECT nextval('survey_survey_id_seq')");
 		if (nextIdResult.next()) {
 			return nextIdResult.getLong(1);
 		} else {

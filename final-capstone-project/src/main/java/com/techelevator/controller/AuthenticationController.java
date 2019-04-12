@@ -19,12 +19,14 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.techelevator.model.AnswerDAO;
 import com.techelevator.model.CsvData;
 import com.techelevator.model.CsvParser;
 import com.techelevator.model.Question;
 import com.techelevator.model.QuestionDAO;
 import com.techelevator.model.Survey;
 import com.techelevator.model.SurveyDAO;
+import com.techelevator.model.SurveyQuestionDAO;
 import com.techelevator.model.SurveySubmission;
 import com.techelevator.model.User;
 import com.techelevator.model.UserDAO;
@@ -46,9 +48,14 @@ public class AuthenticationController {
 	@Autowired
 	private SurveyDAO surveyDao;
 	
+	@Autowired
+	private AnswerDAO answerDao;
 	
 	@Autowired
 	private QuestionDAO questionDao;
+	
+	@Autowired
+	private SurveyQuestionDAO surveyQuestionDao; 
 	
 	@Value("${path}")
 	private String path;
@@ -105,13 +112,35 @@ public class AuthenticationController {
 // grab the file path and the submission object and pass it into the database writer		
 		List<CsvData> csvData = csvParser.getListOfCSVDataFromFile(csvName);  
 // get the survey id before you insert it
-//		long surveyId = surveyDao.getNextSurveyId(); 
 		surveyDao.createNewSurvey(csvData.get(0).getSurveyDate(), csvData.get(0).getSurveyTitle(), csvData.get(0).getSurveyRoom(), submission.getLocation(), submission.getCohortNumber(), submission.getInstructor(), submission.getTopic());
+		long surveyId = surveyDao.getNextSurveyId() -1; 
+		long question1Id = questionDao.getQuestionIdByQuestionText(csvData.get(0).getQuestion1()); 
+		long question2Id = questionDao.getQuestionIdByQuestionText(csvData.get(0).getQuestion2()); 
+		long question3Id = questionDao.getQuestionIdByQuestionText(csvData.get(0).getQuestion3());  
+		long question4Id = questionDao.getQuestionIdByQuestionText(csvData.get(0).getQuestion4()); 
+		long question5Id = questionDao.getQuestionIdByQuestionText(csvData.get(0).getQuestion5());  
+
+// insert each answer on the csv into answer line by line	
+		for (CsvData eachLine : csvData) {
+			answerDao.createNewAnswer(question1Id, eachLine.getPresenceAnswer(), eachLine.getStudentId(), surveyId);
+			answerDao.createNewAnswer(question2Id, eachLine.getPaceOfYesterdaysClassAnswer(), eachLine.getStudentId(), surveyId);
+			answerDao.createNewAnswer(question3Id, eachLine.getContentOfPreviousClassAnswer(), eachLine.getStudentId(), surveyId);
+			answerDao.createNewAnswer(question4Id, eachLine.getUnderstandingOfPreviousDaysMaterialAnswer(), eachLine.getStudentId(), surveyId);
+			answerDao.createNewAnswer(question5Id, eachLine.getEnergyLevel(), eachLine.getStudentId(), surveyId);
+			
+		}
+// insert each question on the survey into survey_question		
+		surveyQuestionDao.createNewRow(question1Id, surveyId);
+		surveyQuestionDao.createNewRow(question2Id, surveyId);
+		surveyQuestionDao.createNewRow(question3Id, surveyId);
+		surveyQuestionDao.createNewRow(question4Id, surveyId);
+		surveyQuestionDao.createNewRow(question5Id, surveyId);
+
 		
-		return "login";
+		return "redirect:/survey";
 	}
 	
-	@RequestMapping(path="/login", method=RequestMethod.POST)
+	@RequestMapping(path="/login", method=RequestMethod.POST) 
 	public String login(@RequestParam String userName, 
 						@RequestParam String password, 
 						HttpSession session) {
