@@ -9,9 +9,18 @@ drop table if exists survey;
 drop table if exists answer;
 drop table if exists question; 
 drop table if exists student; 
+drop table if exists log; 
 
 
 -- Create Statements Go Here
+
+
+CREATE TABLE log (
+ log_event serial PRIMARY KEY, 
+ editing_user text not null, 
+ log_text text not null, 
+ date TIMESTAMP default current_timestamp
+);
 
 CREATE TABLE app_user (
   id SERIAL PRIMARY KEY,

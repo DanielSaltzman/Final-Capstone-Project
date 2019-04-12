@@ -23,6 +23,8 @@ import com.techelevator.model.Answer;
 import com.techelevator.model.AnswerDAO;
 import com.techelevator.model.CsvData;
 import com.techelevator.model.CsvParser;
+import com.techelevator.model.Log;
+import com.techelevator.model.LogDAO;
 import com.techelevator.model.Question;
 import com.techelevator.model.QuestionDAO;
 import com.techelevator.model.StudentDAO;
@@ -59,8 +61,8 @@ public class AuthenticationController {
 	@Autowired
 	private StudentDAO studentDao; 
 	
-//	@Autowired
-//	private LogDAO logDao; 
+	@Autowired
+	private LogDAO logDao; 
 	
 	@Autowired
 	private SurveyQuestionDAO surveyQuestionDao; 
@@ -254,11 +256,13 @@ public class AuthenticationController {
 	@RequestMapping(path="/log", method=RequestMethod.GET)
 	public String displayLogView(ModelMap map, HttpSession session) {
 		
+		User user = ((User) session.getAttribute("currentUser"));
+		
 		if(((User) session.getAttribute("currentUser")).getRole().equals("Admin")) {
 			
-//			List<Log> logList = logDao.getAllLogs();
-			
-//			map.addAttribute("users", logList);
+			List<Log> logList = logDao.getAllLogs();
+		
+			map.addAttribute("users", logList);
 			
 			return "log";
 		}

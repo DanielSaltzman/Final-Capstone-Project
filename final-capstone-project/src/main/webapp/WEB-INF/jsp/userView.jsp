@@ -123,6 +123,7 @@
 	<!-- Button trigger Add User modal -->
 	<button type="button" class="btn btn-light btn-lg btn-block"
 		data-toggle="modal" data-target="#addUserModal">Add User</button>
+		
 </div>
 
 <!-- Add User Modal -->
