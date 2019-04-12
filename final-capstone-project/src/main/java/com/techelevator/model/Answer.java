@@ -4,6 +4,7 @@ public class Answer {
 	private long answerId;
 	private String studentId;
 	private String answerText;
+	private String studentName; 
 	
 	
 	public long getAnswerId() {
@@ -23,6 +24,12 @@ public class Answer {
 	}
 	public void setAnswerText(String answerText) {
 		this.answerText = answerText;
+	}
+	public String getStudentName() {
+		return studentName;
+	}
+	public void setStudentName(String studentName) {
+		this.studentName = studentName;
 	}
 	
 	

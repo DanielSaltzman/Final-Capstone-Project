@@ -40,6 +40,16 @@ public class JDBCAnswerDAO implements AnswerDAO {
 		answer.setAnswerId(result.getLong("answer_id"));
 		answer.setStudentId(result.getString("student_id"));
 		answer.setAnswerText(result.getString("answer_text"));
+
+		
+		return answer; 
+	}
+	
+	private Answer mapRowToAnswerWithJoin(SqlRowSet result) {
+		Answer answer = new Answer(); 
+		
+		answer.setAnswerText(result.getString("answer_text"));
+		answer.setStudentName(result.getString("student_name")); 
 		
 		return answer; 
 	}
@@ -49,6 +59,21 @@ public class JDBCAnswerDAO implements AnswerDAO {
 		String sql = "Insert INTO answer (question_id, answer_text, student_id, survey_id) Values (?, ?, ?, ?)"; 
 		jdbcTemplate.update(sql, questionId, answerText, studentId, surveyId);
 	}
+
+	@Override
+	public List<Answer> getStudentNameAndAnswerBySurveyIdAndQuestionId(int surveyId, int question_id) {
+
+	String sql = "Select student.student_name, answer.answer_text from student join answer on student.student_id = answer.student_id WHERE answer.survey_id = ? and answer.question_id = ? order by student.student_name ASC"; 
+		
+		SqlRowSet result = jdbcTemplate.queryForRowSet(sql, surveyId, question_id);
+		
+		List<Answer> answers = new ArrayList<Answer>();
+		while(result.next()) {
+			answers.add(mapRowToAnswerWithJoin(result));
+		}
+		
+		return answers;	
+			}
 	
 	
 

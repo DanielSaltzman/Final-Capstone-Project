@@ -24,6 +24,7 @@ import com.techelevator.model.CsvData;
 import com.techelevator.model.CsvParser;
 import com.techelevator.model.Question;
 import com.techelevator.model.QuestionDAO;
+import com.techelevator.model.StudentDAO;
 import com.techelevator.model.Survey;
 import com.techelevator.model.SurveyDAO;
 import com.techelevator.model.SurveyQuestionDAO;
@@ -53,6 +54,9 @@ public class AuthenticationController {
 	
 	@Autowired
 	private QuestionDAO questionDao;
+	
+	@Autowired
+	private StudentDAO studentDao; 
 	
 	@Autowired
 	private SurveyQuestionDAO surveyQuestionDao; 
@@ -127,6 +131,7 @@ public class AuthenticationController {
 			answerDao.createNewAnswer(question3Id, eachLine.getContentOfPreviousClassAnswer(), eachLine.getStudentId(), surveyId);
 			answerDao.createNewAnswer(question4Id, eachLine.getUnderstandingOfPreviousDaysMaterialAnswer(), eachLine.getStudentId(), surveyId);
 			answerDao.createNewAnswer(question5Id, eachLine.getEnergyLevel(), eachLine.getStudentId(), surveyId);
+			studentDao.insertStudentIntoTableIfStudentDoesNotExits( eachLine.getStudentId(), eachLine.getStudentName());
 			
 		}
 // insert each question on the survey into survey_question		
@@ -135,6 +140,7 @@ public class AuthenticationController {
 		surveyQuestionDao.createNewRow(question3Id, surveyId);
 		surveyQuestionDao.createNewRow(question4Id, surveyId);
 		surveyQuestionDao.createNewRow(question5Id, surveyId);
+		
 
 		
 		return "redirect:/survey";
