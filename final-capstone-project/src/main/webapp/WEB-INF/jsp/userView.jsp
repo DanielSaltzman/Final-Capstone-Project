@@ -54,11 +54,11 @@
 				</h5>
 				<!-- Button trigger modals -->
 				<small><button type="button" class="btn btn-primary"
-						data-toggle="modal" data-target="#newModal${user.userNameId}">Delete</button>
-					<button type="button" class="btn btn-primary">Modify</button></small>
+						data-toggle="modal" data-target="#deleteModal${user.userNameId}">Delete</button>
+					<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#updateModal${user.userNameId}">Modify</button></small>
 
 				<!-- Delete Modal -->
-				<div class="modal fade" id="newModal${user.userNameId}" tabindex="-1" role="dialog"
+				<div class="modal fade" id="deleteModal${user.userNameId}" tabindex="-1" role="dialog"
 					aria-labelledby="exampleModalLabel" aria-hidden="true">
 					<div class="modal-dialog" role="document">
 						<div class="modal-content">
@@ -73,6 +73,30 @@
 							<div class="modal-body">
 							<c:url var="deleteUserURL" value="deleteUser" />
 							<form action="${deleteUserURL}" method="POST">
+							<input type="hidden" value="${user.userNameId}" name="id">
+								<button type="submit" class="btn btn-primary">Yes</button>
+								<button type="button" class="btn btn-primary" data-dismiss="modal">No</button>
+							</form>
+							</div>
+						</div>
+					</div>
+				</div>
+				<!-- Update Modal -->
+				<div class="modal fade" id="updateModal${user.userNameId}" tabindex="-1" role="dialog"
+					aria-labelledby="exampleModalLabel" aria-hidden="true">
+					<div class="modal-dialog" role="document">
+						<div class="modal-content">
+							<div class="modal-header">
+								<h5 class="modal-title" id="exampleModalLabel">Would you like to switch roles on this user?</h5>
+								<button type="button" class="close" data-dismiss="modal"
+									aria-label="Close">
+									<span aria-hidden="true">&times;</span>
+								</button>
+							</div>
+							<div class="modal-body">
+							<c:url var="editUserURL" value="editUser" />
+							<form action="${editUserURL}" method="POST">
+							<input type="hidden" value="${user.role}" name="role">
 							<input type="hidden" value="${user.userNameId}" name="id">
 								<button type="submit" class="btn btn-primary">Yes</button>
 								<button type="button" class="btn btn-primary" data-dismiss="modal">No</button>

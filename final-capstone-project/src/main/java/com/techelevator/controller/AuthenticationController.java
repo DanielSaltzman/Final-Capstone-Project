@@ -137,6 +137,18 @@ public class AuthenticationController {
 		return "redirect:/survey";
 	}
 	
+	@RequestMapping(path="/editUser", method=RequestMethod.POST)
+	public String editUser(@RequestParam long id, @RequestParam String role) {
+		
+		if(role.equals("Admin")) {
+			userDAO.updateRole("User", id);
+		} else {
+			userDAO.updateRole("Admin", id);
+		}
+		
+		return "redirect:/survey";
+	}
+	
 	@RequestMapping(path="/userView", method=RequestMethod.GET)
 	public String displayUserView(ModelMap map) {
 		
