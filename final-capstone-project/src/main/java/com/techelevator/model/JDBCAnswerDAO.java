@@ -21,7 +21,7 @@ public class JDBCAnswerDAO implements AnswerDAO {
 	    }
 
 	@Override
-	public List<Answer> getAnswersBySurveyIdAndQuestionId(int surveyId, int question_id) {
+	public List<Answer> getAnswersBySurveyIdAndQuestionId(long surveyId, long question_id) {
 		String sql = "SELECT answer_id, student_id, answer_text from ANSWER where survey_id = ? AND question_id = ?" ; 
 		
 		SqlRowSet result = jdbcTemplate.queryForRowSet(sql, surveyId, question_id);
@@ -61,7 +61,7 @@ public class JDBCAnswerDAO implements AnswerDAO {
 	}
 
 	@Override
-	public List<Answer> getStudentNameAndAnswerBySurveyIdAndQuestionId(int surveyId, int question_id) {
+	public List<Answer> getStudentNameAndAnswerBySurveyIdAndQuestionId(long surveyId, long question_id) {
 
 	String sql = "Select student.student_name, answer.answer_text from student join answer on student.student_id = answer.student_id WHERE answer.survey_id = ? and answer.question_id = ? order by student.student_name ASC"; 
 		

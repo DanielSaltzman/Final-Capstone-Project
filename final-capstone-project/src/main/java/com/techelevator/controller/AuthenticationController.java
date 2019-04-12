@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.techelevator.model.Answer;
 import com.techelevator.model.AnswerDAO;
 import com.techelevator.model.CsvData;
 import com.techelevator.model.CsvParser;
@@ -94,11 +95,37 @@ public class AuthenticationController {
 					map.addAttribute("selectedSurvey", survey);
 				}
 			}
+			
 			List<Question> questionList = questionDao.getQuestionsBySurveyId(surveyId);
 			
 			map.addAttribute("questions", questionList);
 			
 			return "surveyDetails";
+		} else {
+			return "redirect:/login";
+		}
+		
+	}
+	
+	@RequestMapping(path="/answers", method=RequestMethod.GET)
+	public String displayAnswerDetailView(ModelMap map, @RequestParam long surveyId, @RequestParam long questionId, HttpSession session) {
+		
+		if(session.getAttribute("currentUser") != null) {
+			
+			List<Answer> answerList = answerDao.getStudentNameAndAnswerBySurveyIdAndQuestionId(surveyId, questionId);
+			
+			List<Question> questionList = questionDao.getQuestionsBySurveyId(surveyId);
+			
+			for(Question question : questionList) {
+				if(question.getQuestionId() == questionId) {
+					map.addAttribute("selectedQuestion", question);
+				}
+			}
+			
+			map.addAttribute("answers", answerList);
+			
+			return "answers";
+			
 		} else {
 			return "redirect:/login";
 		}

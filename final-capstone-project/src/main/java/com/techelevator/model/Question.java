@@ -20,8 +20,5 @@ public class Question {
 	public void setQuestionText(String questionText) {
 		this.questionText = questionText;
 	}
-
-	
-	
 	
 }

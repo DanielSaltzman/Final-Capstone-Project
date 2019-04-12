@@ -43,49 +43,17 @@
 </nav>
 
 <section class="detailSection">
-	<div class="flexBox">
-		<div class="flexItem title">
-			</br>
-			<h1>
-				<c:out value="${selectedSurvey.surveyName}"></c:out>
-			</h1>
-		</div>
-		<div class="flexItem">
-			<div style="display: in-line">
-				<h4>
-					<c:out value="Location: ${selectedSurvey.campus}"></c:out>
-				</h4>
-				<h4>
-					<c:out value="Cohort Number: ${selectedSurvey.cohortNumber}"></c:out>
-				</h4>
-			</div>
-			<div style="display: in-line">
-				<h4>
-					<c:out value="Instructor: ${selectedSurvey.instructor}"></c:out>
-				</h4>
-				<h4>
-					<c:out value="Topic: ${selectedSurvey.topic}"></c:out>
-				</h4>
-			</div>
-		</div>
-	</div>
+	<h1><c:out value="${selectedQuestion.questionText}"></c:out></h1>
 	</br>
 	<div class="list-group">
-		<c:forEach var="question" items="${questions}">
-
-			<c:url value="/answers" var="questionDetailsURL">
-				<c:param name="questionId" value="${question.questionId}" />
-				<c:param name="surveyId" value="${selectedSurvey.surveyId}" />
-			</c:url>
-			
+		<c:forEach var="answer" items="${answers}">
+	
 			<div class="list-group-item">
 				<div class="d-flex w-100 justify-content-between">
 					<h5 class="mb-1">
-						<c:out value="${question.questionText}"></c:out>
+						<c:out value="${answer.answerText}"/>
 					</h5>
-
-					<small><a href="${questionDetailsURL}"><button type="button"
-								class="btn btn-primary">View</button></a></small>
+					<small><c:out value="${answer.studentName}"/></small>
 
 				</div>
 			</div>
