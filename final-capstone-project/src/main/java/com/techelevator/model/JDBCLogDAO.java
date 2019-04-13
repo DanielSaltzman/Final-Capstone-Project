@@ -22,7 +22,7 @@ public class JDBCLogDAO implements LogDAO {
 
 	@Override
 	public List<Log> getAllLogs() {
-		String sql = "Select log_event, editing_user, log_text, event_date from Log"; 
+		String sql = "Select log_event, editing_user, log_text, event_date from Log ORDER BY event_date DESC"; 
 		
 		SqlRowSet result = jdbcTemplate.queryForRowSet(sql); 
 		
@@ -39,7 +39,10 @@ public class JDBCLogDAO implements LogDAO {
 		log.setLogEvent(result.getLong("log_event"));
 		log.setEditingUser(result.getString("editing_user"));
 		log.setLogText(result.getString("log_text")); 
-		log.setTimestamp(result.getDate("event_date").toString());
+		
+		String dateTime = result.getDate("event_date").toString() + " " + result.getTime("event_date").toString(); 
+		
+		log.setTimestamp(dateTime);
 		
 		
 		return log; 
