@@ -99,6 +99,18 @@
 				</div>
 			</div>
 		</c:forEach>
+		<br> 
+		<br> 
+		<div> 
+			<h4>SURVEY DETAILS</h4>
+			<c:forEach var="stat" items="${surveyStats}">
+				<c:out value="For Question # ${stat.questionId}:   ${stat.countOfAnswers} Students Answered : ${stat.answerText}"/>
+				<br> 
+				<br> 
+			</c:forEach>
+		
+		</div>
+		
 	</div>
 </section>
 
