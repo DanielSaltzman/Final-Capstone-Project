@@ -53,13 +53,16 @@
 
 <section class="detailSection">
 	<h1><c:out value="${selectedQuestion.questionText}"></c:out></h1>
-	<div>
-		<c:forEach var="stat" items="${surveyQuestionStats}">
-			<c:out value="${stat.countOfAnswers} Students Answered : ${stat.answerText}"/>
-			<br> 
-		</c:forEach>
-	</div>
-	</br>
+	
+	
+	
+<!-- 	<div> -->
+<%-- 		<c:forEach var="stat" items="${surveyQuestionStats}"> --%>
+<%-- 			<c:out value="${stat.countOfAnswers} Students Answered : ${stat.answerText}"/> --%>
+<!-- 			<br>  -->
+<%-- 		</c:forEach> --%>
+<!-- 	</div> -->
+<!-- 	</br> -->
 	<div class="list-group">
 		<c:forEach var="answer" items="${answers}">
 	
@@ -73,6 +76,29 @@
 			</div>
 		</c:forEach>
 	</div>
+	
+	<div>
+			<table class="table">
+				<thead>
+					<tr>
+						<th scope="col"></th>
+						<th scope="col">Number of Responses</th>
+						<th scope="col">Response</th>
+					</tr>
+				</thead>
+				<tbody>
+					<c:forEach var="stat" items="${surveyQuestionStats}">
+					<tr>
+							<td></td>
+							<td><c:out value= "${stat.countOfAnswers}"/></td>
+							<td><c:out value= "${stat.answerText}"/></td>
+					</tr>
+					</c:forEach>
+				 </tbody>
+			</table>
+		</div>	
+	
+	
 </section>
 
 

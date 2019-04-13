@@ -22,7 +22,7 @@ public class JDBCAnswerStatsDAO implements AnswerStatsDAO {
 
 	@Override
 	public List<AnswerStats> getCountAndTextOfUniqueAnswersForSurveyQuestion(long questionId, long surveyId) {
-		String sql = "select count (answer_text) ,answer_text  from answer where question_id  = ? AND survey_id = ?  group by answer_text";
+		String sql = "select count (answer_text) ,answer_text  from answer where question_id  = ? AND survey_id = ? group by answer_text order by count desc";
 
 		SqlRowSet result = jdbcTemplate.queryForRowSet(sql, questionId, surveyId);
 
@@ -36,7 +36,7 @@ public class JDBCAnswerStatsDAO implements AnswerStatsDAO {
 
 	@Override
 	public List<AnswerStats> getCountAndTextOfUniqueAnswersForSurvey(long surveyId) {
-		String sql = "select question_id, count (answer_text),  answer_text from answer where survey_id = ? group by answer_text, question_id order by question_id";
+		String sql = "select question_id, count (answer_text),  answer_text from answer where survey_id = ? group by answer_text, question_id order by question_id, count desc";
 
 		SqlRowSet result = jdbcTemplate.queryForRowSet(sql, surveyId);
 
