@@ -49,6 +49,7 @@
 				</div>
 			</div>
 		</div>
+		</div>
 </nav>
 
 <section class="detailSection">
@@ -101,16 +102,28 @@
 		</c:forEach>
 		<br> 
 		<br> 
-		<div> 
-			<h4>SURVEY DETAILS</h4>
-			<c:forEach var="stat" items="${surveyStats}">
-				<c:out value="For Question # ${stat.questionId}:   ${stat.countOfAnswers} Students Answered : ${stat.answerText}"/>
-				<br> 
-				<br> 
-			</c:forEach>
-		
-		</div>
-		
+		<div>
+			<table class="table">
+				<thead>
+					<tr>
+						<th scope="col"></th>
+						<th scope="col">Question Number</th>
+						<th scope="col">Number of Responses</th>
+						<th scope="col">Response</th>
+					</tr>
+				</thead>
+				<tbody>
+					<c:forEach var="stat" items="${surveyStats}">
+					<tr>
+							<td></td>
+							<td><c:out value= "${stat.questionId}"/></td>
+							<td><c:out value= "${stat.countOfAnswers}"/></td>
+							<td><c:out value= "${stat.answerText}"/></td>
+					</tr>
+					</c:forEach>
+				 </tbody>
+			</table>
+		</div>	
 	</div>
 </section>
 

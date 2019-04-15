@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.techelevator.model.Answer;
 import com.techelevator.model.AnswerDAO;
 import com.techelevator.model.AnswerStats;
@@ -112,6 +113,7 @@ public class AuthenticationController {
 			
 			map.addAttribute("questions", questionList);
 			map.addAttribute("surveyStats", surveyStats); 
+			
 
 			return "surveyDetails";
 		} else {
@@ -142,7 +144,17 @@ public class AuthenticationController {
 			map.addAttribute("answers", answerList);
 
 //add statistics to model map
+			
 			map.addAttribute("surveyQuestionStats", surveyQuestionStats); 
+
+// Get truncated answer text for the bar graph
+			
+			for(AnswerStats stats : surveyQuestionStats) {
+				if(stats.getAnswerText().length() > 25) {
+					stats.setAnswerText(stats.getAnswerText().substring(0,23) + "...");
+				}
+				map.addAttribute("truncatedStats", surveyQuestionStats);
+			}
 			
 			return "answers";
 			

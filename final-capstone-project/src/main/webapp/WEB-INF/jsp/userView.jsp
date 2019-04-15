@@ -63,8 +63,7 @@
 				<!-- Button trigger modals -->
 				<small><button type="button" class="btn btn-primary"
 						data-toggle="modal" data-target="#deleteModal${user.userNameId}">Delete</button>
-					<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#updateModal${user.userNameId}">Modify</button></small>
-
+					<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#updateModal${user.userNameId}">Modify Role</button></small>
 				<!-- Delete Modal -->
 				<div class="modal fade" id="deleteModal${user.userNameId}" tabindex="-1" role="dialog"
 					aria-labelledby="exampleModalLabel" aria-hidden="true">

@@ -36,7 +36,7 @@
 						</form>
 						<c:url var="logViewURL" value="log" />
 						<form action="${logViewURL}" method="GET">
-						<button class="dropdown-item" type="button">View Log</button>
+							<button class="dropdown-item" type="button">View Log</button>
 						</form>
 					</c:if>
 					<button class="dropdown-item" type="submit" data-toggle="modal"
@@ -52,27 +52,93 @@
 </nav>
 
 <section class="detailSection">
-	<h1><c:out value="${selectedQuestion.questionText}"></c:out></h1>
-	<div>
-		<c:forEach var="stat" items="${surveyQuestionStats}">
-			<c:out value="${stat.countOfAnswers} Students Answered : ${stat.answerText}"/>
-			<br> 
-		</c:forEach>
-	</div>
+
+
+	<h1>
+		<c:out value="${selectedQuestion.questionText}"></c:out>
+	</h1>
+
+	<script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+
+	<canvas id="myChart" width="400" height="200"></canvas>
+	<script>
+
+var ctx = document.getElementById('myChart').getContext('2d');
+var myChart = new Chart(ctx, {
+    type: 'bar',
+    data: {
+    	
+        labels: [<c:forEach items="${truncatedStats}" var="listItem"> `${listItem.answerText}`, </c:forEach>],
+        datasets: [{
+            label: '# of Votes',
+            data: [<c:forEach items="${surveyQuestionStats}" var="listItem"> `${listItem.countOfAnswers}`, </c:forEach>],
+            backgroundColor: [
+                'rgba(255, 99, 132, 0.2)',
+                'rgba(54, 162, 235, 0.2)',
+                'rgba(255, 206, 86, 0.2)',
+                'rgba(75, 192, 192, 0.2)',
+                'rgba(153, 102, 255, 0.2)',
+                'rgba(255, 159, 64, 0.2)'
+            ],
+            borderColor: [
+                'rgba(255, 99, 132, 1)',
+                'rgba(54, 162, 235, 1)',
+                'rgba(255, 206, 86, 1)',
+                'rgba(75, 192, 192, 1)',
+                'rgba(153, 102, 255, 1)',
+                'rgba(255, 159, 64, 1)'
+            ],
+            borderWidth: 1
+        }]
+    },
+    options: {
+        scales: {
+            yAxes: [{
+                ticks: {
+                    beginAtZero: true
+                }
+            }]
+        }
+    }
+});
+</script>
+
 	</br>
 	<div class="list-group">
 		<c:forEach var="answer" items="${answers}">
-	
+
 			<div class="list-group-item">
 				<div class="d-flex w-100 justify-content-between">
 					<h5 class="mb-1">
-						<c:out value="${answer.answerText}"/>
+						<c:out value="${answer.answerText}" />
 					</h5>
-					<small><c:out value="${answer.studentName}"/></small>
+					<small><c:out value="${answer.studentName}" /></small>
 				</div>
 			</div>
 		</c:forEach>
 	</div>
+
+	<div>
+		<%-- 			<table class="table">
+				<thead>
+					<tr>
+						<th scope="col"></th>
+						<th scope="col">Number of Responses</th>
+						<th scope="col">Response</th>
+					</tr>
+				</thead>
+				<tbody>
+					<c:forEach var="stat" items="${surveyQuestionStats}">
+					<tr>
+							<td></td>
+							<td><c:out value= "${stat.countOfAnswers}"/></td>
+							<td><c:out value= "${stat.answerText}"/></td>
+					</tr>
+					</c:forEach>
+				 </tbody>
+			</table> --%>
+	</div>
+
 </section>
 
 
@@ -92,15 +158,17 @@
 			<div class="modal-body">
 				<c:url var="changePasswordURL" value="changePassword" />
 				<div class="form-group">
-				<form action="${changePasswordURL}" method="POST">
-					<label for="exampleInputPassword1">Password</label> <input
-						type="password" class="form-control" id="exampleInputPassword1"
-						placeholder="Password" name="password">
-						<input
-						type="hidden" class="form-control" value="${currentUser.userName}" name="userName">
+					<form action="${changePasswordURL}" method="POST">
+						<label for="exampleInputPassword1">Password</label> <input
+							type="password" class="form-control" id="exampleInputPassword1"
+							placeholder="Password" name="password"> 
+							
+							<input
+							type="hidden" class="form-control"
+							value="${currentUser.userName}" name="userName">
 					</form>
 				</div>
-				
+
 			</div>
 			<div class="modal-footer">
 				<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
