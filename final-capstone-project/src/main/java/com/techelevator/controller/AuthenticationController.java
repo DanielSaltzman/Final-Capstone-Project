@@ -21,6 +21,8 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.techelevator.model.Answer;
 import com.techelevator.model.AnswerDAO;
+import com.techelevator.model.AnswerStats;
+import com.techelevator.model.AnswerStatsDAO;
 import com.techelevator.model.CsvData;
 import com.techelevator.model.CsvParser;
 import com.techelevator.model.Log;
@@ -62,7 +64,11 @@ public class AuthenticationController {
 	private StudentDAO studentDao; 
 	
 	@Autowired
-	private LogDAO logDao; 
+	private LogDAO logDao;
+	
+	@Autowired
+	private AnswerStatsDAO answerStatsDao; 
+	
 	
 	@Autowired
 	private SurveyQuestionDAO surveyQuestionDao; 
@@ -102,9 +108,11 @@ public class AuthenticationController {
 			}
 			
 			List<Question> questionList = questionDao.getQuestionsBySurveyId(surveyId);
+			List<AnswerStats> surveyStats = answerStatsDao.getCountAndTextOfUniqueAnswersForSurvey(surveyId); 
 			
 			map.addAttribute("questions", questionList);
-			
+			map.addAttribute("surveyStats", surveyStats); 
+
 			return "surveyDetails";
 		} else {
 			return "redirect:/login";
@@ -121,6 +129,10 @@ public class AuthenticationController {
 			
 			List<Question> questionList = questionDao.getQuestionsBySurveyId(surveyId);
 			
+// get statistics 
+			
+			List<AnswerStats> surveyQuestionStats = answerStatsDao.getCountAndTextOfUniqueAnswersForSurveyQuestion(questionId, surveyId); 
+			
 			for(Question question : questionList) {
 				if(question.getQuestionId() == questionId) {
 					map.addAttribute("selectedQuestion", question);
@@ -128,6 +140,9 @@ public class AuthenticationController {
 			}
 			
 			map.addAttribute("answers", answerList);
+
+//add statistics to model map
+			map.addAttribute("surveyQuestionStats", surveyQuestionStats); 
 			
 			return "answers";
 			
@@ -327,4 +342,7 @@ public class AuthenticationController {
 			e.printStackTrace();
 		}
 	}
+	
+	
+
 }
