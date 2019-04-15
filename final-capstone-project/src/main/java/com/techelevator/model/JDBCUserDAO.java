@@ -60,7 +60,7 @@ public class JDBCUserDAO implements UserDAO {
 		String hashedPassword = hashMaster.computeHash(password, salt);
 		String saltString = new String(Base64.encode(salt));
 		
-		jdbcTemplate.update("UPDATE app_user SET password = ?, salt = ? WHERE user_name = ?", hashedPassword, saltString, userName);
+		jdbcTemplate.update("UPDATE app_user SET temporary_password = false,  password = ?, salt = ? WHERE user_name = ?", hashedPassword, saltString, userName);
 	}
 	
 	@Override
@@ -69,7 +69,7 @@ public class JDBCUserDAO implements UserDAO {
 		String hashedPassword = hashMaster.computeHash(password, salt);
 		String saltString = new String(Base64.encode(salt));
 		
-		jdbcTemplate.update("UPDATE app_user SET temporary_password = false,  password = ?, salt = ?  WHERE id = ?", hashedPassword, saltString, id);
+		jdbcTemplate.update("UPDATE app_user SET temporary_password = true,  password = ?, salt = ?  WHERE id = ?", hashedPassword, saltString, id);
 		
 	}
 	
