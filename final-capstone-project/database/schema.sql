@@ -27,7 +27,8 @@ CREATE TABLE app_user (
   user_name varchar(32) NOT NULL UNIQUE,
   password varchar(32) NOT NULL,
   role varchar(32),
-  salt varchar(255) NOT NULL
+  salt varchar(255) NOT NULL,
+  temporary_password boolean
 );
 
 create table survey (
