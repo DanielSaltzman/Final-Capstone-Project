@@ -144,15 +144,15 @@
 							</button>
 						</div>
 						<div class="modal-body">
-							<c:url var="changePasswordURL" value="changePassword" />
+							<c:url var="changePasswordURL" value="setOneTimePassword" />
 							<div class="form-group">
 								<form action="${changePasswordURL}" method="POST">
 									<label for="exampleInputPassword1">Password</label> <input
 										type="password" class="form-control"
 										id="exampleInputPassword1" placeholder="Password"
 										name="password"> <input type="hidden"
-										class="form-control" value="${currentUser.userNameId}"
-										name="userName">
+										class="form-control" value="${user.userNameId}"
+										name="userNameId">
 								</form>
 							</div>
 						</div>

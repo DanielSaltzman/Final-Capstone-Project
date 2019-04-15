@@ -218,6 +218,7 @@ public class AuthenticationController {
 		if(userDAO.searchForUsernameAndPassword(userName, password)) {
 			session.setAttribute("currentUser", userDAO.getUserByUserName(userName));
 			User user = ((User) session.getAttribute("currentUser"));
+			
 			logDao.inserLog(user.getUserName(), "Successful Login");
 			return "redirect:/survey";
 		} else {
@@ -242,17 +243,31 @@ public class AuthenticationController {
 		
 	}
 	
-	@RequestMapping(path="/setOneTimePassword", method=RequestMethod.POST) 
-	public String setOneTimePassword(@RequestParam String userName, @RequestParam String password, HttpSession session, ModelMap model) {
+	@RequestMapping(path="/changeOneTimePassword", method=RequestMethod.POST) 
+	public String changeOneTimePassword(@RequestParam String userName, @RequestParam String password, HttpSession session, ModelMap model) {
 		
 		userDAO.updatePassword(userName, password);
+		
+		User user = ((User) session.getAttribute("currentUser"));
+		
+		logDao.inserLog(user.getUserName(), "User Changed One-Time Password");
+		
+		
+		return "redirect:/survey";
+		
+	}
+	
+	@RequestMapping(path="/setOneTimePassword", method=RequestMethod.POST) 
+	public String setOneTimePassword(@RequestParam long userNameId, @RequestParam String password, HttpSession session) {
+		
+		userDAO.updatePasswordTemporary(userNameId, password);
 		
 		User user = ((User) session.getAttribute("currentUser"));
 		
 		logDao.inserLog(user.getUserName(), "Admin Set One-Time Password");
 		
 		
-		return "redirect:/login";
+		return "redirect:/userView";
 		
 	}
 	
