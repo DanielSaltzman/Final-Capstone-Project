@@ -242,6 +242,20 @@ public class AuthenticationController {
 		
 	}
 	
+//	@RequestMapping(path="/changePassword", method=RequestMethod.POST) 
+//	public String changePassword(@RequestParam String userName, @RequestParam String password, HttpSession session, ModelMap model) {
+//		
+//		userDAO.updatePassword(userName, password);
+//		
+//		User user = ((User) session.getAttribute("currentUser"));
+//		
+//		logDao.inserLog(user.getUserName(), "User Changed Password");
+//		
+//		
+//		return "redirect:/login";
+//		
+//	}
+	
 
 	@RequestMapping(path="/logout", method=RequestMethod.POST)
 	public String logout(ModelMap model, HttpSession session) {
