@@ -32,7 +32,7 @@ public class JDBCUserDAO implements UserDAO {
 		String hashedPassword = hashMaster.computeHash(password, salt);
 		String saltString = new String(Base64.encode(salt));
 		
-		jdbcTemplate.update("INSERT INTO app_user(user_name, password, salt, role) VALUES (?, ?, ?, ?)",
+		jdbcTemplate.update("INSERT INTO app_user(user_name, password, salt, role, temporary_password) VALUES (?, ?, ?, ?, true)",
 				userName, hashedPassword, saltString, role);
 	}
 
@@ -72,6 +72,21 @@ public class JDBCUserDAO implements UserDAO {
 		jdbcTemplate.update("UPDATE app_user SET temporary_password = true,  password = ?, salt = ?  WHERE id = ?", hashedPassword, saltString, id);
 		
 	}
+	
+	
+	@Override
+	public boolean isTemporaryPassword(long id) {
+		String sql = "select temporary_password from app_user where id =?"; 
+		
+		SqlRowSet user = jdbcTemplate.queryForRowSet(sql, id);
+		boolean tempPasswordReturn = true;
+		if(user.next()) {
+			tempPasswordReturn = user.getBoolean(1); 	
+		}
+		
+		return tempPasswordReturn;
+	}
+
 	
 	@Override
 	public void updateRole(String role, long id) {
@@ -127,6 +142,7 @@ public class JDBCUserDAO implements UserDAO {
 		
 		return user;
 	}
+
 
 	
 }
