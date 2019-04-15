@@ -28,11 +28,20 @@
 					<c:out value="${currentUser.userName}"></c:out>
 				</button>
 				<div class="dropdown-menu dropdown-menu-right ml-auto mr-1">
-					<c:url var="userViewURL" value="userView" />
-					<form action="${userViewURL}" method="POST">
-						<button class="dropdown-item" type="submit">View Users</button>
-					</form>
-					<button class="dropdown-item" type="button">View Log</button>
+					<c:set var="adminCheck" value="${currentUser.role}" />
+					<c:if test="${adminCheck == 'Admin'}">
+						<c:url var="userViewURL" value="userView" />
+						<form action="${userViewURL}" method="GET">
+							<button class="dropdown-item" type="submit">View Users</button>
+						</form>
+						<c:url var="logViewURL" value="log" />
+						<form action="${logViewURL}" method="GET">
+						<button class="dropdown-item" type="button">View Log</button>
+						</form>
+					</c:if>
+					<button class="dropdown-item" type="submit" data-toggle="modal"
+						data-target="#changePasswordModal">Change Password</button>
+
 					<c:url var="logoutURL" value="logout" />
 					<form action="${logoutURL}" method="POST">
 						<button class="dropdown-item" type="submit">Logout</button>
@@ -42,8 +51,6 @@
 		</div>
 </nav>
 
-<c:url var="trashLogo" value="img/icons/trash.png" />
-
 <div class="list-group surveyView">
 	<c:forEach var="user" items="${users}">
 
@@ -52,13 +59,14 @@
 				<h5 class="mb-1">
 					<c:out value="${user.userName}"></c:out>
 				</h5>
+				
 				<!-- Button trigger modals -->
 				<small><button type="button" class="btn btn-primary"
-						data-toggle="modal" data-target="#newModal${user.userNameId}">Delete</button>
-					<button type="button" class="btn btn-primary">Modify</button></small>
+						data-toggle="modal" data-target="#deleteModal${user.userNameId}">Delete</button>
+					<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#updateModal${user.userNameId}">Modify</button></small>
 
 				<!-- Delete Modal -->
-				<div class="modal fade" id="newModal${user.userNameId}" tabindex="-1" role="dialog"
+				<div class="modal fade" id="deleteModal${user.userNameId}" tabindex="-1" role="dialog"
 					aria-labelledby="exampleModalLabel" aria-hidden="true">
 					<div class="modal-dialog" role="document">
 						<div class="modal-content">
@@ -81,19 +89,45 @@
 						</div>
 					</div>
 				</div>
+				
+				<!-- Update Modal -->
+				<div class="modal fade" id="updateModal${user.userNameId}" tabindex="-1" role="dialog"
+					aria-labelledby="exampleModalLabel" aria-hidden="true">
+					<div class="modal-dialog" role="document">
+						<div class="modal-content">
+							<div class="modal-header">
+								<h5 class="modal-title" id="exampleModalLabel">Would you like to switch roles on this user?</h5>
+								<button type="button" class="close" data-dismiss="modal"
+									aria-label="Close">
+									<span aria-hidden="true">&times;</span>
+								</button>
+							</div>
+							<div class="modal-body">
+							<c:url var="editUserURL" value="editUser" />
+							<form action="${editUserURL}" method="POST">
+							<input type="hidden" value="${user.role}" name="role">
+							<input type="hidden" value="${user.userNameId}" name="id">
+								<button type="submit" class="btn btn-primary">Yes</button>
+								<button type="button" class="btn btn-primary" data-dismiss="modal">No</button>
+							</form>
+							</div>
+						</div>
+					</div>
+				</div>
 			</div>
 			<p class="mb-1">
 				<c:out value="Role: ${user.role}"></c:out>
 			</p>
 		</div>
 	</c:forEach>
-	<!-- Button trigger modal -->
+	<!-- Button trigger Add User modal -->
 	<button type="button" class="btn btn-light btn-lg btn-block"
-		data-toggle="modal" data-target="#exampleModal">Add User</button>
+		data-toggle="modal" data-target="#addUserModal">Add User</button>
+		
 </div>
 
-<!-- Modal -->
-<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog"
+<!-- Add User Modal -->
+<div class="modal fade" id="addUserModal" tabindex="-1" role="dialog"
 	aria-labelledby="exampleModalLabel" aria-hidden="true">
 	<div class="modal-dialog" role="document">
 		<div class="modal-content">
@@ -136,5 +170,38 @@
 	</div>
 </div>
 
+
+<!-- Change Password Modal -->
+<div class="modal fade" id="changePasswordModal" tabindex="-1"
+	role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="exampleModalLabel">Change Password</h5>
+				<button type="button" class="close" data-dismiss="modal"
+					aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="modal-body">
+				<c:url var="changePasswordURL" value="changePassword" />
+				<div class="form-group">
+				<form action="${changePasswordURL}" method="POST">
+					<label for="exampleInputPassword1">Password</label> <input
+						type="password" class="form-control" id="exampleInputPassword1"
+						placeholder="Password" name="password">
+						<input
+						type="hidden" class="form-control" value="${currentUser.userName}" name="userName">
+					</form>
+				</div>
+				
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+				<button type="submit" class="btn btn-primary">Save changes</button>
+			</div>
+		</div>
+	</div>
+</div>
 
 <c:import url="/WEB-INF/jsp/footer.jsp" />

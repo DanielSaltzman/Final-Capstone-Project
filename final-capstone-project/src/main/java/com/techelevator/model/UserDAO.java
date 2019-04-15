@@ -16,4 +16,6 @@ public interface UserDAO {
 
 	void deleteUser(long id);
 
+	void updateRole(String role, long id);
+
 }

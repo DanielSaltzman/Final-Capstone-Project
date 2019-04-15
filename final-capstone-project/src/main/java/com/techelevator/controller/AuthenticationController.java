@@ -19,9 +19,14 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.techelevator.model.Answer;
 import com.techelevator.model.AnswerDAO;
+import com.techelevator.model.AnswerStats;
+import com.techelevator.model.AnswerStatsDAO;
 import com.techelevator.model.CsvData;
 import com.techelevator.model.CsvParser;
+import com.techelevator.model.Log;
+import com.techelevator.model.LogDAO;
 import com.techelevator.model.Question;
 import com.techelevator.model.QuestionDAO;
 import com.techelevator.model.StudentDAO;
@@ -59,6 +64,13 @@ public class AuthenticationController {
 	private StudentDAO studentDao; 
 	
 	@Autowired
+	private LogDAO logDao;
+	
+	@Autowired
+	private AnswerStatsDAO answerStatsDao; 
+	
+	
+	@Autowired
 	private SurveyQuestionDAO surveyQuestionDao; 
 	
 	@Value("${path}")
@@ -94,10 +106,13 @@ public class AuthenticationController {
 					map.addAttribute("selectedSurvey", survey);
 				}
 			}
+			
 			List<Question> questionList = questionDao.getQuestionsBySurveyId(surveyId);
+			List<AnswerStats> surveyStats = answerStatsDao.getCountAndTextOfUniqueAnswersForSurvey(surveyId); 
 			
 			map.addAttribute("questions", questionList);
-			
+			map.addAttribute("surveyStats", surveyStats); 
+
 			return "surveyDetails";
 		} else {
 			return "redirect:/login";
@@ -105,8 +120,45 @@ public class AuthenticationController {
 		
 	}
 	
+	@RequestMapping(path="/answers", method=RequestMethod.GET)
+	public String displayAnswerDetailView(ModelMap map, @RequestParam long surveyId, @RequestParam long questionId, HttpSession session) {
+		
+		if(session.getAttribute("currentUser") != null) {
+			
+			List<Answer> answerList = answerDao.getStudentNameAndAnswerBySurveyIdAndQuestionId(surveyId, questionId);
+			
+			List<Question> questionList = questionDao.getQuestionsBySurveyId(surveyId);
+			
+// get statistics 
+			
+			List<AnswerStats> surveyQuestionStats = answerStatsDao.getCountAndTextOfUniqueAnswersForSurveyQuestion(questionId, surveyId); 
+			
+			for(Question question : questionList) {
+				if(question.getQuestionId() == questionId) {
+					map.addAttribute("selectedQuestion", question);
+				}
+			}
+			
+			map.addAttribute("answers", answerList);
+
+//add statistics to model map
+			map.addAttribute("surveyQuestionStats", surveyQuestionStats); 
+			
+			return "answers";
+			
+		} else {
+			return "redirect:/login";
+		}
+		
+	}
+	
 	@RequestMapping(path="/uploadFile", method=RequestMethod.POST)
-	public String handleFileUpload(SurveySubmission submission , ModelMap map) throws IOException {
+	public String handleFileUpload(SurveySubmission submission , ModelMap map, HttpSession session) throws IOException {
+		
+		User user = ((User) session.getAttribute("currentUser"));
+		
+		logDao.inserLog(user.getUserName(), "Uploaded Survey");
+		
 		
 		File csvPath = getCSVFilePath();
 		String csvName = csvPath + File.separator + "csvFile";
@@ -150,46 +202,117 @@ public class AuthenticationController {
 	public String login(@RequestParam String userName, 
 						@RequestParam String password, 
 						HttpSession session) {
+		
 		if(userDAO.searchForUsernameAndPassword(userName, password)) {
 			session.setAttribute("currentUser", userDAO.getUserByUserName(userName));
+			User user = ((User) session.getAttribute("currentUser"));
+			logDao.inserLog(user.getUserName(), "Successful Login");
 			return "redirect:/survey";
 		} else {
+			logDao.inserLog("Unknown", "Failed Login");
 			return "redirect:/login";
 		}
+	}
+	
+	@RequestMapping(path="/changePassword", method=RequestMethod.POST) 
+	public String changePassword(@RequestParam String userName, @RequestParam String password, HttpSession session, ModelMap model) {
+		
+		userDAO.updatePassword(userName, password);
+		
+		User user = ((User) session.getAttribute("currentUser"));
+		
+		logDao.inserLog(user.getUserName(), "User Changed Password");
+		
+		model.remove("currentUser");
+		session.invalidate();
+		
+		return "redirect:/login";
+		
 	}
 	
 
 	@RequestMapping(path="/logout", method=RequestMethod.POST)
 	public String logout(ModelMap model, HttpSession session) {
+		
+		User user = ((User) session.getAttribute("currentUser"));
+		
+		logDao.inserLog(user.getUserName(), "User Logged Out");
+		
 		model.remove("currentUser");
 		session.invalidate();
 		return "redirect:/login";
 	}
 	
 	@RequestMapping(path="/userView", method=RequestMethod.POST)
-	public String addUser(@RequestParam String userName, @RequestParam String password, @RequestParam String role) {
+	public String addUser(@RequestParam String userName, @RequestParam String password, @RequestParam String role, HttpSession session) {
+		
+		User user = ((User) session.getAttribute("currentUser"));
+		
+		logDao.inserLog(user.getUserName(), "Admin Added New User");
 		
 		userDAO.saveUser(userName, password, role);
 		
-		return "redirect:/survey";
+		return "redirect:/userView";
 	}
 	
 	@RequestMapping(path="/deleteUser", method=RequestMethod.POST)
-	public String addUser(@RequestParam long id) {
+	public String addUser(@RequestParam long id, HttpSession session) {
+		
+		User user = ((User) session.getAttribute("currentUser"));
+		
+		logDao.inserLog(user.getUserName(), "Admin Deleted User");
 		
 		userDAO.deleteUser(id);
 		
-		return "redirect:/survey";
+		return "redirect:/userView";
+	}
+	
+	@RequestMapping(path="/editUser", method=RequestMethod.POST)
+	public String editUser(@RequestParam long id, @RequestParam String role, HttpSession session) {
+		
+		User user = ((User) session.getAttribute("currentUser"));
+		
+		logDao.inserLog(user.getUserName(), "Admin Changed User Role");
+		
+		if(role.equals("Admin")) {
+			userDAO.updateRole("User", id);
+		} else {
+			userDAO.updateRole("Admin", id);
+		}
+		
+		return "redirect:/userView";
 	}
 	
 	@RequestMapping(path="/userView", method=RequestMethod.GET)
-	public String displayUserView(ModelMap map) {
+	public String displayUserView(ModelMap map, HttpSession session) {
 		
-		List<User> userList = userDAO.getAllUsers();
+		if(((User) session.getAttribute("currentUser")).getRole().equals("Admin")) {
+			
+			List<User> userList = userDAO.getAllUsers();
+			
+			map.addAttribute("users", userList);
+			
+			return "userView";
+		}
 		
-		map.addAttribute("users", userList);
+		return "redirect:/login";
+	}
+	
+	@RequestMapping(path="/log", method=RequestMethod.GET)
+	public String displayLogView(ModelMap map, HttpSession session) {
 		
-		return "userView";
+		User user = (User) session.getAttribute("currentUser");
+		
+		if(((User) session.getAttribute("currentUser")).getRole().equals("Admin")) {
+			
+			List<Log> logList = logDao.getAllLogs();
+		
+			map.addAttribute("logs", logList);
+			
+			return "log";
+		}
+		
+		return "redirect:/login";
 	}
 	
 	private File getCSVFilePath() {
@@ -219,4 +342,7 @@ public class AuthenticationController {
 			e.printStackTrace();
 		}
 	}
+	
+	
+
 }
