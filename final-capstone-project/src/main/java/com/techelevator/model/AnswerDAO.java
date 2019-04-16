@@ -11,5 +11,5 @@ public interface AnswerDAO {
 	public List<Answer> getStudentNameAndAnswerBySurveyIdAndQuestionId (long surveyId, long questionId); 
 	
 
-	public void updateAnswerTest(String answerText, long answerId); 
+	public void updateAnswerText(String answerText, long answerId); 
 }
