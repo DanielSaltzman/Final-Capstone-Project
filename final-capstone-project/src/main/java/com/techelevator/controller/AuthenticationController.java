@@ -96,6 +96,18 @@ public class AuthenticationController {
 		}
 	}
 	
+	@RequestMapping(path="/deleteSurvey", method=RequestMethod.POST) 
+	public String deleteSurvey(@RequestParam long id, HttpSession session) {
+		
+		surveyDao.deleteExistingSurvey(id);
+		
+		User user = ((User) session.getAttribute("currentUser"));
+		
+		logDao.inserLog(user.getUserName(), "User Deleted Survey " + id);
+		
+		return "redirect:/survey";
+	}
+	
 	@RequestMapping(path="/surveyDetails", method=RequestMethod.GET)
 	public String displaySurveyDetailView(ModelMap map, @RequestParam long surveyId, HttpSession session) {
 		

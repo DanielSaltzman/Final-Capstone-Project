@@ -143,8 +143,8 @@
 						<option value="9">9</option>
 						<option value="10">10</option>
 					</select> <br /> <input type="text" class="form-control"
-						placeholder="Instructor" name="instructor"> <br /> <input
-						type="text" class="form-control" placeholder="Topic" name="topic">
+						placeholder="Instructor" name="instructor" required> <br /> <input
+						type="text" class="form-control" placeholder="Topic" name="topic" required>
 					<br />
 					<div class="form-group">
 						<label for="exampleFormControlFile1">CSV File:</label> <input

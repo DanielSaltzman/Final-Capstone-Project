@@ -124,8 +124,60 @@
 			</table>
 		</div>	
 	</div>
+	<button type="button" class="btn btn-primary btn-lg btn-block"
+		data-toggle="modal" data-target="#exampleModal">Edit Survey
+	</button>
 </section>
 
+
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog"
+	aria-labelledby="exampleModalLabel" aria-hidden="true">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="exampleModalLabel">Input Info</h5>
+				<button type="button" class="close" data-dismiss="modal"
+					aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="modal-body">
+				<form action="<c:url value="editSurvey"/>" method="POST">
+					<label>Location:</label> <select class="form-control"
+						name="location">
+						<option value="Columbus">Columbus</option>
+						<option value="Cleveland">Cleveland</option>
+						<option value="Detroit">Detroit</option>
+						<option value="Pittsburgh">Pittsburgh</option>
+						<option value="Cincinnati">Cincinnati</option>
+					</select> <br /> <label>Cohort Number:</label> <select class="form-control"
+						name="cohortNumber">
+						<option value="1">1</option>
+						<option value="2">2</option>
+						<option value="3">3</option>
+						<option value="4">4</option>
+						<option value="5">5</option>
+						<option value="6">6</option>
+						<option value="7">7</option>
+						<option value="8">8</option>
+						<option value="9">9</option>
+						<option value="10">10</option>
+					</select> <br /> <input type="text" class="form-control"
+						placeholder="Instructor" name="instructor" value="${selectedSurvey.instructor}" required> <br /> <input
+						type="text" class="form-control" placeholder="Topic" name="topic" value="${selectedSurvey.topic}" required>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-secondary"
+							data-dismiss="modal">Close</button>
+						<button type="submit" class="btn btn-primary">Save
+							changes</button>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
 
 <!-- Change Password Modal -->
 <div class="modal fade" id="changePasswordModal" tabindex="-1"
