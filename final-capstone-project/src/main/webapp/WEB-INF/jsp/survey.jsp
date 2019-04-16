@@ -178,20 +178,19 @@
 			</div>
 			<div class="modal-body">
 				<c:url var="changePasswordURL" value="changePassword" />
+				<form action="${changePasswordURL}" method="POST">
 				<div class="form-group">
-					<form action="${changePasswordURL}" method="POST">
 						<label for="exampleInputPassword1">Password</label> <input
 							type="password" class="form-control" id="exampleInputPassword1"
 							placeholder="Password" name="password"> <input
 							type="hidden" class="form-control"
 							value="${currentUser.userName}" name="userName">
-					</form>
 				</div>
 
-			</div>
 			<div class="modal-footer">
 				<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
 				<button type="submit" class="btn btn-primary">Save changes</button>
+				</form>
 			</div>
 		</div>
 	</div>
