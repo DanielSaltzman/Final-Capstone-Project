@@ -152,7 +152,7 @@
 									placeholder="Password" name="password"> <input
 									type="hidden" class="form-control" value="${user.userNameId}"
 									name="userNameId">
-							</form>
+							
 						</div>
 					</div>
 					<div class="modal-footer">
@@ -160,6 +160,7 @@
 							data-dismiss="modal">Close</button>
 						<button type="submit" class="btn btn-primary">Save
 							changes</button>
+							</form>
 					</div>
 				</div>
 			</div>
