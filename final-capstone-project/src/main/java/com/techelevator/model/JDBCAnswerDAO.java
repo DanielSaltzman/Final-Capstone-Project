@@ -50,6 +50,8 @@ public class JDBCAnswerDAO implements AnswerDAO {
 		
 		answer.setAnswerText(result.getString("answer_text"));
 		answer.setStudentName(result.getString("student_name")); 
+		answer.setAnswerId(result.getLong("answer_id"));
+		answer.setStudentName(result.getString("student_name"));
 		
 		return answer; 
 	}
@@ -70,7 +72,7 @@ public class JDBCAnswerDAO implements AnswerDAO {
 	@Override
 	public List<Answer> getStudentNameAndAnswerBySurveyIdAndQuestionId(long surveyId, long question_id) {
 
-	String sql = "Select student.student_name, answer.answer_text from student join answer on student.student_id = answer.student_id WHERE answer.survey_id = ? and answer.question_id = ? order by student.student_name ASC"; 
+	String sql = "Select  student.student_id, answer.answer_id, student.student_name, answer.answer_text from student join answer on student.student_id = answer.student_id WHERE answer.survey_id = ? and answer.question_id = ? order by student.student_name ASC"; 
 		
 		SqlRowSet result = jdbcTemplate.queryForRowSet(sql, surveyId, question_id);
 		
