@@ -36,7 +36,7 @@
 						</form>
 						<c:url var="logViewURL" value="log" />
 						<form action="${logViewURL}" method="GET">
-						<button class="dropdown-item" type="button">View Log</button>
+							<button class="dropdown-item" type="submit">View Log</button>
 						</form>
 					</c:if>
 					<button class="dropdown-item" type="submit" data-toggle="modal"
@@ -48,7 +48,6 @@
 					</form>
 				</div>
 			</div>
-		</div>
 		</div>
 </nav>
 

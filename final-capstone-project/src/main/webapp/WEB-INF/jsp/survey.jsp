@@ -49,7 +49,6 @@
 				</div>
 			</div>
 		</div>
-		
 </nav>
 
 <div class="list-group surveyView">
@@ -65,12 +64,42 @@
 					<c:out value="${survey.surveyName}"></c:out>
 				</h5>
 				<small><a href="${surveyDetailsURL}"><button
-							type="button" class="btn btn-primary">View</button></a></small>
+							type="button" class="btn btn-primary">View</button></a>
+<%-- 				<c:if test="${adminCheck == 'Admin'}"> --%>
+					<button type="button" class="btn btn-primary"
+						data-toggle="modal" data-target="#deleteModal${survey.surveyId}">Delete</button></small>
+			<%-- 	</c:if> --%>
 			</div>
 			<p class="mb-1">
 				<c:out value="Class Room: ${survey.room}"></c:out>
 			</p>
 			<small><c:out value="${survey.createdDate}"></c:out></small>
+		</div>
+		
+				<!-- Delete Survey Modal -->
+		<div class="modal fade" id="deleteModal${survey.surveyId}"
+			tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+			aria-hidden="true">
+			<div class="modal-dialog" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title" id="exampleModalLabel">Are you Sure?</h5>
+						<button type="button" class="close" data-dismiss="modal"
+							aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+					<div class="modal-body">
+						<c:url var="deleteSurveyURL" value="deleteSurvey"/>
+						<form action="${deleteSurveyURL}" method="POST">
+							<input type="hidden" value="${survey.surveyId}" name="id">
+							<button type="submit" class="btn btn-primary">Yes</button>
+							<button type="button" class="btn btn-primary"
+								data-dismiss="modal">No</button>
+						</form>
+					</div>
+				</div>
+			</div>
 		</div>
 	</c:forEach>
 	<!-- Button trigger modal -->
