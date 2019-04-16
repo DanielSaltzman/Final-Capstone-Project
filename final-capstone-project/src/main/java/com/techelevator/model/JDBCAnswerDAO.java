@@ -58,7 +58,7 @@ public class JDBCAnswerDAO implements AnswerDAO {
 	
 	
 	@Override
-	public void updateAnswerTest(String answerText, long answerId) {
+	public void updateAnswerText(String answerText, long answerId) {
 		String sql =" UPDATE answer SET answer_text = ? WHERE answer_id = ?"; 
 		jdbcTemplate.update(sql, answerText, answerId); 
 	}
