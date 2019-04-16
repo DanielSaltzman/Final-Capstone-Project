@@ -49,6 +49,7 @@
 				</div>
 			</div>
 		</div>
+		
 </nav>
 
 <div class="list-group surveyView">

@@ -49,6 +49,7 @@
 				</div>
 			</div>
 		</div>
+		</div>
 </nav>
 
 <section class="detailSection">

@@ -135,8 +135,9 @@ VALUES
 ('STUDENT1', 'Keys, Bobby'), 
 ('STUDENT2', 'Hopkins, Nicky');
 
-INSERT INTO app_user(user_name, password, role, salt) 
+INSERT INTO app_user(user_name, password, role, salt, temporary_password) 
 VALUES
-('admin', '4YbAeLajCoyT/3miTru9bQ==', 'Admin', 'Zj75Cs1H4p1k6HBrY7dGfPLeivQ9Kzt1GJPiUIZVjDXFqlpUC5MDSwif34CFfh+eIX16IFxBAUdwRNNamMqG5KXx7jZEXOIDF48PI2hjdoonxUSt0Rw3Fl/5BGIR1H8wJysSmgu9cSYjWWXMxriEsYML82tqrKDI5d792yXs+hk=');
+('userTemp', '4YbAeLajCoyT/3miTru9bQ==', 'User', 'Zj75Cs1H4p1k6HBrY7dGfPLeivQ9Kzt1GJPiUIZVjDXFqlpUC5MDSwif34CFfh+eIX16IFxBAUdwRNNamMqG5KXx7jZEXOIDF48PI2hjdoonxUSt0Rw3Fl/5BGIR1H8wJysSmgu9cSYjWWXMxriEsYML82tqrKDI5d792yXs+hk=', true),
+('admin', '4YbAeLajCoyT/3miTru9bQ==', 'Admin', 'Zj75Cs1H4p1k6HBrY7dGfPLeivQ9Kzt1GJPiUIZVjDXFqlpUC5MDSwif34CFfh+eIX16IFxBAUdwRNNamMqG5KXx7jZEXOIDF48PI2hjdoonxUSt0Rw3Fl/5BGIR1H8wJysSmgu9cSYjWWXMxriEsYML82tqrKDI5d792yXs+hk=', false);
 
 COMMIT;

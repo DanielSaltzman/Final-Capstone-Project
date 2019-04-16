@@ -50,7 +50,9 @@
 			</div>
 		</div>
 </nav>
-<div class="list-group-item surveyView">
+
+
+<%-- <div class="list-group-item surveyView">
 <c:forEach var="log" items="${logs}">
 			<div class="d-flex w-100 justify-content-between">
 				<h5 class="mb-1">
@@ -60,7 +62,23 @@
 			</div>
 			<small><c:out value="${log.editingUser}"/></small>
 </c:forEach>
-</div>
+</div> --%>
 
+
+<div class="list-group surveyView">
+	<c:forEach var="log" items="${logs}">
+
+		<div class="list-group-item">
+			<div class="d-flex w-100 justify-content-between">
+				<h5 class="mb-1">
+					<c:out value="${log.logText}"></c:out>
+				</h5>
+				<small><c:out value="${log.timestamp}"></c:out></small>
+			</div>
+			<small class="mb-1">
+				<c:out value="Username: ${log.editingUser}"></c:out>
+			</small>
+		</div>
+	</c:forEach>
 
 <c:import url="/WEB-INF/jsp/footer.jsp" />

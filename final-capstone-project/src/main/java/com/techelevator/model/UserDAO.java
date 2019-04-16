@@ -17,5 +17,9 @@ public interface UserDAO {
 	void deleteUser(long id);
 
 	void updateRole(String role, long id);
+	
+	void updatePasswordTemporary(long id, String password); 
+	
+	public boolean isTemporaryPassword(long id); 
 
 }

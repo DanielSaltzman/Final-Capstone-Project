@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.techelevator.model.Answer;
 import com.techelevator.model.AnswerDAO;
 import com.techelevator.model.AnswerStats;
@@ -112,6 +113,7 @@ public class AuthenticationController {
 			
 			map.addAttribute("questions", questionList);
 			map.addAttribute("surveyStats", surveyStats); 
+			
 
 			return "surveyDetails";
 		} else {
@@ -142,7 +144,17 @@ public class AuthenticationController {
 			map.addAttribute("answers", answerList);
 
 //add statistics to model map
+			
 			map.addAttribute("surveyQuestionStats", surveyQuestionStats); 
+
+// Get truncated answer text for the bar graph
+			
+			for(AnswerStats stats : surveyQuestionStats) {
+				if(stats.getAnswerText().length() > 25) {
+					stats.setAnswerText(stats.getAnswerText().substring(0,23) + "...");
+				}
+				map.addAttribute("truncatedStats", surveyQuestionStats);
+			}
 			
 			return "answers";
 			
@@ -206,6 +218,11 @@ public class AuthenticationController {
 		if(userDAO.searchForUsernameAndPassword(userName, password)) {
 			session.setAttribute("currentUser", userDAO.getUserByUserName(userName));
 			User user = ((User) session.getAttribute("currentUser"));
+			
+			if(userDAO.isTemporaryPassword(user.getUserNameId())) {
+				return "redirect:/changeOneTimePassword";
+			}
+			
 			logDao.inserLog(user.getUserName(), "Successful Login");
 			return "redirect:/survey";
 		} else {
@@ -227,6 +244,45 @@ public class AuthenticationController {
 		session.invalidate();
 		
 		return "redirect:/login";
+		
+	}
+	
+	@RequestMapping(path="/changeOneTimePassword", method=RequestMethod.POST) 
+	public String changeOneTimePassword(@RequestParam String userName, @RequestParam String password, HttpSession session, ModelMap model) {
+		
+		userDAO.updatePassword(userName, password);
+		
+		User user = ((User) session.getAttribute("currentUser"));
+		
+		logDao.inserLog(user.getUserName(), "User Changed One-Time Password");
+		
+		
+		return "redirect:/survey";
+		
+	}
+	
+	@RequestMapping(path="/changeOneTimePassword", method=RequestMethod.GET)
+	public String displayChangeOneTimePasswordView(ModelMap map, HttpSession session) {
+		
+		if(((User) session.getAttribute("currentUser")) != null) {
+			
+			return "changeOneTimePassword";
+		}
+		
+		return "redirect:/login";
+	}
+	
+	@RequestMapping(path="/setOneTimePassword", method=RequestMethod.POST) 
+	public String setOneTimePassword(@RequestParam long userNameId, @RequestParam String password, HttpSession session) {
+		
+		userDAO.updatePasswordTemporary(userNameId, password);
+		
+		User user = ((User) session.getAttribute("currentUser"));
+		
+		logDao.inserLog(user.getUserName(), "Admin Set One-Time Password");
+		
+		
+		return "redirect:/userView";
 		
 	}
 	
