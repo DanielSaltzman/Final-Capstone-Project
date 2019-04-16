@@ -123,8 +123,10 @@
 			</table>
 		</div>
 	</div>
+	<c:if test="${adminCheck == 'Admin'}">
 	<button type="button" class="btn btn-primary btn-lg btn-block"
 		data-toggle="modal" data-target="#exampleModal">Edit Survey</button>
+		</c:if>
 </section>
 
 

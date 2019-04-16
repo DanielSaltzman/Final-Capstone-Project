@@ -105,7 +105,7 @@ var myChart = new Chart(ctx, {
 
 	</br>
 	<div class="list-group">
-		<c:forEach var="answer" items="${answers}">
+		<c:forEach var="answer" items="${answers}" varStatus="loop">
 
 			<div class="list-group-item">
 				<div class="d-flex w-100 justify-content-between">
@@ -113,15 +113,15 @@ var myChart = new Chart(ctx, {
 						<c:out value="${answer.answerText}" />
 					</h5>
 					<small><button type="button" class="btn btn-primary"
-							data-toggle="modal" data-target="#editModal${answer.studentId}">Edit</button></small>
+							data-toggle="modal" data-target="#editModal${loop.index}">Edit</button></small>
 				</div>
-				<p class="mb-1">
+				<p class="mb-1" style="text-align:left">
 					<c:out value="${answer.studentName}" />
 				</p>
 			</div>
 
 			<!-- Edit Answers Modal -->
-			<div class="modal fade" id="editModal${answer.studentId}" tabindex="-1" role="dialog"
+			<div class="modal fade" id="editModal${loop.index}" tabindex="-1" role="dialog"
 				aria-labelledby="exampleModalLabel" aria-hidden="true">
 				<div class="modal-dialog" role="document">
 					<div class="modal-content">
@@ -133,18 +133,26 @@ var myChart = new Chart(ctx, {
 							</button>
 						</div>
 						<div class="modal-body">
-						<form action="editAnswer" method="POST">
-						<input type="text" value="<c:out value="${answer.answerText}" />" name="answerText">
+						<c:url var="editAnswerURL" value="editAnswer"/>
+						<form action="${editAnswerURL}" method="POST">
+						<div class="form-group">
+						<input class="form-control" type="text" value="${answer.answerText}" name="answerText">
+						<input type="hidden" value="${answer.answerText}" name="beforeAnswerText">
 						<input type="hidden" value="${answer.answerId}" name="id">
-						</form>
+						<input type="hidden" value="${param.questionId}" name="questionId">
+						<input type="hidden" value="${param.surveyId}" name="surveyId">
+						</div>
+						
 						
 						</div>
 						<div class="modal-footer">
 							<button type="button" class="btn btn-secondary"
 								data-dismiss="modal">Close</button>
-							<button type="button" class="btn btn-primary">Save
+							<button type="submit" class="btn btn-primary">Save
 								changes</button>
+						</form>
 						</div>
+						
 					</div>
 				</div>
 			</div>

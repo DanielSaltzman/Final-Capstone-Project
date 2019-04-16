@@ -120,6 +120,18 @@ public class AuthenticationController {
 		return "redirect:/surveyDetails?surveyId=" + id;
 	}
 	
+	@RequestMapping(path="/editAnswer", method=RequestMethod.POST) 
+	public String editSurvey(@RequestParam long id, @RequestParam String answerText, @RequestParam String beforeAnswerText, @RequestParam long questionId, @RequestParam long surveyId, HttpSession session) {
+		
+		answerDao.updateAnswerText(answerText, id);
+		
+		User user = ((User) session.getAttribute("currentUser"));
+		
+		logDao.inserLog(user.getUserName(), "User Edited Answer " + id + " || Before: " + beforeAnswerText + " After: " + answerText );
+		
+		return "redirect:/answers?questionId=" + questionId + "&surveyId=" + surveyId;
+	}
+
 	@RequestMapping(path="/surveyDetails", method=RequestMethod.GET)
 	public String displaySurveyDetailView(ModelMap map, @RequestParam long surveyId, HttpSession session) {
 		
