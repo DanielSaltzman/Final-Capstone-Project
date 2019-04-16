@@ -218,6 +218,11 @@ public class AuthenticationController {
 		if(userDAO.searchForUsernameAndPassword(userName, password)) {
 			session.setAttribute("currentUser", userDAO.getUserByUserName(userName));
 			User user = ((User) session.getAttribute("currentUser"));
+			
+			if(userDAO.isTemporaryPassword(user.getUserNameId())) {
+				return "redirect:/changeOneTimePassword";
+			}
+			
 			logDao.inserLog(user.getUserName(), "Successful Login");
 			return "redirect:/survey";
 		} else {
@@ -239,6 +244,45 @@ public class AuthenticationController {
 		session.invalidate();
 		
 		return "redirect:/login";
+		
+	}
+	
+	@RequestMapping(path="/changeOneTimePassword", method=RequestMethod.POST) 
+	public String changeOneTimePassword(@RequestParam String userName, @RequestParam String password, HttpSession session, ModelMap model) {
+		
+		userDAO.updatePassword(userName, password);
+		
+		User user = ((User) session.getAttribute("currentUser"));
+		
+		logDao.inserLog(user.getUserName(), "User Changed One-Time Password");
+		
+		
+		return "redirect:/survey";
+		
+	}
+	
+	@RequestMapping(path="/changeOneTimePassword", method=RequestMethod.GET)
+	public String displayChangeOneTimePasswordView(ModelMap map, HttpSession session) {
+		
+		if(((User) session.getAttribute("currentUser")) != null) {
+			
+			return "changeOneTimePassword";
+		}
+		
+		return "redirect:/login";
+	}
+	
+	@RequestMapping(path="/setOneTimePassword", method=RequestMethod.POST) 
+	public String setOneTimePassword(@RequestParam long userNameId, @RequestParam String password, HttpSession session) {
+		
+		userDAO.updatePasswordTemporary(userNameId, password);
+		
+		User user = ((User) session.getAttribute("currentUser"));
+		
+		logDao.inserLog(user.getUserName(), "Admin Set One-Time Password");
+		
+		
+		return "redirect:/userView";
 		
 	}
 	
