@@ -75,6 +75,13 @@ public class JDBCSurveyDAO implements SurveyDAO {
 		jdbcTemplate.update(deleteFromSurvey, id);
 		jdbcTemplate.update(deleteFromAnswer, id);
 	}
+	
+
+	@Override
+	public void updateSurvey(long id, String campus, String cohortNumber, String instructor, String topic) {
+		String sql = "UPDATE survey SET campus = ?, cohort_number = ? , instructor = ? , topic = ? WHERE survey_id = ?"; 
+		jdbcTemplate.update(sql, campus, cohortNumber, instructor, topic, id); 
+	}
 
 	private Survey mapRowToSurvey(SqlRowSet result) {
 
@@ -91,5 +98,6 @@ public class JDBCSurveyDAO implements SurveyDAO {
 
 		return survey;
 	}
+
 
 }

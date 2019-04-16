@@ -14,4 +14,8 @@ public interface SurveyDAO {
 			String instructor, String topic); 
 	
 	public void deleteExistingSurvey(long id); 
+	
+	public void updateSurvey(long id, String campus, String cohortNumber, String instructor, String topic); 
+	
+	
 }
