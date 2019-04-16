@@ -9,4 +9,7 @@ public interface AnswerDAO {
 	public void createNewAnswer(long questionId, String answerText, String studentId, long surveyId);
 	
 	public List<Answer> getStudentNameAndAnswerBySurveyIdAndQuestionId (long surveyId, long questionId); 
+	
+
+	public void updateAnswerTest(String answerText, long answerId); 
 }
