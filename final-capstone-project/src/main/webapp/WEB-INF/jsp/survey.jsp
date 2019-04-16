@@ -65,10 +65,10 @@
 				</h5>
 				<small><a href="${surveyDetailsURL}"><button
 							type="button" class="btn btn-primary">View</button></a>
-<%-- 				<c:if test="${adminCheck == 'Admin'}"> --%>
+				<c:if test="${adminCheck == 'Admin'}"> 
 					<button type="button" class="btn btn-primary"
 						data-toggle="modal" data-target="#deleteModal${survey.surveyId}">Delete</button></small>
-			<%-- 	</c:if> --%>
+			 	</c:if> 
 			</div>
 			<p class="mb-1">
 				<c:out value="Class Room: ${survey.room}"></c:out>

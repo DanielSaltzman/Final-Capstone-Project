@@ -108,6 +108,18 @@ public class AuthenticationController {
 		return "redirect:/survey";
 	}
 	
+	@RequestMapping(path="/editSurvey", method=RequestMethod.POST) 
+	public String editSurvey(@RequestParam long id, @RequestParam String campus, @RequestParam String cohortNumber, @RequestParam String instructor, @RequestParam String topic, HttpSession session) {
+		
+		surveyDao.updateSurvey(id, campus, cohortNumber, instructor, topic);
+		
+		User user = ((User) session.getAttribute("currentUser"));
+		
+		logDao.inserLog(user.getUserName(), "User Edited Survey " + id);
+		
+		return "redirect:/surveyDetails?surveyId=" + id;
+	}
+	
 	@RequestMapping(path="/surveyDetails", method=RequestMethod.GET)
 	public String displaySurveyDetailView(ModelMap map, @RequestParam long surveyId, HttpSession session) {
 		

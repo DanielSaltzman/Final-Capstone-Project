@@ -112,7 +112,40 @@ var myChart = new Chart(ctx, {
 					<h5 class="mb-1">
 						<c:out value="${answer.answerText}" />
 					</h5>
-					<small><c:out value="${answer.studentName}" /></small>
+					<small><button type="button" class="btn btn-primary"
+							data-toggle="modal" data-target="#editModal${answer.studentId}">Edit</button></small>
+				</div>
+				<p class="mb-1">
+					<c:out value="${answer.studentName}" />
+				</p>
+			</div>
+
+			<!-- Edit Answers Modal -->
+			<div class="modal fade" id="editModal${answer.studentId}" tabindex="-1" role="dialog"
+				aria-labelledby="exampleModalLabel" aria-hidden="true">
+				<div class="modal-dialog" role="document">
+					<div class="modal-content">
+						<div class="modal-header">
+							<h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+							<button type="button" class="close" data-dismiss="modal"
+								aria-label="Close">
+								<span aria-hidden="true">&times;</span>
+							</button>
+						</div>
+						<div class="modal-body">
+						<form action="editAnswer" method="POST">
+						<input type="text" value="<c:out value="${answer.answerText}" />" name="answerText">
+						<input type="hidden" value="${answer.answerId}" name="id">
+						</form>
+						
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-secondary"
+								data-dismiss="modal">Close</button>
+							<button type="button" class="btn btn-primary">Save
+								changes</button>
+						</div>
+					</div>
 				</div>
 			</div>
 		</c:forEach>
@@ -161,9 +194,7 @@ var myChart = new Chart(ctx, {
 					<form action="${changePasswordURL}" method="POST">
 						<label for="exampleInputPassword1">Password</label> <input
 							type="password" class="form-control" id="exampleInputPassword1"
-							placeholder="Password" name="password"> 
-							
-							<input
+							placeholder="Password" name="password"> <input
 							type="hidden" class="form-control"
 							value="${currentUser.userName}" name="userName">
 					</form>
@@ -177,5 +208,7 @@ var myChart = new Chart(ctx, {
 		</div>
 	</div>
 </div>
+
+
 
 <c:import url="/WEB-INF/jsp/footer.jsp" />

@@ -53,6 +53,13 @@ public class JDBCAnswerDAO implements AnswerDAO {
 		
 		return answer; 
 	}
+	
+	
+	@Override
+	public void updateAnswerTest(String answerText, long answerId) {
+		String sql =" UPDATE answer SET answer_text = ? WHERE answer_id = ?"; 
+		jdbcTemplate.update(sql, answerText, answerId); 
+	}
 
 	@Override
 	public void createNewAnswer(long questionId, String answerText, String studentId, long surveyId) {
@@ -74,6 +81,8 @@ public class JDBCAnswerDAO implements AnswerDAO {
 		
 		return answers;	
 			}
+
+
 	
 	
 

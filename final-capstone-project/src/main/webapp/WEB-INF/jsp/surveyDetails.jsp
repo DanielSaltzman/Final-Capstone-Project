@@ -86,21 +86,20 @@
 				<c:param name="questionId" value="${question.questionId}" />
 				<c:param name="surveyId" value="${selectedSurvey.surveyId}" />
 			</c:url>
-			
+
 			<div class="list-group-item">
 				<div class="d-flex w-100 justify-content-between">
 					<h5 class="mb-1">
 						<c:out value="${question.questionText}"></c:out>
 					</h5>
 
-					<small><a href="${questionDetailsURL}"><button type="button"
-								class="btn btn-primary">View</button></a></small>
+					<small><a href="${questionDetailsURL}"><button
+								type="button" class="btn btn-primary">View</button></a></small>
 
 				</div>
 			</div>
 		</c:forEach>
-		<br> 
-		<br> 
+		<br> <br>
 		<div>
 			<table class="table">
 				<thead>
@@ -113,20 +112,19 @@
 				</thead>
 				<tbody>
 					<c:forEach var="stat" items="${surveyStats}">
-					<tr>
+						<tr>
 							<td></td>
-							<td><c:out value= "${stat.questionId}"/></td>
-							<td><c:out value= "${stat.countOfAnswers}"/></td>
-							<td><c:out value= "${stat.answerText}"/></td>
-					</tr>
+							<td><c:out value="${stat.questionId}" /></td>
+							<td><c:out value="${stat.countOfAnswers}" /></td>
+							<td><c:out value="${stat.answerText}" /></td>
+						</tr>
 					</c:forEach>
-				 </tbody>
+				</tbody>
 			</table>
-		</div>	
+		</div>
 	</div>
 	<button type="button" class="btn btn-primary btn-lg btn-block"
-		data-toggle="modal" data-target="#exampleModal">Edit Survey
-	</button>
+		data-toggle="modal" data-target="#exampleModal">Edit Survey</button>
 </section>
 
 
@@ -145,8 +143,7 @@
 			</div>
 			<div class="modal-body">
 				<form action="<c:url value="editSurvey"/>" method="POST">
-					<label>Location:</label> <select class="form-control"
-						name="location">
+					<label>Location:</label> <select class="form-control" name="campus">
 						<option value="Columbus">Columbus</option>
 						<option value="Cleveland">Cleveland</option>
 						<option value="Detroit">Detroit</option>
@@ -165,8 +162,11 @@
 						<option value="9">9</option>
 						<option value="10">10</option>
 					</select> <br /> <input type="text" class="form-control"
-						placeholder="Instructor" name="instructor" value="${selectedSurvey.instructor}" required> <br /> <input
-						type="text" class="form-control" placeholder="Topic" name="topic" value="${selectedSurvey.topic}" required>
+						placeholder="Instructor" name="instructor"
+						value="${selectedSurvey.instructor}" required> <br /> <input
+						type="text" class="form-control" placeholder="Topic" name="topic"
+						value="${selectedSurvey.topic}" required>
+						<input type="hidden" value="${param.surveyId}" name="id">
 					<div class="modal-footer">
 						<button type="button" class="btn btn-secondary"
 							data-dismiss="modal">Close</button>
@@ -194,15 +194,15 @@
 			<div class="modal-body">
 				<c:url var="changePasswordURL" value="changePassword" />
 				<div class="form-group">
-				<form action="${changePasswordURL}" method="POST">
-					<label for="exampleInputPassword1">Password</label> <input
-						type="password" class="form-control" id="exampleInputPassword1"
-						placeholder="Password" name="password">
-						<input
-						type="hidden" class="form-control" value="${currentUser.userName}" name="userName">
+					<form action="${changePasswordURL}" method="POST">
+						<label for="exampleInputPassword1">Password</label> <input
+							type="password" class="form-control" id="exampleInputPassword1"
+							placeholder="Password" name="password"> <input
+							type="hidden" class="form-control"
+							value="${currentUser.userName}" name="userName">
 					</form>
 				</div>
-				
+
 			</div>
 			<div class="modal-footer">
 				<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
