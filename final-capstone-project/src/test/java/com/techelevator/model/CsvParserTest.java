@@ -8,6 +8,9 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
+import com.techelevator.model.CSV.CsvData;
+import com.techelevator.model.CSV.CsvParser;
+
 public class CsvParserTest {
 	
 	private CsvParser dbw; 

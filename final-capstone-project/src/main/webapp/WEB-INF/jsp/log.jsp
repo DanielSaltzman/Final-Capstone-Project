@@ -53,19 +53,6 @@
 
 <div class="list-group surveyView">
 
-<input class="form-control" id="myInput" type="text" placeholder="Search..">
-
-<script>
-$(document).ready(function(){
-  $("#myInput").on("keyup", function() {
-    var value = $(this).val().toLowerCase();
-    $("#myList h5").filter(function() {
-      $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
-    });
-  });
-});
-</script>
-
 	<c:forEach var="log" items="${logs}">
 
 		<div class="list-group-item">

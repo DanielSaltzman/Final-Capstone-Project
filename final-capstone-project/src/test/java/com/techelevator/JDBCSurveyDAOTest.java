@@ -7,8 +7,8 @@ import org.junit.Before;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.techelevator.model.JDBCSurveyDAO;
-import com.techelevator.model.Survey;
+import com.techelevator.model.Survey.Survey;
+import com.techelevator.model.Survey.Survey.JDBCSurveyDAO;
 
 public class JDBCSurveyDAOTest extends DAOIntegrationTest {
 	

@@ -1,47 +1,83 @@
 package com.techelevator.controller;
 
-import javax.validation.Valid;
+import java.util.List;
+
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.springframework.web.bind.annotation.RequestParam;
 
-import com.techelevator.model.User;
-import com.techelevator.model.UserDAO;
+import com.techelevator.model.Log.LogDAO;
+import com.techelevator.model.User.User;
+import com.techelevator.model.User.UserDAO;
 
 @Controller
 public class UserController {
 
-	private UserDAO userDAO;
 
 	@Autowired
-	public UserController(UserDAO userDAO) {
-		this.userDAO = userDAO;
-	}
-
-	@RequestMapping(path="/users/new", method=RequestMethod.GET)
-	public String displayNewUserForm(ModelMap modelHolder) {
-		if( ! modelHolder.containsAttribute("user")) {
-			modelHolder.addAttribute("user", new User());
-		}
-		return "newUser";
-	}
+	private UserDAO userDAO;
 	
-	@RequestMapping(path="/users", method=RequestMethod.POST)
-	public String createUser(@Valid @ModelAttribute User user, BindingResult result, RedirectAttributes flash) {
-		if(result.hasErrors()) {
-			flash.addFlashAttribute("user", user);
-			flash.addFlashAttribute(BindingResult.MODEL_KEY_PREFIX + "user", result);
-			return "redirect:/users/new";
+	@Autowired
+	private LogDAO logDao;
+	
+	@RequestMapping(path="/userView", method=RequestMethod.GET)
+	public String displayUserView(ModelMap map, HttpSession session) {
+		
+		if(((User) session.getAttribute("currentUser")).getRole().equals("Admin")) {
+			
+			List<User> userList = userDAO.getAllUsers();
+			
+			map.addAttribute("users", userList);
+			
+			return "userView";
 		}
 		
-		userDAO.saveUser(user.getUserName(), user.getPassword(), user.getRole());
 		return "redirect:/login";
+	}
+	
+	@RequestMapping(path="/userView", method=RequestMethod.POST)
+	public String addUser(@RequestParam String userName, @RequestParam String password, @RequestParam String role, HttpSession session) {
+		
+		User user = ((User) session.getAttribute("currentUser"));
+		
+		logDao.insertLog(user.getUserName(), "Admin Added New User");
+		
+		userDAO.saveUser(userName, password, role);
+		
+		return "redirect:/userView";
+	}
+	
+	@RequestMapping(path="/deleteUser", method=RequestMethod.POST)
+	public String addUser(@RequestParam long id, HttpSession session) {
+		
+		User user = ((User) session.getAttribute("currentUser"));
+		
+		logDao.insertLog(user.getUserName(), "Admin Deleted User");
+		
+		userDAO.deleteUser(id);
+		
+		return "redirect:/userView";
+	}
+	
+	@RequestMapping(path="/editUser", method=RequestMethod.POST)
+	public String editUser(@RequestParam long id, @RequestParam String role, HttpSession session) {
+		
+		User user = ((User) session.getAttribute("currentUser"));
+		
+		logDao.insertLog(user.getUserName(), "Admin Changed User Role");
+		
+		if(role.equals("Admin")) {
+			userDAO.updateRole("User", id);
+		} else {
+			userDAO.updateRole("Admin", id);
+		}
+		
+		return "redirect:/userView";
 	}
 	
 	

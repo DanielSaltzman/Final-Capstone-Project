@@ -7,9 +7,9 @@ import org.junit.Before;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.techelevator.model.JDBCAnswerDAO;
-import com.techelevator.model.JDBCQuestionDAO;
-import com.techelevator.model.Question;
+import com.techelevator.model.Answer.JDBCAnswerDAO;
+import com.techelevator.model.Question.Question;
+import com.techelevator.model.Question.Question.JDBCQuestionDAO;
 
 
 
