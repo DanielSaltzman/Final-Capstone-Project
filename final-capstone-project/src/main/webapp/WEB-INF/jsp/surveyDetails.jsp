@@ -16,7 +16,8 @@
 	<div class="collapse navbar-collapse" id="navbarTogglerDemo02">
 		<div class="collapse navbar-collapse" id="navbarSupportedContent">
 			<ul class="navbar-nav mr-auto">
-				<li class="nav-item active"><a class="nav-link" href="#">Home
+				<c:url var="surveyPage" value="/survey" />
+				<li class="nav-item active"><a class="nav-link" href="${surveyPage}">Home
 						<span class="sr-only">(current)</span>
 				</a></li>
 			</ul>

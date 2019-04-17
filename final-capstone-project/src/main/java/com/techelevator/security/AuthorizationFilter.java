@@ -18,54 +18,52 @@ public class AuthorizationFilter implements Filter {
 
 	@Override
 	public void init(FilterConfig filterConfig) throws ServletException {
-		
+
 	}
 
 	@Override
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
 			throws IOException, ServletException {
-		
-		HttpServletRequest httpRequest = (HttpServletRequest)request;
-		HttpServletResponse httpResponse = (HttpServletResponse)response;
-		
+
+		HttpServletRequest httpRequest = (HttpServletRequest) request;
+		HttpServletResponse httpResponse = (HttpServletResponse) response;
+
 		User sessionUser = getUserFromSession(httpRequest);
 
 		String urlRequested = httpRequest.getRequestURI();
-		if(
-			urlRequested.contains("/admin/") ||
-			urlRequested.contains("/restricted/")
-			// Put more URLs here to lock down
+		if (urlRequested.contains("/admin/") || urlRequested.contains("/restricted/")
+		// Put more URLs here to lock down
 		) {
 
-			if(sessionUser == null) {
+			if (sessionUser == null) {
 				redirectToLoginPage(httpRequest, httpResponse);
 			}
-				//httpResponse.sendError(403);
-			
+			// httpResponse.sendError(403);
+
 		}
 		chain.doFilter(request, response);
 	}
 
 	private void redirectToLoginPage(HttpServletRequest httpRequest, HttpServletResponse httpResponse)
 			throws IOException {
-		
+
 		String originalRequest = httpRequest.getRequestURL().toString();
 		String queryString = httpRequest.getQueryString();
-		if(queryString != null) {
+		if (queryString != null) {
 			originalRequest = originalRequest + "?" + queryString;
 		}
-		
+
 		String context = httpRequest.getServletContext().getContextPath();
-		httpResponse.sendRedirect(context+"/login?destination="+URLEncoder.encode(originalRequest, "UTF-8"));
+		httpResponse.sendRedirect(context + "/login?destination=" + URLEncoder.encode(originalRequest, "UTF-8"));
 	}
 
 	private User getUserFromSession(HttpServletRequest httpRequest) {
-		return (User)httpRequest.getSession().getAttribute("currentUser");
+		return (User) httpRequest.getSession().getAttribute("currentUser");
 	}
 
 	@Override
 	public void destroy() {
-		
+
 	}
 
 }
