@@ -1,7 +1,5 @@
 package com.techelevator.model.Log;
 
-import java.time.LocalDateTime;
-
 public class Log {
 	private String editingUser;
 	private String logText;
