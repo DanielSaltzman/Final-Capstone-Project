@@ -51,25 +51,25 @@
 		</div>
 </nav>
 
-
-<%-- <div class="list-group-item surveyView">
-<c:forEach var="log" items="${logs}">
-			<div class="d-flex w-100 justify-content-between">
-				<h5 class="mb-1">
-					<c:out value="${log.logText}"></c:out>
-				</h5>
-				<small><c:out value="${log.timestamp}"/></small>
-			</div>
-			<small><c:out value="${log.editingUser}"/></small>
-</c:forEach>
-</div> --%>
-
-
 <div class="list-group surveyView">
+
+<input class="form-control" id="myInput" type="text" placeholder="Search..">
+
+<script>
+$(document).ready(function(){
+  $("#myInput").on("keyup", function() {
+    var value = $(this).val().toLowerCase();
+    $("#myList h5").filter(function() {
+      $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+    });
+  });
+});
+</script>
+
 	<c:forEach var="log" items="${logs}">
 
 		<div class="list-group-item">
-			<div class="d-flex w-100 justify-content-between">
+			<div class="d-flex w-100 justify-content-between" id=myList>
 				<h5 class="mb-1">
 					<c:out value="${log.logText}"></c:out>
 				</h5>
