@@ -22,7 +22,7 @@ public class JDBCLogDAOTest extends DAOIntegrationTest {
 	
 	@Before
 	public void setup() {
-		String sqlInsertLog = "INSERT INTO log(editing_user, log_text) VALUES ('Admin', 'test text')";
+		String sqlInsertLog = "TRUNCATE Log; INSERT INTO log(editing_user, log_text) VALUES ('Admin', 'test text')";
 		JdbcTemplate jdbcTemplate = new JdbcTemplate(getDataSource());
 		jdbcTemplate.update(sqlInsertLog);
 		
@@ -36,4 +36,5 @@ public class JDBCLogDAOTest extends DAOIntegrationTest {
 		Assert.assertEquals(1, test.size());
 	}
 
+	
 }
