@@ -20,31 +20,42 @@ public class JDBCQuestionDAOTest extends DAOIntegrationTest {
 	private JDBCQuestionDAO QuestionDAO;
 	private JdbcTemplate jdbcTemplate;
 	Integer id;
-	Integer questionId;
 	
 	@Before
 	public void setup() {
 		
-			String truncateSql = "TRUNCATE survey_question, survey, question";
-			String sqlInsertQuestion = "INSERT INTO question(question_text) VALUES ('test question')";
-			String sqlInsertSurvey = "INSERT INTO survey(survey_date, survey_name, room, campus, cohort_number, instructor, topic) VALUES ('Wednesday, May 23 2018 09:02 AM', 'survey one', 'tecbusjavab', 'Columbus', '7',  'Brian Lauvray', 'Magnets: How do they work?') Returning survey_id";
 			
+			String sqlInsertQuestion = "INSERT INTO question(question_text)\n" + 
+					"VALUES\n" + 
+					"('Presence'), \n" + 
+					"('The pace of yesterday''s class was:'), \n" + 
+					"('The content of the previous class was:'),\n" + 
+					"('I feel my level of understanding of the previous day''s material is:'),\n" + 
+					"('On a scale of 1-10, my energy level today is:')";
+			String sqlInsertSurvey = "INSERT INTO survey(survey_date, survey_name, room, campus, cohort_number, instructor, topic) VALUES ('Wednesday, May 23 2018 09:02 AM', 'survey one', 'tecbusjavab', 'Columbus', '7',  'Brian Lauvray', 'Magnets: How do they work?')";
 			JdbcTemplate jdbcTemplate = new JdbcTemplate(getDataSource());
-			jdbcTemplate.update(truncateSql);
 			jdbcTemplate.update(sqlInsertQuestion);
-			id = jdbcTemplate.queryForObject(sqlInsertSurvey, Integer.class);
+			jdbcTemplate.update(sqlInsertSurvey);
 			
-	
-		
-		QuestionDAO = new JDBCQuestionDAO(getDataSource());
+			QuestionDAO = new JDBCQuestionDAO(getDataSource());
 	}
 	
 	@Test
-	public void getQuestionsBySurveyId_returns_the_correct_amount(){
+	public void getQuestionsBySurveyId_returns_the_correct_list_size(){
 		
-		List<Question> testList = QuestionDAO.getQuestionsBySurveyId(id);
+		List<Question> testList = QuestionDAO.getQuestionsBySurveyId(1);
 		
-		Assert.assertEquals(1, testList.size());
+		Assert.assertEquals(5, testList.size());
+	}
+	
+	@Test
+	public void getQuestionIdByQuestionText_returns_the_correct_id() {
+		
+		long testId = QuestionDAO.getQuestionIdByQuestionText("Presence");
+		
+		Assert.assertEquals(1, testId);
+		
+		
 	}
 	
 
