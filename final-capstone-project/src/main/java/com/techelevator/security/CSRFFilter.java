@@ -25,30 +25,30 @@ public class CSRFFilter implements Filter {
 	@Override
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
 			throws IOException, ServletException {
-		
-		HttpServletRequest httpRequest = (HttpServletRequest)request;
-		HttpServletResponse httpResponse = (HttpServletResponse)response;
-		
-		if(isGET(httpRequest)) {
+
+		HttpServletRequest httpRequest = (HttpServletRequest) request;
+		HttpServletResponse httpResponse = (HttpServletResponse) response;
+
+		if (isGET(httpRequest)) {
 			handleGET(httpRequest);
 		} else {
 			handlePOST(httpRequest, httpResponse);
 		}
-		if(!response.isCommitted()) {
+		if (!response.isCommitted()) {
 			chain.doFilter(httpRequest, httpResponse);
 		}
 	}
 
 	private void handlePOST(HttpServletRequest httpRequest, HttpServletResponse httpResponse) throws IOException {
-		String sessionToken = (String)httpRequest.getSession().getAttribute(CSRF_TOKEN);
-		String requestToken = (String)httpRequest.getParameter(CSRF_TOKEN);
-		if(sessionToken == null || sessionToken.equals(requestToken) == false) {
+		String sessionToken = (String) httpRequest.getSession().getAttribute(CSRF_TOKEN);
+		String requestToken = (String) httpRequest.getParameter(CSRF_TOKEN);
+		if (sessionToken == null || sessionToken.equals(requestToken) == false) {
 			httpResponse.sendError(400);
 		}
 	}
 
 	private void handleGET(HttpServletRequest httpRequest) {
-		if(sessionDoesNotContainToken(httpRequest)) {
+		if (sessionDoesNotContainToken(httpRequest)) {
 			String csrfToken = generateNewToken();
 			httpRequest.getSession().setAttribute(CSRF_TOKEN, csrfToken);
 		}

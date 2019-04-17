@@ -9,7 +9,6 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class JDBCStudentDAO implements StudentDAO {
-	
 
 	private JdbcTemplate jdbcTemplate;
 
@@ -18,16 +17,15 @@ public class JDBCStudentDAO implements StudentDAO {
 		this.jdbcTemplate = new JdbcTemplate(datasource);
 	}
 
-
 	@Override
 	public void insertStudentIntoTableIfStudentDoesNotExits(String studentId, String studentName) {
-		String sql = "Select Count(*) from student WHERE student_id LIKE (?)"; 
-		SqlRowSet result = jdbcTemplate.queryForRowSet(sql, studentId); 
-		
-		result.next(); 
+		String sql = "Select Count(*) from student WHERE student_id LIKE (?)";
+		SqlRowSet result = jdbcTemplate.queryForRowSet(sql, studentId);
+
+		result.next();
 		if (result.getLong(1) == 0) {
-			String sqlInsert = "INSERT INTO student (student_id, student_name) VALUES (?, ?)"; 
-			jdbcTemplate.update(sqlInsert, studentId, studentName); 
+			String sqlInsert = "INSERT INTO student (student_id, student_name) VALUES (?, ?)";
+			jdbcTemplate.update(sqlInsert, studentId, studentName);
 		}
 	}
 

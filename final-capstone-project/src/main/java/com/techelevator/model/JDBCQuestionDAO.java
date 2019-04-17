@@ -12,39 +12,39 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class JDBCQuestionDAO implements QuestionDAO {
-	
-	private JdbcTemplate jdbcTemplate; 
-	
-    @Autowired
-    public JDBCQuestionDAO(DataSource datasource) {
-        this.jdbcTemplate = new JdbcTemplate(datasource);
-    }
 
-    @Override
-    public List<Question> getQuestionsBySurveyId(long id) {
-    	String sql = "SELECT question.question_id, question.question_text from survey_question join question on question.question_id = survey_question.question_id where survey_id = ?"; 
-    	
-    	SqlRowSet result = jdbcTemplate.queryForRowSet(sql, id);
+	private JdbcTemplate jdbcTemplate;
 
-    	List<Question> questions = new ArrayList<Question>();
-    	while(result.next()) {
-    		questions.add(mapRowToQuestion(result));
-    	}
-    	return questions;
-    }
-	
-    private Question mapRowToQuestion(SqlRowSet result) {
-		
+	@Autowired
+	public JDBCQuestionDAO(DataSource datasource) {
+		this.jdbcTemplate = new JdbcTemplate(datasource);
+	}
+
+	@Override
+	public List<Question> getQuestionsBySurveyId(long id) {
+		String sql = "SELECT question.question_id, question.question_text from survey_question join question on question.question_id = survey_question.question_id where survey_id = ?";
+
+		SqlRowSet result = jdbcTemplate.queryForRowSet(sql, id);
+
+		List<Question> questions = new ArrayList<Question>();
+		while (result.next()) {
+			questions.add(mapRowToQuestion(result));
+		}
+		return questions;
+	}
+
+	private Question mapRowToQuestion(SqlRowSet result) {
+
 		Question question = new Question();
-		question.setQuestionId(result.getLong("question_id")); 
-		question.setQuestionText(result.getString("question_text"));  
+		question.setQuestionId(result.getLong("question_id"));
+		question.setQuestionText(result.getString("question_text"));
 
 		return question;
 	}
 
 	@Override
 	public long getQuestionIdByQuestionText(String questionText) {
-		String sql = "select question_id from question where question_text LIKE ?"; 
+		String sql = "select question_id from question where question_text LIKE ?";
 		SqlRowSet nextIdResult = jdbcTemplate.queryForRowSet(sql, questionText);
 		if (nextIdResult.next()) {
 			return nextIdResult.getLong(1);
@@ -53,6 +53,4 @@ public class JDBCQuestionDAO implements QuestionDAO {
 		}
 	}
 
-
 }
-

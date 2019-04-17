@@ -77,7 +77,7 @@ public class AuthenticationController {
 	@Value("${path}")
 	private String path;
 
-	@RequestMapping(path="/login", method=RequestMethod.GET)
+	@RequestMapping(value = {"/", "/login"}, method=RequestMethod.GET)
 	public String displayLoginForm() {
 		return "login";
 	}
@@ -103,7 +103,7 @@ public class AuthenticationController {
 		
 		User user = ((User) session.getAttribute("currentUser"));
 		
-		logDao.inserLog(user.getUserName(), "User Deleted Survey " + id);
+		logDao.insertLog(user.getUserName(), "User Deleted Survey " + id);
 		
 		return "redirect:/survey";
 	}
@@ -115,7 +115,7 @@ public class AuthenticationController {
 		
 		User user = ((User) session.getAttribute("currentUser"));
 		
-		logDao.inserLog(user.getUserName(), "User Edited Survey " + id);
+		logDao.insertLog(user.getUserName(), "User Edited Survey " + id);
 		
 		return "redirect:/surveyDetails?surveyId=" + id;
 	}
@@ -127,7 +127,7 @@ public class AuthenticationController {
 		
 		User user = ((User) session.getAttribute("currentUser"));
 		
-		logDao.inserLog(user.getUserName(), "User Edited Answer " + id + " || Before: " + beforeAnswerText + " After: " + answerText );
+		logDao.insertLog(user.getUserName(), "User Edited Answer " + id + " || Before: " + beforeAnswerText + " After: " + answerText );
 		
 		return "redirect:/answers?questionId=" + questionId + "&surveyId=" + surveyId;
 	}
@@ -205,7 +205,7 @@ public class AuthenticationController {
 		
 		User user = ((User) session.getAttribute("currentUser"));
 		
-		logDao.inserLog(user.getUserName(), "Uploaded Survey");
+		logDao.insertLog(user.getUserName(), "Uploaded Survey");
 		
 		
 		File csvPath = getCSVFilePath();
@@ -259,10 +259,10 @@ public class AuthenticationController {
 				return "redirect:/changeOneTimePassword";
 			}
 			
-			logDao.inserLog(user.getUserName(), "Successful Login");
+			logDao.insertLog(user.getUserName(), "Successful Login");
 			return "redirect:/survey";
 		} else {
-			logDao.inserLog("Unknown", "Failed Login");
+			logDao.insertLog("Unknown", "Failed Login");
 			return "redirect:/login";
 		}
 	}
@@ -274,7 +274,7 @@ public class AuthenticationController {
 		
 		User user = ((User) session.getAttribute("currentUser"));
 		
-		logDao.inserLog(user.getUserName(), "User Changed Password");
+		logDao.insertLog(user.getUserName(), "User Changed Password");
 		
 		model.remove("currentUser");
 		session.invalidate();
@@ -290,7 +290,7 @@ public class AuthenticationController {
 		
 		User user = ((User) session.getAttribute("currentUser"));
 		
-		logDao.inserLog(user.getUserName(), "User Changed One-Time Password");
+		logDao.insertLog(user.getUserName(), "User Changed One-Time Password");
 		
 		
 		return "redirect:/survey";
@@ -315,7 +315,7 @@ public class AuthenticationController {
 		
 		User user = ((User) session.getAttribute("currentUser"));
 		
-		logDao.inserLog(user.getUserName(), "Admin Set One-Time Password");
+		logDao.insertLog(user.getUserName(), "Admin Set One-Time Password");
 		
 		
 		return "redirect:/userView";
@@ -328,7 +328,7 @@ public class AuthenticationController {
 		
 		User user = ((User) session.getAttribute("currentUser"));
 		
-		logDao.inserLog(user.getUserName(), "User Logged Out");
+		logDao.insertLog(user.getUserName(), "User Logged Out");
 		
 		model.remove("currentUser");
 		session.invalidate();
@@ -340,7 +340,7 @@ public class AuthenticationController {
 		
 		User user = ((User) session.getAttribute("currentUser"));
 		
-		logDao.inserLog(user.getUserName(), "Admin Added New User");
+		logDao.insertLog(user.getUserName(), "Admin Added New User");
 		
 		userDAO.saveUser(userName, password, role);
 		
@@ -352,7 +352,7 @@ public class AuthenticationController {
 		
 		User user = ((User) session.getAttribute("currentUser"));
 		
-		logDao.inserLog(user.getUserName(), "Admin Deleted User");
+		logDao.insertLog(user.getUserName(), "Admin Deleted User");
 		
 		userDAO.deleteUser(id);
 		
@@ -364,7 +364,7 @@ public class AuthenticationController {
 		
 		User user = ((User) session.getAttribute("currentUser"));
 		
-		logDao.inserLog(user.getUserName(), "Admin Changed User Role");
+		logDao.insertLog(user.getUserName(), "Admin Changed User Role");
 		
 		if(role.equals("Admin")) {
 			userDAO.updateRole("User", id);
