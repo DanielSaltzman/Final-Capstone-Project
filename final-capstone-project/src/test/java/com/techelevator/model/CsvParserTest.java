@@ -24,7 +24,7 @@ public class CsvParserTest {
 	@Test
 	public void correct_amount_of_records_returned() throws IOException {
 		list = dbw.getListOfCSVDataFromFile(filepath);
-		Assert.assertEquals(18, list.size());
+		Assert.assertEquals(17, list.size());
 	}
 
 	@Test
@@ -36,7 +36,7 @@ public class CsvParserTest {
 	@Test
 	public void previous_class_thoughts_returned_correctly() throws IOException {
 		list = dbw.getListOfCSVDataFromFile(filepath);
-		Assert.assertEquals("Mostly interesting", list.get(8).getContentOfPreviousClassAnswer());
+		Assert.assertEquals("Somewhat uninteresting", list.get(8).getContentOfPreviousClassAnswer());
 	}
 
 	@Test
