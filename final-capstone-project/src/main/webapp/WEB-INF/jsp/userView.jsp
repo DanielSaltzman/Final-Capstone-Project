@@ -36,7 +36,7 @@
 						</form>
 						<c:url var="logViewURL" value="log" />
 						<form action="${logViewURL}" method="GET">
-							<button class="dropdown-item" type="button">View Log</button>
+							<button class="dropdown-item" type="submit">View Log</button>
 						</form>
 					</c:if>
 					<button class="dropdown-item" type="submit" data-toggle="modal"
@@ -152,7 +152,7 @@
 									placeholder="Password" name="password"> <input
 									type="hidden" class="form-control" value="${user.userNameId}"
 									name="userNameId">
-							</form>
+							
 						</div>
 					</div>
 					<div class="modal-footer">
@@ -160,6 +160,7 @@
 							data-dismiss="modal">Close</button>
 						<button type="submit" class="btn btn-primary">Save
 							changes</button>
+							</form>
 					</div>
 				</div>
 			</div>
@@ -230,20 +231,19 @@
 			</div>
 			<div class="modal-body">
 				<c:url var="changePasswordURL" value="changePassword" />
+				<form action="${changePasswordURL}" method="POST">
 				<div class="form-group">
-					<form action="${changePasswordURL}" method="POST">
 						<label for="exampleInputPassword1">Password</label> <input
 							type="password" class="form-control" id="exampleInputPassword1"
 							placeholder="Password" name="password"> <input
 							type="hidden" class="form-control"
 							value="${currentUser.userName}" name="userName">
-					</form>
 				</div>
 
-			</div>
 			<div class="modal-footer">
 				<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
 				<button type="submit" class="btn btn-primary">Save changes</button>
+				</form>
 			</div>
 		</div>
 	</div>

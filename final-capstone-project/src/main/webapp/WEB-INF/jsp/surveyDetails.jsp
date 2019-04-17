@@ -36,7 +36,7 @@
 						</form>
 						<c:url var="logViewURL" value="log" />
 						<form action="${logViewURL}" method="GET">
-						<button class="dropdown-item" type="button">View Log</button>
+							<button class="dropdown-item" type="submit">View Log</button>
 						</form>
 					</c:if>
 					<button class="dropdown-item" type="submit" data-toggle="modal"
@@ -48,7 +48,6 @@
 					</form>
 				</div>
 			</div>
-		</div>
 		</div>
 </nav>
 
@@ -87,21 +86,20 @@
 				<c:param name="questionId" value="${question.questionId}" />
 				<c:param name="surveyId" value="${selectedSurvey.surveyId}" />
 			</c:url>
-			
+
 			<div class="list-group-item">
 				<div class="d-flex w-100 justify-content-between">
 					<h5 class="mb-1">
 						<c:out value="${question.questionText}"></c:out>
 					</h5>
 
-					<small><a href="${questionDetailsURL}"><button type="button"
-								class="btn btn-primary">View</button></a></small>
+					<small><a href="${questionDetailsURL}"><button
+								type="button" class="btn btn-primary">View</button></a></small>
 
 				</div>
 			</div>
 		</c:forEach>
-		<br> 
-		<br> 
+		<br> <br>
 		<div>
 			<table class="table">
 				<thead>
@@ -114,19 +112,74 @@
 				</thead>
 				<tbody>
 					<c:forEach var="stat" items="${surveyStats}">
-					<tr>
+						<tr>
 							<td></td>
-							<td><c:out value= "${stat.questionId}"/></td>
-							<td><c:out value= "${stat.countOfAnswers}"/></td>
-							<td><c:out value= "${stat.answerText}"/></td>
-					</tr>
+							<td><c:out value="${stat.questionId}" /></td>
+							<td><c:out value="${stat.countOfAnswers}" /></td>
+							<td><c:out value="${stat.answerText}" /></td>
+						</tr>
 					</c:forEach>
-				 </tbody>
+				</tbody>
 			</table>
-		</div>	
+		</div>
 	</div>
+	<c:if test="${adminCheck == 'Admin'}">
+	<button type="button" class="btn btn-primary btn-lg btn-block"
+		data-toggle="modal" data-target="#exampleModal">Edit Survey</button>
+		</c:if>
 </section>
 
+
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog"
+	aria-labelledby="exampleModalLabel" aria-hidden="true">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="exampleModalLabel">Input Info</h5>
+				<button type="button" class="close" data-dismiss="modal"
+					aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="modal-body">
+				<form action="<c:url value="editSurvey"/>" method="POST">
+					<label>Location:</label> <select class="form-control" name="campus">
+						<option value="Columbus">Columbus</option>
+						<option value="Cleveland">Cleveland</option>
+						<option value="Detroit">Detroit</option>
+						<option value="Pittsburgh">Pittsburgh</option>
+						<option value="Cincinnati">Cincinnati</option>
+					</select> <br /> <label>Cohort Number:</label> <select class="form-control"
+						name="cohortNumber">
+						<option value="1">1</option>
+						<option value="2">2</option>
+						<option value="3">3</option>
+						<option value="4">4</option>
+						<option value="5">5</option>
+						<option value="6">6</option>
+						<option value="7">7</option>
+						<option value="8">8</option>
+						<option value="9">9</option>
+						<option value="10">10</option>
+					</select> <br /> <input type="text" class="form-control"
+						placeholder="Instructor" name="instructor"
+						value="${selectedSurvey.instructor}" required> <br /> <input
+						type="text" class="form-control" placeholder="Topic" name="topic"
+						value="${selectedSurvey.topic}" required>
+						<input type="hidden" value="${param.surveyId}" name="id">
+					<div class="modal-footer">
+						<button type="button" class="btn btn-secondary"
+							data-dismiss="modal">Close</button>
+						<button type="submit" class="btn btn-primary">Save
+							changes</button>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
 
 <!-- Change Password Modal -->
 <div class="modal fade" id="changePasswordModal" tabindex="-1"
@@ -142,20 +195,19 @@
 			</div>
 			<div class="modal-body">
 				<c:url var="changePasswordURL" value="changePassword" />
-				<div class="form-group">
 				<form action="${changePasswordURL}" method="POST">
-					<label for="exampleInputPassword1">Password</label> <input
-						type="password" class="form-control" id="exampleInputPassword1"
-						placeholder="Password" name="password">
-						<input
-						type="hidden" class="form-control" value="${currentUser.userName}" name="userName">
-					</form>
+				<div class="form-group">
+						<label for="exampleInputPassword1">Password</label> <input
+							type="password" class="form-control" id="exampleInputPassword1"
+							placeholder="Password" name="password"> <input
+							type="hidden" class="form-control"
+							value="${currentUser.userName}" name="userName">
 				</div>
-				
-			</div>
+
 			<div class="modal-footer">
 				<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
 				<button type="submit" class="btn btn-primary">Save changes</button>
+				</form>
 			</div>
 		</div>
 	</div>

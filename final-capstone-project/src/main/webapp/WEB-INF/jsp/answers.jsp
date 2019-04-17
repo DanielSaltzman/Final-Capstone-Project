@@ -36,7 +36,7 @@
 						</form>
 						<c:url var="logViewURL" value="log" />
 						<form action="${logViewURL}" method="GET">
-							<button class="dropdown-item" type="button">View Log</button>
+							<button class="dropdown-item" type="submit">View Log</button>
 						</form>
 					</c:if>
 					<button class="dropdown-item" type="submit" data-toggle="modal"
@@ -105,14 +105,55 @@ var myChart = new Chart(ctx, {
 
 	</br>
 	<div class="list-group">
-		<c:forEach var="answer" items="${answers}">
+		<c:forEach var="answer" items="${answers}" varStatus="loop">
 
 			<div class="list-group-item">
 				<div class="d-flex w-100 justify-content-between">
 					<h5 class="mb-1">
 						<c:out value="${answer.answerText}" />
 					</h5>
-					<small><c:out value="${answer.studentName}" /></small>
+					<small><button type="button" class="btn btn-primary"
+							data-toggle="modal" data-target="#editModal${loop.index}">Edit</button></small>
+				</div>
+				<p class="mb-1" style="text-align:left">
+					<c:out value="${answer.studentName}" />
+				</p>
+			</div>
+
+			<!-- Edit Answers Modal -->
+			<div class="modal fade" id="editModal${loop.index}" tabindex="-1" role="dialog"
+				aria-labelledby="exampleModalLabel" aria-hidden="true">
+				<div class="modal-dialog" role="document">
+					<div class="modal-content">
+						<div class="modal-header">
+							<h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+							<button type="button" class="close" data-dismiss="modal"
+								aria-label="Close">
+								<span aria-hidden="true">&times;</span>
+							</button>
+						</div>
+						<div class="modal-body">
+						<c:url var="editAnswerURL" value="editAnswer"/>
+						<form action="${editAnswerURL}" method="POST">
+						<div class="form-group">
+						<input class="form-control" type="text" value="${answer.answerText}" name="answerText">
+						<input type="hidden" value="${answer.answerText}" name="beforeAnswerText">
+						<input type="hidden" value="${answer.answerId}" name="id">
+						<input type="hidden" value="${param.questionId}" name="questionId">
+						<input type="hidden" value="${param.surveyId}" name="surveyId">
+						</div>
+						
+						
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-secondary"
+								data-dismiss="modal">Close</button>
+							<button type="submit" class="btn btn-primary">Save
+								changes</button>
+						</form>
+						</div>
+						
+					</div>
 				</div>
 			</div>
 		</c:forEach>
@@ -157,25 +198,24 @@ var myChart = new Chart(ctx, {
 			</div>
 			<div class="modal-body">
 				<c:url var="changePasswordURL" value="changePassword" />
+				<form action="${changePasswordURL}" method="POST">
 				<div class="form-group">
-					<form action="${changePasswordURL}" method="POST">
 						<label for="exampleInputPassword1">Password</label> <input
 							type="password" class="form-control" id="exampleInputPassword1"
-							placeholder="Password" name="password"> 
-							
-							<input
+							placeholder="Password" name="password"> <input
 							type="hidden" class="form-control"
 							value="${currentUser.userName}" name="userName">
-					</form>
 				</div>
 
-			</div>
 			<div class="modal-footer">
 				<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
 				<button type="submit" class="btn btn-primary">Save changes</button>
+				</form>
 			</div>
 		</div>
 	</div>
 </div>
+
+
 
 <c:import url="/WEB-INF/jsp/footer.jsp" />

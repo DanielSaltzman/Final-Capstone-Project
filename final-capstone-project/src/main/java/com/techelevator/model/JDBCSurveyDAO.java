@@ -64,6 +64,25 @@ public class JDBCSurveyDAO implements SurveyDAO {
 		}
 	}
 
+	@Override
+	public void deleteExistingSurvey(long id) {
+
+		String deleteFromSurveyQuestion = "DELETE from survey_question where survey_id = ?";
+		String deleteFromSurvey = "DELETE from survey where survey_id = ?";
+		String deleteFromAnswer = "DELETE from answer where survey_id = ?";
+
+		jdbcTemplate.update(deleteFromSurveyQuestion, id);
+		jdbcTemplate.update(deleteFromSurvey, id);
+		jdbcTemplate.update(deleteFromAnswer, id);
+	}
+	
+
+	@Override
+	public void updateSurvey(long id, String campus, String cohortNumber, String instructor, String topic) {
+		String sql = "UPDATE survey SET campus = ?, cohort_number = ? , instructor = ? , topic = ? WHERE survey_id = ?"; 
+		jdbcTemplate.update(sql, campus, cohortNumber, instructor, topic, id); 
+	}
+
 	private Survey mapRowToSurvey(SqlRowSet result) {
 
 		Survey survey = new Survey();
@@ -79,5 +98,6 @@ public class JDBCSurveyDAO implements SurveyDAO {
 
 		return survey;
 	}
+
 
 }
